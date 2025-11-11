@@ -1,7 +1,7 @@
 {
     "GROUP": "G003",
     "ALL_SPRINTS":{
-        "SPRINT1_URL": https://selt-3-72bc5b0ae2ad.herokuapp.com/,
+        "SPRINT1_URL" : https://selt-3-72bc5b0ae2ad.herokuapp.com,
         “SPRINT2_URL“: http://blah.blee.boo/myapp,
         “SPRINT3_URL“: http://blah.blee.boo/myapp,
         “FINAL_URL“: http://blah.blee.boo/myapp"
