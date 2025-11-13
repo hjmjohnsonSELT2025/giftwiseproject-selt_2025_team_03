@@ -20,6 +20,9 @@ gem "importmap-rails"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
 
+# Password encryption
+gem "bcrypt", "~> 3.1.7"
+
 group :development, :test do
   gem "sqlite3", ">= 1.4"
 end
