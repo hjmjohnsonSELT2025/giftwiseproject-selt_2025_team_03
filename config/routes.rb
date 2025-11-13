@@ -7,8 +7,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  get "/login", :to => "users#login"
   root "users#login"
+  get "/login", :to => "users#login"
+
   resources :users do
     collection do
       post 'authorize'
