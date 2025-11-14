@@ -8,11 +8,21 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   root "users#login"
+
+  # logging in/out
   get "/login", :to => "users#login"
+  #post "/users/check_email", :to => "users#check_email"
+  #post "/login", :to => "users#authorize"
+  #post "/logout", :to => "users#destroy", :as => :logout
+
+  # signing up
 
   resources :users do
     collection do
       post 'authorize'
+      post 'logout'
+      post 'check_email'
+      #post 'create'
     end
   end
 end
