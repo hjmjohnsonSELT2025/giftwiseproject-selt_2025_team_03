@@ -1,0 +1,21 @@
+<div class="header">
+  <p>GiftWise</p>
+</div>
+<div class="field-container">
+  <%= form_with url: authorize_users_path, method: :post do%>
+    <div class="field">
+      <%= label_tag :username, "Username" %>
+      <%= text_field_tag :username, nil, :max_length => 20, :placeholder => "Username..." %>
+    </div>
+    <div class="field">
+      <%= label_tag :password, "Password" %>
+      <%= password_field_tag :password, nil, maxlength: 30, placeholder: "Password..."%>
+    </div>
+    <div class="options">
+      <%= submit_tag "Login", :id => "login_button" %>
+      <p>Don't have an account?
+        <%= link_to "Register", new_user_path %>
+      </p>
+    </div>
+  <% end %>
+</div>
