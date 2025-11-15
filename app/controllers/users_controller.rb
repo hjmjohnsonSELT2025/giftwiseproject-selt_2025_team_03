@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :require_login, only: [:index]
+
   def login
 
   end
@@ -28,6 +30,9 @@ class UsersController < ApplicationController
     end
   end
 
+  def index
+    @user = current_user
+  end
   # (logout)
   def destroy
     session[:user_id] = nil

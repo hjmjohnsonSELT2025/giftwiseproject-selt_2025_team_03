@@ -11,11 +11,14 @@ Rails.application.routes.draw do
 
   # logging in/out
   get "/login", :to => "users#login"
+  post "/login", :to => "users#authorize"
+  delete "/logout", :to => "users#destroy"
   #post "/users/check_email", :to => "users#check_email"
   #post "/login", :to => "users#authorize"
   #post "/logout", :to => "users#destroy", :as => :logout
 
   # signing up
+  resources :users, only: [:index, :new, :create]
 
   resources :users do
     collection do
