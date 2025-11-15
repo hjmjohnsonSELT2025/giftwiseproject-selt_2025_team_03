@@ -1,0 +1,30 @@
+<div class="form-container">
+  <%= form_with url: users_path, method: :post do%>
+    <div class="field required">
+      <%=label_tag :first_name, "First Name" %>
+      <%= text_field_tag :first_name, nil, :max_length => 30, :placeholder => "First Name..." %>
+      <div class="info"></div>
+    </div>
+    <div class="field required">
+      <%= label_tag :last_name, "Last Name" %>
+      <%= text_field_tag :last_name, nil, :max_length => 30, :placeholder => "Last Name..." %>
+      <div class="info"></div>
+    </div>
+    <div class="email-field-container required">
+      <%= label_tag :email, "Email" %>
+      <%= text_field_tag :email, nil, placeholder: "example@mail.com", class: "email-field" %>
+      <div class="email-info">
+        <!-- Text to say "account w/ this email already exists or email available" -->
+      </div>
+    </div>
+    <div class="field required">
+      <%= label_tag :birthday, "Birthday" %>
+      <%= date_field_tag :birthday, Date.today %>
+      <div class="info"></div>
+    </div>
+    <div class="options">
+      <%= submit_tag "Create my account", :id => "create_account_button" %>
+    </div>
+  <% end %>
+</div>
+<%= javascript_import_module_tag "controllers/users/email_validator" %>
