@@ -6,4 +6,7 @@ const application = Application.start()
 application.debug = false
 window.Stimulus   = application
 
+import $ from "jquery";
+window.$ = $;
+window.jQuery = $;
 export { application }

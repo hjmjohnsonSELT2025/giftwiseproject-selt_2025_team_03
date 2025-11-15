@@ -20,7 +20,8 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
-  <<: *default
+  #<<: *default
+  adapter: sqlite3
   database: final_development
 
   # The specified database role being used to connect to PostgreSQL.
@@ -54,7 +55,8 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
+  #<<: *default
+  adapter: sqlite3
   database: final_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
