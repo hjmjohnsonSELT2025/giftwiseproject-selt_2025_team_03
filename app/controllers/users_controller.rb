@@ -3,12 +3,12 @@ class UsersController < ApplicationController
 
   end
   def authorize
-    render js: q{console.log("authorizing request"); }
     input = params[:login]
     user = User.find_by(email: input) || User.find_by(username: input)
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
       redirect_to root_path, notice: "Now logged in."
+      Rails.logger.debug "user successfully logged in"
     else
       flash[:alert] = "Invalid username/email or password."
       render :login, status: :unauthorized
@@ -16,6 +16,7 @@ class UsersController < ApplicationController
   end
   def new
     #@user = User.new
+    @user = User.new
   end
   def create
     @user = User.new(user_params)
@@ -43,8 +44,32 @@ class UsersController < ApplicationController
       render json: {available: true}, :status => :ok
     end
   end
-
+  private
   def user_params
-    params.require(:user).permit(:username, :email, :password, :password_confirmation)
+    if params[:user].present?
+      params.require(:user).permit(
+        :first_name,
+        :last_name,
+        :username,
+        :email,
+        :password,
+        :password_confirmation,
+        :birthday,
+        :likes,
+        :dislikes
+      )
+    else
+      params.permit(
+        :first_name,
+        :last_name,
+        :username,
+        :email,
+        :password,
+        :password_confirmation,
+        :birthday,
+        :likes,
+        :dislikes
+      )
+    end
   end
 end

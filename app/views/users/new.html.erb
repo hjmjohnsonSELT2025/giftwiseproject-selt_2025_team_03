@@ -1,25 +1,36 @@
 <div class="form-container">
   <%= form_with url: users_path, method: :post do%>
     <div class="field required">
-      <%=label_tag :first_name, "First Name" %>
-      <%= text_field_tag :first_name, nil, :max_length => 30, :placeholder => "First Name..." %>
+      <%=label_tag "user[first_name]", "First Name" %>
+      <%= text_field_tag "user[first_name]", nil, :max_length => 30, :placeholder => "First Name..." %>
       <div class="info"></div>
     </div>
     <div class="field required">
-      <%= label_tag :last_name, "Last Name" %>
-      <%= text_field_tag :last_name, nil, :max_length => 30, :placeholder => "Last Name..." %>
+      <%= label_tag "user[last_name]", "Last Name" %>
+      <%= text_field_tag "user[last_name]", nil, :max_length => 30, :placeholder => "Last Name..." %>
       <div class="info"></div>
     </div>
     <div class="email-field-container required">
-      <%= label_tag :email, "Email" %>
-      <%= text_field_tag :email, nil, placeholder: "example@mail.com", class: "email-field" %>
+      <%= label_tag "user[email]", "Email" %>
+      <%= text_field_tag "user[email]", nil, placeholder: "example@mail.com", class: "email-field" %>
       <div class="email-info">
         <!-- Text to say "account w/ this email already exists or email available" -->
       </div>
     </div>
+    <div class="password-field required">
+      <%= label_tag "user[password]", "Password" %>
+      <%= password_field_tag "user[password]" %>
+    </div>
+    <div class="password-field required">
+      <%= label_tag "user[password_confirmation]", "Password" %>
+      <%= password_field_tag "user[password_confirmation]" %>
+      <div class="password-info">
+        <!-- Text to say "account w/ this email already exists or email available" -->
+      </div>
+    </div>
     <div class="field required">
-      <%= label_tag :birthday, "Birthday" %>
-      <%= date_field_tag :birthday, Date.today %>
+      <%= label_tag "user[birthday]", "Birthday" %>
+      <%= date_field_tag "user[birthday]", Date.today %>
       <div class="info"></div>
     </div>
     <div class="options">
