@@ -41,12 +41,13 @@ Given ("I am on the registration page") do
 end
 
 When("I fill in the registration form with valid details") do
-  fill_in "Username", with: "testuser"
-  fill_in "Password", with: "example@example.com"
+  fill_in "Name", with: "testuser"
+  fill_in "Email", with: "example@example.com"
   fill_in "Password", with: "Password1!"
+  fill_in "Birthday", with: "01/01/01"
 end
 
-WHen("I click the button: Create Account") do
+When("I click the button: Create Account") do
   click_button "Create Account"
 end
 
@@ -58,6 +59,8 @@ Then("I should be redirected to {string} page") do |page_name|
   case page_name.downcase
   when "dashboard"
     expect(current_path).to eq(dashboard_path)
+  else
+    raise "Unknown page #{page_name}"
 end
 
 end

@@ -3,7 +3,7 @@ Feature: Account Creation
     Background:
         Given I am on the registration page
         Then I should see the button: Create Account
-        And I should see the fillable field: name, email, password, age, occupation
+        And I should see the fillable field: name, email, password, birthday, occupation, likes, dislikes
         And I should see link on the bottom: "Already have an account? Login"
 
     Scenario:
