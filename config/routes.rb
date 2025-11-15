@@ -22,7 +22,7 @@ Rails.application.routes.draw do
       post 'authorize'
       post 'logout'
       post 'check_email'
-      #post 'create'
+      post 'create'
     end
   end
 end
