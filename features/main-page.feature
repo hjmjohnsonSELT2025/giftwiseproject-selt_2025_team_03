@@ -2,7 +2,7 @@ Feature: Main Page
 
   Background:
     Given I am on the main page
-    Then I should see the buttons: Events, Recipients, Gift Ideas, Profile
+    Then I should see the buttons: "Events, Recipients, Gift Ideas, Profile, Notifications"
     And I should see a list of recent activity
 
   Scenario: User seeking to see their events

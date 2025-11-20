@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 Given("I am on the main page") do
-  vist root_path
+  vist root_path #might have to change
 end
 
-Then("I should see the buttons: {string}") do |button|
-  buttons.each do |button|
-    expect(page).to have_button(button)
+Then("I should see the buttons: {string}") do |buttons|
+  buttons.split(",").map(&:strip).each do |button|
+    expect(page).to have_button(button).or have_link(button)
   end
 end
 
