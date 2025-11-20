@@ -2,7 +2,7 @@ Feature: Main Page
 
   Background:
     Given I am on the main page
-    Then I should see the buttons: "Events, Recipients, Gift Ideas, Profile, Notifications"
+    Then I should see the buttons: "Events, Recipients, Gift Ideas, Profile, Settings, Logout"
     And I should see a list of recent activity
 
   Scenario: User seeking to see their events
@@ -20,3 +20,11 @@ Feature: Main Page
   Scenario: User looking to update their profile
     When I click the button "Profile"
     Then I should see the "Profile" page
+
+  Scenario: User looking to update their settings
+    When I click the button "Settings"
+    Then I should see the "Settings" page
+
+  Scenario: User looking to logout
+    When I click the button "Logout"
+    Then I should see the "LogIn" page
