@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   end
 
   # (logout)
-  def destroy
+  def logout
     session[:user_id] = nil
     redirect_to root_path, notice: "Logged out."
   end
@@ -46,30 +46,6 @@ class UsersController < ApplicationController
   end
   private
   def user_params
-    if params[:user].present?
-      params.require(:user).permit(
-        :first_name,
-        :last_name,
-        :username,
-        :email,
-        :password,
-        :password_confirmation,
-        :birthday,
-        :likes,
-        :dislikes
-      )
-    else
-      params.permit(
-        :first_name,
-        :last_name,
-        :username,
-        :email,
-        :password,
-        :password_confirmation,
-        :birthday,
-        :likes,
-        :dislikes
-      )
-    end
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, :first_name, :last_name)
   end
 end
