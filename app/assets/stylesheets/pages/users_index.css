@@ -1,0 +1,56 @@
+/* Index page specific styles - only applies to users_index action */
+
+.users_index {
+    background-color: var(--dark-blue-bg);
+    color: var(--light-text);
+}
+
+.users_index .header {
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.users_index .field-container {
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.users_index .field {
+    margin-bottom: 20px;
+}
+
+.users_index .field label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.users_index .field input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    background-color: transparent;
+    color: var(--light-text);
+    font-size: 16px;
+}
+
+.users_index .options {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.users_index .options #login_button {
+    background-color: var(--light-text);
+    color: var(--dark-blue-bg);
+    border: none;
+    border-radius: 10px;
+    padding: 16px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}

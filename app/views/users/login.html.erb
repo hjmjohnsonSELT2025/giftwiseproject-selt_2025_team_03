@@ -1,21 +1,28 @@
-<div class="header">
-  <p>GiftWise</p>
-</div>
-<div class="field-container">
-  <%= form_with url: authorize_users_path, method: :post do%>
-    <div class="field">
-      <%= label_tag :username, "Username" %>
-      <%= text_field_tag :username, nil, :max_length => 20, :placeholder => "Username..." %>
+<!-- Added elements to Login page for Theme -->
+<div class="sign-in-container">
+  <div class="decorative-circle"></div>
+  <div class="brown-rectangle"></div>
+  <div class="brown-rectangle-bars">
+    <div class="white-bar"></div>
+    <div class="white-bar"></div>
+    <div class="white-bar"></div>
+  </div>
+  <div class="giftwise-header">GiftWise</div>
+
+  <%= form_with url: authorize_users_path, method: :post, class: "sign-in-form" do %>
+    <div class="decorative-line"></div>
+    <h1 class="sign-in-heading">Sign in</h1>
+    <div class="input-group">
+      <%= label_tag :username, "Username", class: "input-label" %>
+      <%= text_field_tag :username, nil, max_length: 20, placeholder: "", class: "input-field" %>
     </div>
-    <div class="field">
-      <%= label_tag :password, "Password" %>
-      <%= password_field_tag :password, nil, maxlength: 30, placeholder: "Password..."%>
+    <div class="input-group">
+      <%= label_tag :password, "Password", class: "input-label" %>
+      <%= password_field_tag :password, nil, maxlength: 30, placeholder: "", class: "input-field" %>
     </div>
-    <div class="options">
-      <%= submit_tag "Login", :id => "login_button" %>
-      <p>Don't have an account?
-        <%= link_to "Register", new_user_path %>
-      </p>
+    <%= submit_tag "Login", class: "login-button" %>
+    <div class="bottom-link">
+      <p>Don't have an account? <%= link_to "Register", new_user_path %></p>
     </div>
   <% end %>
 </div>
