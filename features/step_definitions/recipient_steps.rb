@@ -70,4 +70,39 @@ def within_recipient(name, &block)
   within(:xpath, "//*[contains(text(),'#{name}')]/ancestor::*[self::div or self::li][1]", &block)
 end
 
+Given("I am on the New Recipient form") do
+  visit new_recipient_path
+end
 
+Then("I should see a field {string}") do |field_name|
+  expect(page).to have_field(field_name)
+end
+
+When("I fill in {string} with {string}") do |field_name, value|
+  fill_in field_name, with: value
+end
+
+When("I click the button {string}") do |button_text|
+  click_button button_text
+end
+
+Then("I should see {string} in the recipient list") do |name|
+  within("#recipient-list") do   #adjust selector to match our HTML
+    expect(page).to have_content(name)
+  end
+end
+
+Then("I should be taken to the {string} page") do |page_name|
+  case page_name
+  when "Recipients"
+    expect(current_path).to eq recipients_path
+  when "View"
+    expect(current_path).to match(/recipients\/\d+/)
+  when "Edit"
+    expect(current_path).to match(/recipients\/\d+\/edit/)
+  end
+end
+
+Then("I should see a validation error for {string}") do |field_name|
+  expect(page).to have_content("#{field_name} can't be blank")
+end
