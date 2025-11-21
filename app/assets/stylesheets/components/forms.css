@@ -1,0 +1,15 @@
+/* Reusable styles for components*/
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.input-label {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--light-text);
+    opacity: 0.85;
+}
