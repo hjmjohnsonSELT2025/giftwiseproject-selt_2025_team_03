@@ -2,9 +2,9 @@ $(() => {
     console.log("Setting up validation for required fields and validation for email.");
     const injectStyle = () => {
         $('<style id="js-style">').text(`
-            .error-text { color:#ff0000; margin-right: 10px; font-style: italic; }
+            .error-text { color:#ff0000; margin-left: 20px; font-style: italic; }
             .error-input { outline: 1px solid #ff0000; }
-            .hint { display: inline; }
+            .label-style { display: flex; justify-content: space-between; }
         `).appendTo('head');
     };
     injectStyle();
@@ -21,12 +21,13 @@ $(() => {
         $(".input-group").each(function() {
             const $input = $(this).find(".input-field");
             const $label = $(this).find(".input-label");
-            const setOk = (input, label) => {
-                label.find('.error-text').remove();
-                input.removeClass("error-input");
+            const setOk = () => {
+                $label.find('.error-text').remove();
+                $input.removeClass("error-input");
             };
             const setInvalid = (input, label, message) => {
                 if (!label.find(".error-text").length) {
+                    label.addClass("label-style");
                     label.append($('<span>', { class: "error-text", text: `${message}`}));
                 }
                 input.addClass('error-input');
@@ -52,7 +53,7 @@ $(() => {
                             if (response.status === 409) 
                                 setInvalid($input, $label, "Email already in use.");
                             else {
-                                setOk($input, $label);
+                                setOk();
                                 console.error("AJAX Error", response.status, response.responseText);
                             }
                         });
@@ -66,7 +67,7 @@ $(() => {
                         if (empty) {
                             setInvalid($input, $label, " Required");
                         } else {
-                            setOk($input, $label);
+                            setOk();
                         }
                     }
                 };
