@@ -1,14 +1,5 @@
-<!-- Added elements to Login page for Theme -->
-<div class="sign-in-container">
-  <div class="decorative-circle"></div>
-  <div class="brown-rectangle"></div>
-  <div class="brown-rectangle-bars">
-    <div class="white-bar"></div>
-    <div class="white-bar"></div>
-    <div class="white-bar"></div>
-  </div>
-  <div class="giftwise-header">GiftWise</div>
-
+<!-- Added elements to Login page for Theme from primary_layout -->
+<%= render layout: 'shared/primary_layout' do %>
   <%= form_with url: authorize_users_path, method: :post, class: "sign-in-form" do %>
     <div class="decorative-line"></div>
     <h1 class="sign-in-heading">Sign in</h1>
@@ -25,4 +16,4 @@
       <p>Don't have an account? <%= link_to "Register", new_user_path %></p>
     </div>
   <% end %>
-</div>
+<% end %>
