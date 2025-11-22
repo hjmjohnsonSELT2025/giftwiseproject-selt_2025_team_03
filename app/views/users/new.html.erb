@@ -6,17 +6,17 @@
 
     <div class="input-group">
       <%= label_tag :first_name, "First Name", class: "input-label" %>
-      <%= text_field_tag :first_name, nil, max_length: 30, placeholder: "", class: "input-field" %>
+      <%= text_field_tag :first_name, nil, max_length: 30, placeholder: "", class: "input-field required" %>
     </div>
 
     <div class="input-group">
       <%= label_tag :last_name, "Last Name", class: "input-label" %>
-      <%= text_field_tag :last_name, nil, max_length: 30, placeholder: "", class: "input-field" %>
+      <%= text_field_tag :last_name, nil, max_length: 30, placeholder: "", class: "input-field required" %>
     </div>
 
     <div class="input-group">
       <%= label_tag :email, "Email", class: "input-label" %>
-      <%= text_field_tag :email, nil, placeholder: "", class: "input-field email-field" %>
+      <%= text_field_tag :email, nil, placeholder: "", class: "input-field email-field required" %>
       <div class="email-info">
         <!-- Text to say "account w/ this email already exists or email available" -->
       </div>
@@ -34,4 +34,4 @@
     </div>
   <% end %>
 <% end %>
-<%= javascript_import_module_tag "controllers/users/email_validator" %>
+<%= javascript_import_module_tag "controllers/users/new_user" %>
