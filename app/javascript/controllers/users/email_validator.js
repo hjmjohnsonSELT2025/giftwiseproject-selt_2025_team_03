@@ -58,9 +58,10 @@ $(() => {
                 .error-input { outline: 1px solid #ff0000; }
             `).appendTo('head');
         };
+        injectStyle();
         const $submitButton = $('input[type="submit"][name="commit"]');
         const updateSubmitButton = () => {
-            const anyEmpty = $('.required:text, .required:password')
+            const anyEmpty = $('.required:text')
             .toArray()
             .some(function(item) {
                 return $(item).val().trim().length === 0;
@@ -70,7 +71,7 @@ $(() => {
         $(".input-group").each(function() {
             const $input = $(this).find(".input-field");
             const $label = $(this).find(".input-label");
-            if (!$input.hassClass('required')) {
+            if ($input.hasClass('required') && !$input.is("input:password")) {
                 if (!$input.is("#email")) {
                     const validate = () => {
                         const empty = !$input.val().trim();
@@ -96,6 +97,6 @@ $(() => {
     }
     const validateEmailSetup = () => {
         const $email = $("#email");
-        
+
     }
 });
