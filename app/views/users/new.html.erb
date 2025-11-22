@@ -1,30 +1,37 @@
-<div class="form-container">
-  <%= form_with url: users_path, method: :post do%>
-    <div class="field required">
-      <%=label_tag :first_name, "First Name" %>
-      <%= text_field_tag :first_name, nil, :max_length => 30, :placeholder => "First Name..." %>
-      <div class="info"></div>
+<%= render layout: 'shared/primary_layout' do %>
+  <%= form_with url: users_path, method: :post, class: "register-form" do %>
+    <div class="decorative-line"></div>
+
+    <h1 class="register-heading">Register</h1>
+
+    <div class="input-group">
+      <%= label_tag :first_name, "First Name", class: "input-label" %>
+      <%= text_field_tag :first_name, nil, max_length: 30, placeholder: "", class: "input-field" %>
     </div>
-    <div class="field required">
-      <%= label_tag :last_name, "Last Name" %>
-      <%= text_field_tag :last_name, nil, :max_length => 30, :placeholder => "Last Name..." %>
-      <div class="info"></div>
+
+    <div class="input-group">
+      <%= label_tag :last_name, "Last Name", class: "input-label" %>
+      <%= text_field_tag :last_name, nil, max_length: 30, placeholder: "", class: "input-field" %>
     </div>
-    <div class="email-field-container required">
-      <%= label_tag :email, "Email" %>
-      <%= text_field_tag :email, nil, placeholder: "example@mail.com", class: "email-field" %>
+
+    <div class="input-group">
+      <%= label_tag :email, "Email", class: "input-label" %>
+      <%= text_field_tag :email, nil, placeholder: "", class: "input-field email-field" %>
       <div class="email-info">
         <!-- Text to say "account w/ this email already exists or email available" -->
       </div>
     </div>
-    <div class="field required">
-      <%= label_tag :birthday, "Birthday" %>
-      <%= date_field_tag :birthday, Date.today %>
-      <div class="info"></div>
+
+    <div class="input-group">
+      <%= label_tag :birthday, "Birthday", class: "input-label" %>
+      <%= date_field_tag :birthday, Date.today, class: "input-field" %>
     </div>
-    <div class="options">
-      <%= submit_tag "Create my account", :id => "create_account_button" %>
+
+    <%= submit_tag "Create my account", class: "login-button" %>
+
+    <div class="bottom-link">
+      <p>Already have an account? <%= link_to "Login", login_path %></p>
     </div>
   <% end %>
-</div>
+<% end %>
 <%= javascript_import_module_tag "controllers/users/email_validator" %>
