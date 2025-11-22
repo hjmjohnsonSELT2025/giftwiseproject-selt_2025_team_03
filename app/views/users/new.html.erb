@@ -22,6 +22,16 @@
       </div>
     </div>
 
+    <div class='input-group'>
+      <%= label_tag :password, "Password", class: "input-label"%>
+      <%= password_field_tag :password, nil, placeholder: "", class: "input-field required" %>
+    </div>
+
+    <div class='input-group'>
+      <%= label_tag :password_confirm, "Confirm password", class: "input-label" %>
+      <%= password_field_tag :password_confirm, nil, placeholder: "", class: "input-field required" %>
+    </div>
+
     <div class="input-group">
       <%= label_tag :birthday, "Birthday", class: "input-label" %>
       <%= date_field_tag :birthday, Date.today, class: "input-field" %>

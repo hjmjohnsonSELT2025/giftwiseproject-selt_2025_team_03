@@ -96,5 +96,6 @@ $(() => {
     }
     const validateEmailSetup = () => {
         const $email = $("#email");
+        
     }
 });
