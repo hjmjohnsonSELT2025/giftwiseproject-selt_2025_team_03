@@ -12,5 +12,5 @@
  *
  *= require_tree ./base
  *= require_tree ./components
- *= require_self
+ *= require_self ./pages
  */
