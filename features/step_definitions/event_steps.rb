@@ -1,4 +1,78 @@
 # frozen_string_literal: true
+# Navigate to Events List page
+Given("I am on the Events page") do
+  visit events_path
+end
+
+Given("the following events exist:") do |table|
+  table.hashes.each do |row|
+    Event.create!(
+      name: row["Name"],
+      event_type: row["Type"],
+      date: row["Date"],
+      recipients: row["Recipients"]
+    )
+  end
+end
+
+# Check that an event appears in the list
+Then("I should see {string} in the event list") do |event_name|
+  within("#events-list") do
+    expect(page).to have_content(event_name)
+  end
+end
+
+# Check that each event has the specified buttons
+Then("each event should have buttons {string}") do |buttons|
+  buttons.split(", ").each do |button|
+    within(".event-item") do
+      expect(page).to have_button(button)
+    end
+  end
+end
+
+Given("an event exists with name {string}") do |name|
+  Event.create!(
+    name: name,
+    event_type: "Birthday",        # default type; adjust as needed
+    date: Date.today + 1.week,     # default date
+    recipients: "Alice"            # default recipient
+  )
+end
+
+# Click a specific action button for a specific event
+When("I click {string} on the {string} event") do |action, event_name|
+  within(find(".event-item", text: event_name)) do
+    click_button(action)
+  end
+end
+
+# Viewing an event’s details
+Then("I should see the event name {string}") do |name|
+  expect(page).to have_content(name)
+end
+
+
+Then("I should see the date {string}") do |date|
+  expect(page).to have_content(date)
+end
+
+Then("I should see recipients {string}") do |recipients|
+  expect(page).to have_content(recipients)
+end
+
+#clicking Add Event button navigates to New Event page
+When("I click the button Add Event") do
+  click_button("Add Event")
+end
+
+Then("I should not see {string} in the event list") do |event_name|
+  within("#events-list") do
+    expect(page).to have_no_content(event_name)
+  end
+end
+
+
 
 Given("I am on the New Event form") do
   visit new_event_path #change event if neccessary
