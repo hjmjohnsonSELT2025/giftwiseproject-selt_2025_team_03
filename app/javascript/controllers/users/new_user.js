@@ -22,7 +22,6 @@ $(() => {
             const anyInvalid = $requiredInputs.filter(".error-input").length > 0;
             $submitButton.prop('disabled', anyInvalid);
             console.log(`Submit button state: ${$submitButton.is(':disabled') ? 'disabled' : 'enabled'}`);
-            
         };
         
         $(".input-group").each(function() {
@@ -114,5 +113,4 @@ $(() => {
         $('input[type="submit"][name="commit"]').prop('disabled', true);
     };
     validateRequiredFieldsSetup();
-
 });
