@@ -3,36 +3,38 @@
     <div class="decorative-line"></div>
 
     <h1 class="register-heading">Register</h1>
-
-    <div class="input-group">
+    
+    <div class="input-group">       <!--------------- First name --------------->
       <%= label_tag :first_name, "First Name", class: "input-label" %>
       <%= text_field_tag :first_name, nil, max_length: 30, placeholder: "", class: "input-field required" %>
     </div>
 
-    <div class="input-group">
+    <div class="input-group">       <!--------------- Last name --------------->
       <%= label_tag :last_name, "Last Name", class: "input-label" %>
       <%= text_field_tag :last_name, nil, max_length: 30, placeholder: "", class: "input-field required" %>
     </div>
 
-    <div class="input-group">
+    <div class="input-group">       <!--------------- Email --------------->
       <%= label_tag :email, "Email", class: "input-label" %>
       <%= text_field_tag :email, nil, placeholder: "", class: "input-field email-field required" %>
-      <div class="email-info">
-        <!-- Text to say "account w/ this email already exists or email available" -->
-      </div>
     </div>
 
-    <div class='input-group'>
+    <div class="input-group">       <!--------------- Username --------------->
+      <%= label_tag :username, "Username", class: "input-label" %>
+      <%= text_field_tag :username, nil, placeholder: "", class: "input-field required" %>
+    </div>
+
+    <div class='input-group'>       <!--------------- Password --------------->
       <%= label_tag :password, "Password", class: "input-label"%>
       <%= password_field_tag :password, nil, placeholder: "", class: "input-field required" %>
     </div>
 
-    <div class='input-group'>
+    <div class='input-group'>       <!--------------- Confirm password --------------->
       <%= label_tag :password_confirm, "Confirm password", class: "input-label" %>
       <%= password_field_tag :password_confirm, nil, placeholder: "", class: "input-field required" %>
     </div>
 
-    <div class="input-group">
+    <div class="input-group">       <!--------------- Birthday --------------->
       <%= label_tag :birthday, "Birthday", class: "input-label" %>
       <%= date_field_tag :birthday, Date.today, class: "input-field" %>
     </div>

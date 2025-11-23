@@ -23,3 +23,10 @@
 .login-button:active {
     transform: translateY(0);
 }
+.login-button:disabled {
+    cursor: default;
+    pointer-events: none;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.65;
+}
