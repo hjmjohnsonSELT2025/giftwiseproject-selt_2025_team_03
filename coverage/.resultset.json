@@ -142,6 +142,25 @@
         "branches": {
         }
       },
+      "/mnt/c/Users/blake/SELT_2025/giftwise/giftwiseproject-selt_2025_team_03/app/models/event_recipient.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/mnt/c/Users/blake/SELT_2025/giftwise/giftwiseproject-selt_2025_team_03/app/models/gift_idea.rb": {
+        "lines": [
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
       "/mnt/c/Users/blake/SELT_2025/giftwise/giftwiseproject-selt_2025_team_03/app/models/recipient.rb": {
         "lines": [
           0,
@@ -175,6 +194,6 @@
         }
       }
     },
-    "timestamp": 1763879446
+    "timestamp": 1763880401
   }
 }
