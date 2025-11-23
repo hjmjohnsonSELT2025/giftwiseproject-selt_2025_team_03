@@ -5,6 +5,7 @@ $(() => {
             .error-text { color:#ff0000; margin-left: 20px; font-style: italic; }
             .error-input { outline: 1px solid #ff0000; }
             .label-style { display: flex; justify-content: space-between; }
+            
         `).appendTo('head');
     };
     injectStyle();
@@ -76,5 +77,6 @@ $(() => {
             }
         });
     };
+    
     validateRequiredFieldsSetup();
 });
