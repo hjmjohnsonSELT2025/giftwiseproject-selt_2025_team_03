@@ -1,0 +1,25 @@
+/* Reusable component style for buttons */
+
+.login-button {
+    background-color: var(--light-text);
+    color: var(--dark-blue-bg);
+    border: none;
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 237, 241, 0.3);
+}
+
+.login-button:active {
+    transform: translateY(0);
+}
