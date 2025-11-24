@@ -8,6 +8,7 @@ class UsersController < ApplicationController
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
       redirect_to root_path, notice: "Now logged in."
+      Rails.logger.debug "user successfully logged in"
     else
       flash[:alert] = "Invalid username/email or password."
       render :login, status: :unauthorized
@@ -15,6 +16,7 @@ class UsersController < ApplicationController
   end
   def new
     #@user = User.new
+    @user = User.new
   end
   def create
     @user = User.new(user_params)
@@ -42,7 +44,7 @@ class UsersController < ApplicationController
       render json: {available: true}, :status => :ok
     end
   end
-
+  private
   def user_params
     params.require(:user).permit(:username, :email, :password, :password_confirmation, :first_name, :last_name)
   end
