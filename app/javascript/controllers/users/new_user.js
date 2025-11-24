@@ -1,5 +1,5 @@
 $(() => {
-    console.log("Setting up validation for required fields and validation for email.");
+    console.debug("Setting up validation for required fields and validation for email.");
     const injectStyle = () => {$('<style id="js-style">').text(`.error-text { 
     color:#ff0000; 
     margin-left: 20px; 
@@ -16,12 +16,12 @@ $(() => {
     const validateRequiredFieldsSetup = () => {
         const $submitButton = $('input[type="submit"][name="commit"]');
         $submitButton.prop('disabled', true);
-        console.log(`Submit button found: ${$submitButton.length > 0}`);
+        console.debug(`Submit button found: ${$submitButton.length > 0}`);
         const updateSubmitButton = () => {
             const $requiredInputs = $('input.required:text, input.required:password');
             const anyInvalid = $requiredInputs.filter(".error-input").length > 0;
             $submitButton.prop('disabled', anyInvalid);
-            console.log(`Submit button state: ${$submitButton.is(':disabled') ? 'disabled' : 'enabled'}`);
+            console.debug(`Submit button state: ${$submitButton.is(':disabled') ? 'disabled' : 'enabled'}`);
         };
         
         $(".input-group").each(function() {
