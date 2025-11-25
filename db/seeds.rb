@@ -7,3 +7,20 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+USERS = [
+  {
+    :username => "test",
+    :email => "email@email.com",
+    :first_name => "ruby",
+    :last_name => "rails",
+    :password => "password123",
+    :password_confirmation => "password123"
+  }
+]
+# assuming each user only has one email
+USERS.each do |attrs|
+    user = User.find_or_create_by!(:email => attrs[:email]) do |u|
+      u.assign_attributes(attrs)
+    end
+    puts "Seeded user id=#{user.id} username=#{user.username}"
+end
