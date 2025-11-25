@@ -7,3 +7,17 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+USERS = [
+  {
+    :username => "test",
+    :email => "email@email.com",
+    :first_name => "ruby",
+    :last_name => "rails",
+    :password => "password123",
+    :password_confirmation => "password123"
+  }
+]
+# assuming each user only has one email
+USERS.each { |attr| User.find_or_create_by!(:email => attr[:email]) { user do
+  user.assign_attributes(attr)
+end }}

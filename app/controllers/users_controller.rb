@@ -1,17 +1,21 @@
 class UsersController < ApplicationController
+  def show
+    @user = User.find(params[:id])
+    render :dashboard
+  end
   def login
 
   end
   def authorize
-    input = params[:login]
-    user = User.find_by(email: input) || User.find_by(username: input)
+    username = params[:username].to_s.strip
+    user = User.where('lower(username) = ?', username.downcase).first
+    
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to root_path, notice: "Now logged in."
       Rails.logger.debug "user successfully logged in"
+      redirect_to user_path(user), notice: "Now logged in"
     else
-      flash[:alert] = "Invalid username/email or password."
-      render :login, status: :unauthorized
+      redirect_to login_path, alert: "Invalid username/password."
     end
   end
   def new
@@ -21,7 +25,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      # session[:user_id] = @user.id
+      #session[:user_id] = @user.id
       redirect_to root_path, notice: "Welcome, #{@user.username}"
     else
       render :new, status: :unprocessable_entity
