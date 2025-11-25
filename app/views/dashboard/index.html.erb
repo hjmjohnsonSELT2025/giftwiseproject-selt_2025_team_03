@@ -9,27 +9,21 @@
     <nav>
       <ul class="nav-menu">
         <li class="nav-item active">
-          <div class="nav-icon"></div>
           <span>Dashboard</span>
         </li>
         <li class="nav-item">
-          <div class="nav-icon"></div>
           <span>Events</span>
         </li>
         <li class="nav-item">
-          <div class="nav-icon"></div>
           <span>Recipients</span>
         </li>
         <li class="nav-item">
-          <div class="nav-icon"></div>
           <span>Gift Ideas</span>
         </li>
         <li class="nav-item">
-          <div class="nav-icon"></div>
           <span>Purchases</span>
         </li>
         <li class="nav-item">
-          <div class="nav-icon"></div>
           <span>Settings</span>
         </li>
       </ul>
@@ -38,6 +32,40 @@
 
   <!-- Main Content -->
   <main class="main-content">
-    <!-- Content will go here -->
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <h1 class="page-title">Dashboard</h1>
+      <div class="user-profile">
+        <div class="user-info">
+          <div class="user-name"><%= @user.first_name %> <%= @user.last_name %></div>
+          <div class="user-role">Gift Coordinator</div>
+        </div>
+        <div class="user-avatar"></div>
+      </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon"></div>
+        <div class="stat-value"><%= @total_events %></div>
+        <div class="stat-label">Active Events</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"></div>
+        <div class="stat-value"><%= @total_recipients %></div>
+        <div class="stat-label">Recipients</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"></div>
+        <div class="stat-value"><%= @gifts_purchased_percentage %>%</div>
+        <div class="stat-label">Gifts Purchased</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"></div>
+        <div class="stat-value">$<%= number_with_delimiter(@total_spent.round, delimiter: ',') %></div>
+        <div class="stat-label">Total Spent</div>
+      </div>
+    </div>
   </main>
 </div>
