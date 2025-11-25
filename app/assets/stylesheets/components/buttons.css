@@ -30,3 +30,16 @@
     box-shadow: none;
     opacity: 0.65;
 }
+
+.profile-button {
+    padding: 10px 15px;
+    background-color: #ddd;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.profile-button:hover {
+    background-color: #ccc;
+}
