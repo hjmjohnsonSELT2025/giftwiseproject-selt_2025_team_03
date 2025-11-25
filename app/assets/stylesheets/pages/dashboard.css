@@ -174,3 +174,236 @@
     font-size: 14px;
     opacity: 0.7;
 }
+
+/* Main Dashboard Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+/* Event Cards */
+.events-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.view-all-link {
+    color: var(--brown-accent);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+}
+
+.view-all-link:hover {
+    opacity: 0.8;
+}
+
+.event-card {
+    background-color: #2d4293;
+    padding: 28px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateX(8px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.event-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.event-name {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.event-date {
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+.event-meta {
+    display: flex;
+    gap: 20px;
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Circular Progress */
+.circular-progress {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+}
+
+.progress-ring {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-inner {
+    width: 90px;
+    height: 90px;
+    background-color: #2d4293;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-value {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.progress-label {
+    font-size: 11px;
+    opacity: 0.7;
+}
+
+/* Right Sidebar */
+.right-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.budget-card {
+    background-color: #2d4293;
+    padding: 28px;
+    border-radius: 16px;
+}
+
+.budget-amount {
+    font-size: 36px;
+    font-weight: 700;
+    margin: 16px 0;
+}
+
+.budget-label {
+    font-size: 14px;
+    opacity: 0.7;
+    margin-bottom: 8px;
+}
+
+.budget-breakdown {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.budget-bar {
+    height: 8px;
+    border-radius: 4px;
+}
+
+.bar-spent {
+    background-color: var(--brown-accent);
+}
+
+.bar-remaining {
+    background-color: rgba(157, 111, 87, 0.3);
+}
+
+/* Activity Feed */
+.activity-card {
+    background-color: #2d4293;
+    padding: 24px;
+    border-radius: 16px;
+}
+
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.activity-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.activity-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--brown-accent), #b88968);
+    flex-shrink: 0;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-text {
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.activity-time {
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+.card-number {
+    font-size: 18px;
+    letter-spacing: 2px;
+    margin-top: 12px;
+    opacity: 0.8;
+}
+
+/* Empty State */
+.empty-state {
+    background-color: #2d4293;
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.empty-state p {
+    font-size: 16px;
+    opacity: 0.7;
+}
