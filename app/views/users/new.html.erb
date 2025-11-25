@@ -6,32 +6,32 @@
     
     <div class="input-group">       <!--------------- First name --------------->
       <%= label_tag :first_name, "First Name", class: "input-label" %>
-      <%= f.text_field :first_name, nil, max_length: 30, placeholder: "", class: "input-field required" %>
+      <%= f.text_field :first_name, max_length: 30, placeholder: "", class: "input-field required" %>
     </div>
 
     <div class="input-group">       <!--------------- Last name --------------->
       <%= label_tag :last_name, "Last Name", class: "input-label" %>
-      <%= f.text_field :last_name, nil, max_length: 30, placeholder: "", class: "input-field required" %>
+      <%= f.text_field :last_name, max_length: 30, placeholder: "", class: "input-field required" %>
     </div>
 
     <div class="input-group">       <!--------------- Email --------------->
       <%= label_tag :email, "Email", class: "input-label" %>
-      <%= f.text_field :email, nil, placeholder: "", class: "input-field email-field required" %>
+      <%= f.text_field :email, placeholder: "", class: "input-field email-field required" %>
     </div>
 
     <div class="input-group">       <!--------------- Username --------------->
       <%= label_tag :username, "Username", class: "input-label" %>
-      <%= f.text_field :username, nil, placeholder: "", class: "input-field required" %>
+      <%= f.text_field :username, placeholder: "", class: "input-field required" %>
     </div>
 
     <div class='input-group'>       <!--------------- Password --------------->
       <%= label_tag :password, "Password", class: "input-label"%>
-      <%= f.password_field :password, nil, placeholder: "", class: "input-field required" %>
+      <%= f.password_field :password, placeholder: "", class: "input-field required" %>
     </div>
 
     <div class='input-group'>       <!--------------- Confirm password --------------->
       <%= label_tag :password_confirm, "Confirm password", class: "input-label" %>
-      <%= f.password_field :password_confirm, nil, placeholder: "", class: "input-field required" %>
+      <%= f.password_field :password_confirm, placeholder: "", class: "input-field required" %>
     </div>
 
     <div class="input-group">       <!--------------- Birthday --------------->
