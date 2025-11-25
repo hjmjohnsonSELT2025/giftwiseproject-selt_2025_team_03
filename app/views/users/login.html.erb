@@ -1,6 +1,6 @@
 <!-- Added elements to Login page for Theme from primary_layout -->
 <%= render layout: 'shared/primary_layout' do %>
-  <%= form_with model: @user do |f| authorize_users_path, method: :post, class: "sign-in-form" do %>
+  <%= form_with model: @user, authorize_users_path, method: :post, class: "sign-in-form" do |f| %>
     <div class="decorative-line"></div>
     <h1 class="sign-in-heading">Sign in</h1>
     <div class="input-group">
