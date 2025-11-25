@@ -16,11 +16,10 @@ class UsersController < ApplicationController
   end
   def new
     #@user = User.new
-    @user = User.new(params[:user])
+    @user = User.new(user_params)
   end
   def create
-    @user = User.new(params[:user])
-    params.require(:user).permit(:first_name, :last_name, :email, :username, :password, :password_confirm, :birthday)
+    @user = User.new(user_params)
     if @user.save
       # session[:user_id] = @user.id
       redirect_to root_path, notice: "Welcome, #{@user.username}"
