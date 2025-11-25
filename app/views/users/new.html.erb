@@ -36,7 +36,7 @@
 
     <div class="input-group">       <!--------------- Birthday --------------->
       <%= label_tag :birthday, "Birthday", class: "input-label" %>
-      <%= f.date_field :birthday, Date.today, class: "input-field" %>
+      <%= f.date_field :birthday, value: Date.today, class: "input-field" %>
     </div>
 
     <%= submit_tag "Create my account", class: "login-button" %>
