@@ -18,6 +18,9 @@ USERS = [
   }
 ]
 # assuming each user only has one email
-USERS.each { |attr| User.find_or_create_by!(:email => attr[:email]) { user do
-  user.assign_attributes(attr)
-end }}
+USERS.each do |attrs|
+    user = User.find_or_create_by!(:email => attrs[:email]) do |u|
+      u.assign_attributes(attrs)
+    end
+    puts "Seeded user id=#{user.id} username=#{user.username}"
+end

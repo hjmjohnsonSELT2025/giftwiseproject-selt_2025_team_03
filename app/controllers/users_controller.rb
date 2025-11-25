@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_action :require_authorization, :only => [:show, :logout]
+  before_action :redirect_if_authorized, :only => [:login, :new, :create]
+
   def show
     @user = User.find(params[:id])
     render :dashboard
@@ -12,9 +15,10 @@ class UsersController < ApplicationController
     
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
-      Rails.logger.debug "user successfully logged in"
+      Rails.logger.debug "User #{username} successfully logged in"
       redirect_to user_path(user), notice: "Now logged in"
     else
+      Rails.logger.debug "Invalid credentials received."
       redirect_to login_path, alert: "Invalid username/password."
     end
   end
