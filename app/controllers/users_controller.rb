@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   end
   def authorize
-    input = params[:login]
+    input = params[:username]
     user = User.find_by(email: input) || User.find_by(username: input)
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
