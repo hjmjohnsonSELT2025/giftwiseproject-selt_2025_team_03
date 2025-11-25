@@ -36,3 +36,6 @@
 
 # Ignore VSCode Workspace
 *.code-workspace
+
+/app/assets/builds/*
+!/app/assets/builds/.keep
