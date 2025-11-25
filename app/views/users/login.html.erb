@@ -1,15 +1,15 @@
 <!-- Added elements to Login page for Theme from primary_layout -->
 <%= render layout: 'shared/primary_layout' do %>
-  <%= form_with url: authorize_users_path, method: :post, class: "sign-in-form" do %>
+  <%= form_with model: @user do |f| authorize_users_path, method: :post, class: "sign-in-form" do %>
     <div class="decorative-line"></div>
     <h1 class="sign-in-heading">Sign in</h1>
     <div class="input-group">
       <%= label_tag :username, "Username", class: "input-label" %>
-      <%= text_field_tag :username, nil, max_length: 20, placeholder: "", class: "input-field" %>
+      <%= f.text_field :username, nil, max_length: 20, placeholder: "", class: "input-field" %>
     </div>
     <div class="input-group">
       <%= label_tag :password, "Password", class: "input-label" %>
-      <%= password_field_tag :password, nil, maxlength: 30, placeholder: "", class: "input-field" %>
+      <%= f.password_field :password, nil, maxlength: 30, placeholder: "", class: "input-field" %>
     </div>
     <%= submit_tag "Login", class: "login-button" %>
     <div class="bottom-link">

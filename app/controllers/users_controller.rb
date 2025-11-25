@@ -4,9 +4,9 @@ class UsersController < ApplicationController
   end
   def authorize
     input = params[:login]
-    user = User.find_by(email: input) || User.find_by(username: input)
-    if user&.authenticate(params[:password])
-      session[:user_id] = user.id
+    @user = User.find_by(email: input) || User.find_by(username: input)
+    if @user.authenticate(params[:password])
+      session[:user_id] = @user.id
       redirect_to root_path, notice: "Now logged in."
       Rails.logger.debug "user successfully logged in"
     else
@@ -16,10 +16,11 @@ class UsersController < ApplicationController
   end
   def new
     #@user = User.new
-    @user = User.new
+    @user = User.new(params[:user])
   end
   def create
-    @user = User.new(user_params)
+    @user = User.new(params[:user])
+    params.require(:user).permit(:first_name, :last_name, :email, :username, :password, :password_confirm, :birthday)
     if @user.save
       # session[:user_id] = @user.id
       redirect_to root_path, notice: "Welcome, #{@user.username}"
