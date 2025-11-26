@@ -41,9 +41,3 @@
     -webkit-text-fill-color: var(--light-text);
     transition: background-color 5000s ease-in-out 0s;
 }
-/* Top-right positioning for profile button */
-.top-right-profile {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
