@@ -18,4 +18,6 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create, :show]
   post 'users/check_email', :to => "users#check_email"
   post 'users/check_username', :to => "users#check_username"
+  # recipients
+  resources :recipients
 end
