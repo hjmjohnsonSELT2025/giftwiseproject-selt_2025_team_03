@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    render :dashboard
+    redirect_to dashboard_path
   end
   def login
 

@@ -122,8 +122,10 @@
           <div class="budget-breakdown">
             <% spent_percentage = @total_budget > 0 ? (@total_spent / @total_budget * 100).round : 0 %>
             <% remaining_percentage = 100 - spent_percentage %>
-            <div class="budget-bar bar-spent" style="flex: <%= spent_percentage %>;"></div>
-            <div class="budget-bar bar-remaining" style="flex: <%= remaining_percentage %>;"></div>
+          <div class="budget-bar bar-spent"
+              style="flex: <%= @total_budget.to_f.zero? ? 0 : (@total_spent.to_f / @total_budget.to_f).clamp(0, 1) %>"></div>
+          <div class="budget-bar bar-remaining"
+              style="flex: <%= @total_budget.to_f.zero? ? 1 : (1 - (@total_spent.to_f / @total_budget.to_f)).clamp(0, 1) %>"></div>
           </div>
         </div>
 
