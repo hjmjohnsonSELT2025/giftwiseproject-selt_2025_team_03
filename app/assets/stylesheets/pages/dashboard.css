@@ -407,3 +407,73 @@
     font-size: 16px;
     opacity: 0.7;
 }
+
+/* Chart Section */
+.chart-section {
+    background-color: #2d4293;
+    padding: 28px;
+    border-radius: 16px;
+}
+
+.chart-select {
+    background-color: #1e2d5f;
+    color: var(--light-text);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-family: inherit;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.chart-placeholder {
+    height: 280px;
+    background: linear-gradient(to top,
+    rgba(157, 111, 87, 0.4) 0%,
+    rgba(157, 111, 87, 0.2) 30%,
+    transparent 100%
+    );
+    border-radius: 12px;
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.chart-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--brown-accent);
+    transform-origin: left;
+    animation: drawLine 2s ease-out forwards;
+}
+
+@keyframes drawLine {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+/* Floating Add Button */
+.add-button {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--brown-accent), #b88968);
+    border: none;
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(157, 111, 87, 0.4);
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.add-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 32px rgba(157, 111, 87, 0.6);
+}
