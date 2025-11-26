@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   # logging in/out
   get "/login", :to => "users#login", as: :login
   post '/login', :to => 'users#authorize'
-  delete '/logout', :to => 'users#logout'
+  delete '/logout', :to => 'users#logout', as: :logout
   resources :users, only: [:new, :create, :show]
   post 'users/check_email', :to => "users#check_email"
   post 'users/check_username', :to => "users#check_username"
