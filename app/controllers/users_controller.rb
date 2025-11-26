@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
       Rails.logger.debug "User #{username} successfully logged in"
-      redirect_to user_path(user), notice: "Now logged in"
+      redirect_to dashboard_path, notice: "Now logged in"
     else
       Rails.logger.debug "Invalid credentials received."
       redirect_to login_path, alert: "Invalid username/password."
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to user_path(@user), notice: "Welcome, #{@user.username}!"
+      redirect_to dashboard_path, notice: "Welcome, #{@user.username}!"
     else
       Rails.logger.warn "Failed to create an account: #{user.errors.full_messages.to_sentence}"
       render :new, status: :unprocessable_entity

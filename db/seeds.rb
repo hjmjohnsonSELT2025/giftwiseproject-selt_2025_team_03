@@ -7,7 +7,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-<<<<<<< HEAD
+
 USERS = [
   {
     :username => "test",
@@ -25,7 +25,6 @@ USERS.each do |attrs|
     end
     puts "Seeded user id=#{user.id} username=#{user.username}"
 end
-=======
 
 # test user
 user = User.find_or_create_by!(email: "johndoe@gmail.com") do |u|
@@ -128,4 +127,4 @@ end
 puts "Seed completed"
 puts "Test user login: johndoe@gmail.com / password"
 puts "Total users: #{User.count}"
->>>>>>> origin/blake-app
+
