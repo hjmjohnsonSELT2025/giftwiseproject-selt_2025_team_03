@@ -1,7 +1,153 @@
-<div class='header'>
-    Welcome, <%= @user[:username] %>!
+<div class='dashboard_index'>
+    <div class='dashboard-container'>
+
+    <%# Sidebar %>
+    <aside class='sidebar'>
+        <div class='logo'>
+            <div class='logo-icon'></div>
+            <span>GiftDash</span>
+        </div>
+
+        <ul class='nav-menu'>
+            <li class='nav-item active'>
+                <span class='nav-icon'></span>
+                Dashboard
+            </li>
+            <li class='nav-item'>
+                <span class='nav-icon'></span>
+                <%= link_to "Events", events_path rescue '#' %>
+            </li>
+            <li class='nav-item'>
+                <span class='nav-icon'></span>
+                <%= link_to "recipients", recipients_path rescue '#' %>
+                </li>
+                <li class='nav-item'>
+                    <span class='nav-icon'></span>
+                    <%= link_to 'Logout', logout_path, data: { turbo_method: :delete }, method: :delete %>
+                </li>
+        </ul>
+    </aside>
+
+    <%# Main content %>
+    <main class='main-content'>
+        <%# Top bar %>
+        <div class='top-bar'>
+            <h1 class='page-title'>Welcome back, <%= @user.first_name || @user.username %>!</h1>
+            <div class = 'user-profile'>
+                <div class='user-avatar'></div>
+                <div class='user-info'>
+                    <div class='user-name'><%= @user.username %></div>
+                    <div class='user-role'>Member</div>
+                </div>
+            </div>
+        </div>
+
+        <%# Stats %>
+        <section class='stats-grid'>
+            <div class='stat-card'>
+                <div class='stat-value'><%= @total_events %></div>
+                <div class='stat-label'>Total Events</div>
+            </div>
+            <div class='stat=card'>
+                <div class='stat-icon'></div>
+                <div class='stat-value'><%= @total_recipients %></div>
+                <div class='stat-label'>Recipients</div>
+            </div>
+            <div class='stat-card'>
+                <div class='stat-icon'></div>
+                <div class='stat-value'>$<%= number_with_precision(@total_budget, precision: 2) %></div>
+                <div class='stat-label'>Total Budget</div>
+            </div>
+            <div class='stat-card'>
+                <div class='stat-icon'></div>
+                <div class='stat-value'>$<%= number_with_precision(@total_spent, precision: 2) %></div>
+                <div class='stat-label'>Total Spent</div>
+            </div>
+        </section>
+
+        <%# Main Grid %>
+        <section class='dashboard-grid'>
+            <%# Left: upcoming events %>
+            <div class='events-section'>
+                <div class='section-header'>
+                    <h2 class='section-title'>Upcoming Events</h2>
+                    <a class='view-all-link' href="<%= events_path rescue '#' %>">View all</a>
+                </div>
+
+                <% if @upcoming_events.present? %>
+                    <% @upcoming_events.each do |event| %>
+                        <div class='event-card'>
+                            <div class='event-info'>
+                                <div class='event-name'><%= event.name %></div>
+                                <div class='event-date'><%= l(event.date) rescue event.date.to_s %></div>
+                                <div class='event-meta'>
+                                    <div class='meta-item'>Budget: $<%= number_with_precision(event.budget, precision: 2) %></div>
+                                    <div class='meta-item'>Spent: $<%= number_with_precision(event.total_spent, precision: 2) %></div>
+                                </div>
+                            </div>
+
+                            <%# Circular progress chart %>
+                            <div class='circular-progress'>
+                                <div class='progress-ring'>
+                                    <div class='progress-inner'>
+                                        <div class='progress-value'><%= @gifts_purchased_percentage %>%</div>
+                                        <div class='progress-label'>Gifts Purchased</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% end %>
+                    <% else %>
+                        <div class='empty-state'>
+                            <p>No upcoming events yet.</p>
+                        </div>
+                    <% end %>
+                </div>
+
+                <%# Right: budget & activity %>
+                <div class='right-sidebar'>
+                    <%# Budget card %>
+                    <div class='budget-card'>
+                        <h3>Budget Overview</h3>
+                        <div class='budget-amount'>$<%= number_with_precision(@total_budget, precision: 2) %></div>
+                        <div class='budget-label'>Remaining</div>
+                        <div class='budget-breakdown'>
+                            <div class='budget-bar bar-spent' style='flex: <%= @total_budget.zero ? 0 : (@total_spent / @total_budget.to_f).clamp(0,1) %>'></div>
+                            <div class='budget-bar bar-remaining' style='flex: <%= @total_budget.zero? ? 1 : (1- (@total_spent / @total_budget.to_f)).clamp(0,1) %>'></div>
+                        </div>
+                    </div>
+                    <%# Activity card %>
+                    <div class='activity-card'>
+                        <h3>Recent Activity</h3>
+                        <div class='activity-list'>
+                            <%# Fillers for now %>
+                            <div class='activity-item'>
+                                <div class='activity-content'>
+                                    <div class='activity-text'>You logged in.</div>
+                                    <div class='activity-time'><%= l(Time.current, format: :short) %></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <%# Section placeholder %>
+            <section class='chart-section'>
+                <div class='section-header'>
+                    <h2 class='section-title'>Spending Trend</h2>
+                    <select class='chart-select'>
+                        <option>Last 30 days</option>
+                        <option>Last 90 days</option>
+                    </select>
+                </div>
+                <div class='chart-placeholder'>
+                    <div class='chart-line'></div>
+                </div>
+            </section>
+
+            <%# Floating button placeholder %>
+            <button class='add-button' title='Add'>+</button>
+        </main> 
+    </div>
 </div>
-<%= form_with url: logout_path, method: :delete do %>
-    <%= submit_tag "Logout" %>
-<% end %>
-<%= link_to "Recipients", recipients_path %>

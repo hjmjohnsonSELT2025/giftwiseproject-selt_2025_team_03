@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
       Rails.logger.debug "User #{username} successfully logged in"
-      redirect_to user_path(user), notice: "Now logged in"
+      redirect_to dashboard_path, notice: "Now logged in"
     else
       Rails.logger.debug "Invalid credentials received."
       redirect_to login_path, alert: "Invalid username/password."
