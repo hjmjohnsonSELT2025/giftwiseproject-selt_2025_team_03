@@ -4,12 +4,12 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    render :dashboard
+    redirect_to dashboard_path
   end
   def login
 
   end
-  def authorize
+  def authorize 
     username = params[:username].to_s.strip
     user = User.where('lower(username) = ?', username.downcase).first
     
@@ -53,6 +53,9 @@ class UsersController < ApplicationController
       render json: {available: true}, :status => :ok
     end
   end
+
+
+
   private
   def user_params
     params.require(:user).permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :birthday)
