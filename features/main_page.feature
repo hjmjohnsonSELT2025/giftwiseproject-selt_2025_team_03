@@ -1,8 +1,8 @@
 Feature: Main Page
 
   Background:
-    Given I am on the main page
-    Then I should see the buttons: "Events, Recipients, Gift Ideas, Profile, Settings, Logout"
+    Given I am on the dashboard
+    Then I should see the buttons: "Events, Recipients, Gift Ideas, Settings"
     And I should see a list of recent activity
 
   Scenario: User seeking to see their events
