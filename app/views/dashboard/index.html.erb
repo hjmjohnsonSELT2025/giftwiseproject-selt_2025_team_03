@@ -1,0 +1,181 @@
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-icon"></div>
+      <span>GiftWise</span>
+    </div>
+
+    <nav>
+      <ul class="nav-menu">
+        <li class="nav-item active">
+          <span>Dashboard</span>
+        </li>
+        <li class="nav-item">
+          <span>Events</span>
+        </li>
+        <li class="nav-item">
+          <span>Recipients</span>
+        </li>
+        <li class="nav-item">
+          <span>Gift Ideas</span>
+        </li>
+        <li class="nav-item">
+          <span>Purchases</span>
+        </li>
+        <li class="nav-item">
+          <span>Settings</span>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <h1 class="page-title">Dashboard</h1>
+      <div class="user-profile">
+        <div class="user-info">
+          <div class="user-name"><%= @user.first_name %> <%= @user.last_name %></div>
+          <div class="user-role">Gift Coordinator</div>
+        </div>
+        <div class="user-avatar"></div>
+      </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon"></div>
+        <div class="stat-value"><%= @total_events %></div>
+        <div class="stat-label">Active Events</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"></div>
+        <div class="stat-value"><%= @total_recipients %></div>
+        <div class="stat-label">Recipients</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"></div>
+        <div class="stat-value"><%= @gifts_purchased_percentage %>%</div>
+        <div class="stat-label">Gifts Purchased</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"></div>
+        <div class="stat-value">$<%= number_with_delimiter(@total_spent.round, delimiter: ',') %></div>
+        <div class="stat-label">Total Spent</div>
+      </div>
+    </div>
+
+    <!-- Dashboard Grid -->
+    <div class="dashboard-grid">
+      <!-- Events Section -->
+      <div class="events-section">
+        <div class="section-header">
+          <h2 class="section-title">Upcoming Events</h2>
+          <a href="#" class="view-all-link">View All →</a>
+        </div>
+
+        <% if @upcoming_events.any? %>
+          <% @upcoming_events.each do |event| %>
+            <div class="event-card">
+              <div class="event-info">
+                <div class="event-name"><%= event.name %></div>
+                <div class="event-date"><%= event.date.strftime("%B %d, %Y") %></div>
+                <div class="event-meta">
+                  <div class="meta-item">
+                    <span><%= pluralize(event.days_until, 'day') %> left</span>
+                  </div>
+                  <div class="meta-item">
+                    <span><%= pluralize(event.recipients.count, 'recipient') %></span>
+                  </div>
+                </div>
+              </div>
+              <div class="circular-progress">
+                <% percentage = event.budget_percentage %>
+                <% degrees = (percentage * 3.6).round %>
+                <div class="progress-ring" style="background: conic-gradient(var(--brown-accent) 0deg <%= degrees %>deg, rgba(157, 111, 87, 0.2) <%= degrees %>deg 360deg);">
+                  <div class="progress-inner">
+                    <div class="progress-value">$<%= event.total_spent.round %></div>
+                    <div class="progress-label">of $<%= event.budget.to_i %></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="empty-state">
+            <p>No upcoming events. Create your first event to get started!</p>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Right Sidebar -->
+      <div class="right-sidebar">
+        <!-- Budget Summary -->
+        <div class="budget-card">
+          <div class="budget-label">Total Budget</div>
+          <div class="budget-amount">$<%= number_with_delimiter(@total_budget.to_i, delimiter: ',') %></div>
+          <div class="budget-label">Remaining Balance</div>
+          <div class="card-number">$<%= number_with_delimiter((@total_budget - @total_spent).round, delimiter: ',') %></div>
+          <div class="budget-breakdown">
+            <% spent_percentage = @total_budget > 0 ? (@total_spent / @total_budget * 100).round : 0 %>
+            <% remaining_percentage = 100 - spent_percentage %>
+          <div class="budget-bar bar-spent"
+              style="flex: <%= @total_budget.to_f.zero? ? 0 : (@total_spent.to_f / @total_budget.to_f).clamp(0, 1) %>"></div>
+          <div class="budget-bar bar-remaining"
+              style="flex: <%= @total_budget.to_f.zero? ? 1 : (1 - (@total_spent.to_f / @total_budget.to_f)).clamp(0, 1) %>"></div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="activity-card">
+          <h3 class="section-title" style="font-size: 18px;">Recent Activity</h3>
+          <div class="activity-list">
+            <% recent_gifts = GiftIdea.joins(event_recipient: :event).where(events: { user_id: @user.id }).order(updated_at: :desc).limit(3) %>
+            <% if recent_gifts.any? %>
+              <% recent_gifts.each do |gift| %>
+                <div class="activity-item">
+                  <div class="activity-icon"></div>
+                  <div class="activity-content">
+                    <div class="activity-text">
+                      <%= gift.status.capitalize %>: <%= gift.title %>
+                    </div>
+                    <div class="activity-time"><%= time_ago_in_words(gift.updated_at) %> ago</div>
+                  </div>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="activity-item">
+                <div class="activity-icon"></div>
+                <div class="activity-content">
+                  <div class="activity-text">No recent activity</div>
+                  <div class="activity-time">Start adding gift ideas!</div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Spending Chart -->
+    <div class="chart-section">
+      <div class="section-header">
+        <h2 class="section-title">Spending Overview</h2>
+        <select class="chart-select">
+          <option>Last 7 Days</option>
+          <option>Last 30 Days</option>
+          <option>Last Year</option>
+        </select>
+      </div>
+      <div class="chart-placeholder">
+        <div class="chart-line"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Floating Add Button -->
+<button class="add-button">+</button>
