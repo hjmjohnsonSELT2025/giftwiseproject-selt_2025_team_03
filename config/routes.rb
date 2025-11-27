@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get "/preview_profile", to: "preview#profile"
 
   # logging in/out
+  get "/", :to => "users#login"
   get "/login", :to => "users#login", as: :login
   post '/login', :to => 'users#authorize'
   delete '/logout', :to => 'users#logout', as: :logout
@@ -19,5 +20,8 @@ Rails.application.routes.draw do
   post 'users/check_email', :to => "users#check_email"
   post 'users/check_username', :to => "users#check_username"
   # recipients
-  resources :recipients
+  #resources :recipients, only: []
+  # gift_ideas
+  get "/list_gifts", :to => "gift_ideas#list", as: :list_gifts
+  resources :gift_ideas, only: [:new, :create, :show]
 end
