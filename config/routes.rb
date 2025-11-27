@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   get 'dashboard', to: 'dashboard#index', as: 'dashboard'
 
+  get "/preview_profile", to: "preview#profile"
+
   # logging in/out
   get "/login", :to => "users#login", as: :login
   post '/login', :to => 'users#authorize'
