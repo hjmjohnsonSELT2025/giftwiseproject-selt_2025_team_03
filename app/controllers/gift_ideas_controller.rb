@@ -16,4 +16,7 @@ class GiftIdeasController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+  def list
+    render :list
+  end
 end
