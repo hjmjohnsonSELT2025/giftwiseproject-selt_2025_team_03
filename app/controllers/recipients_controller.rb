@@ -1,15 +1,31 @@
-class RecipientsConotroller < ApplicationController
+class RecipientsController < ApplicationController
   before_action :require_authorization
   before_action :set_recipient, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_scope, only: [:index, :search]
   def index
-    @recipients = current_user.recipients.order(:name)
+    @recipients = @current_user.recipients.order(:name)    
   end
 
-
-  def show
-    
+  def search
+      query = params[:query].to_s.strip
+      recipients = if query.present?
+        pattern = "%#{query.downcase}%"
+        @scope.where("LOWER(recipients.name) LIKE ?", pattern)
+      else
+        @scope.order(:name)
+      end
+      render json: {
+        recipients: recipients.map { |r| 
+        {
+          name: r.name,
+          relationship: r.relationship,
+          events: r.events.map(&:name),
+          likes: r.likes
+        }
+      }
+      }, status: :ok
   end
+  def show; end
 
   def new 
     @recipient = current_user.recipients.new
@@ -40,10 +56,16 @@ class RecipientsConotroller < ApplicationController
 
   private
   def set_recipient
-    @recipient = current_user.recipients.find(params[:id])
+    @recipient = @current_user.recipients.find(params[:id])
   end
 
   def recipient_params
     params.require(:recipient).permit(:name, :birthday, :relationship, :likes, :dislikes)
+  end
+
+  def set_scope
+    @scope = current_user
+      .recipients
+      .includes(:events, :gift_ideas)
   end
 end
