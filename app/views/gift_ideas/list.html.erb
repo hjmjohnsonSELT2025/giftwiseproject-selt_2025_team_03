@@ -74,6 +74,12 @@
       <div class="gift-placeholder">
         <div class="gift-line"></div>
       </div>
+
+      <!-- Button to add a gift-->
+      <%= form_with model: @gift_idea, url: add_gifts_path, method: :get, class: "gift-list-form" do |u| %>
+        <%= submit_tag "New Gift", class: "more-gits-to-list-button" %>
+      <% end %>
+      <%= javascript_import_module_tag "controllers/gift_ideas/add" %>
     </div>
   </main>
 </div>

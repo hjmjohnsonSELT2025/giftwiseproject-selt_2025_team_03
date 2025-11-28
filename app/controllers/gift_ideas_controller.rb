@@ -19,4 +19,7 @@ class GiftIdeasController < ApplicationController
   def list
     render :list
   end
+  def add
+    render :add
+  end
 end
