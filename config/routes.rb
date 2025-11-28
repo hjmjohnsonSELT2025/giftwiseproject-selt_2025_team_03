@@ -17,5 +17,9 @@ Rails.application.routes.draw do
   post 'users/check_email', :to => "users#check_email"
   post 'users/check_username', :to => "users#check_username"
   # recipients
-  resources :recipients
+  resources :recipients do
+    collection do
+      get :search
+    end
+  end
 end

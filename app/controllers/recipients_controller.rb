@@ -9,9 +9,10 @@ class RecipientsController < ApplicationController
   def search
       query = params[:query].to_s.strip
       recipients = if query.present?
-        @scope.where("recipients.name ILIKE ?", "%#{query}%")
+        pattern = "%#{query.downcase}%"
+        @scope.where("recipients.name LIKE ?", pattern)
       else
-        @scope.none
+        @scope.order(:name)
       end
       render json: {
         recipients: recipients.map { |r| 

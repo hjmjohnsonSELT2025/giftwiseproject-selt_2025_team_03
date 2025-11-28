@@ -5,7 +5,13 @@
         <%= render 'shared/profile_dropdown' %>
     </div>
     <div class='view-options container'>
-        <input type='text' placeholder='Search for recipient' id='search-recipients' class='input-field'>
+        <input 
+          type='text' 
+          placeholder='Search for recipient' 
+          id='search-recipients' 
+          class='input-field'
+          data-search-url='<%= search_recipients_path %>'
+        >
         <div class='container'>
             <div class='view-button' id='filter-option'>
                 [Filter]
@@ -30,7 +36,7 @@
             <div class='recipient-container'>
                 <div class='ri' name='name'><%= r.name %></div>
                 <div class='ri' name='relationship'><%= r.relationship&.name %></div>
-                <div class='ri' name='events'><%= r.events.map(&:name).join(", ") %></div>
+                <div class='ri' name='events'><%= r.events.map(&:name).join(', ') %></div>
                 <div class='ri' name='likes'><%= r.likes %></div>
             </div>
         <% end %>
