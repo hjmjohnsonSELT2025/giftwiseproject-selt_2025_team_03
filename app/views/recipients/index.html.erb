@@ -28,18 +28,24 @@
                 <div class='ri' name='name'></div>
                 <div class='ri' name='relationship'></div>
             </div>
-            <div class='recipient-details'>
-                <div class='detail-row'>
-                    <div class='detail-label'>Events</div>
-                    <div class='detail-value'>
-                        <div class='ri' name='events'></div>
+            <div class='recipient-body'>
+                <div class='recipient-details'>
+                    <div class='detail-row'>
+                        <div class='detail-label'>Events</div>
+                        <div class='detail-value'>
+                            <div class='ri' name='events'></div>
+                        </div>
+                    </div>
+                    <div class='detail-row'>
+                        <div class='detail-label'>Interests</div>
+                        <div class='detail-value'>
+                            <div class='ri' name='likes'></div>
+                        </div>
                     </div>
                 </div>
-                <div class='detail-row'>
-                    <div class='detail-label'>Interests</div>
-                    <div class='detail-value'>
-                        <div class='ri' name='likes'></div>
-                    </div>
+                <div class='recipient-options'>
+                    <a class='view-button edit-link' href='#'><%= image_tag "edit.png", alt: "Edit recipient", class: "icon" %></a>
+                    <a class='view-button delete-link' href='#'><%= image_tag "trash.png", alt: "Delete recipient", class: "icon" %></a>
                 </div>
             </div>
         </div>
@@ -48,6 +54,7 @@
     <div id='recipient-results' class='recipients-list'>
     </div>
 </main>
+<button class='add-button' href="<%= new_recipient_path %>">+</button>
 <%= javascript_import_module_tag 'controllers/recipients/search' %>
 <%# 
 Events:      Christmas, Mom's Birthday
