@@ -7,7 +7,8 @@ class GiftIdeasController < ApplicationController
     redirect_to list_gifts_path
   end
   def create
-    @gift_idea = GiftIdea.new(gift_idea_params)
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @gift_idea = current_user.gift_ideas.new(gift_idea_params)
     if @gift_idea.save
       session[:event_recipient_id] = @gift_idea.event_recipient_id
       redirect_to list_gifts_path(@gift_idea), notice: "#{@gift_idea.title} added!"
@@ -17,7 +18,8 @@ class GiftIdeasController < ApplicationController
     end
   end
   def list
-    @upcoming_gifts = GiftIdea.all
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @upcoming_gifts = current_user.gift_ideas
     render :list
   end
   def add
