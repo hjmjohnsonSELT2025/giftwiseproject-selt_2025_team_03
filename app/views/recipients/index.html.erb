@@ -1,35 +1,39 @@
-<%# Render primary layout %>
-<%= render layout: 'shared/primary_layout' do %>
-    <%# Header %>
-    <div class='decorative-line'></div>
-    <div class='header'>
-        <h1>Recipients</h1>
+<%= render "shared/sidebar_layout" %>
+<main class='main-content'>
+    <div class='top-bar'>
+        <h1 class='page-title'>Recipients</h1>
+        <%= render 'shared/profile_dropdown' %>
     </div>
-
-    <%# Body %>
-    <div class='container'>
-        <%# Options to filter view based on events %>
-        <div class='container' id='filter-container'>
-            <p>Filter options</p>
-
-        </div>
-        <div class='container' id='list-container'>
-            <template id='recipient-row-template'>
-                <tr>
-                    <td class='first-name'></td>
-                    <td class='last-name'></td>
-                    <td class='relationship'></td>
-                    <td class='status'></td>
-                </tr>
-            </template>
-            <table id='recipient-table'>
-                <tr>
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th>Relationship</th>
-                    <th>Status</th>
-                </tr>
-            </table>
+    <div class='view-options container'>
+        <input type='text' placeholder='Search for recipient' id='search-recipients' class='input-field'>
+        <div class='container'>
+            <div class='view-button' id='filter-option'>
+                [Filter]
+            </div>
+            <div class='view-button' id='sort-option'>
+                [Sort]
+            </div>
         </div>
     </div>
-<% end %>
+    <template id='recipient-card'>
+        <div class='recipient-container'>
+            <%# 'ri' short for recipient item %>
+            <div class='ri' name='name'></div>
+            <div class='ri' name='relationship'></div>
+            <div class='ri' name='events'></div>
+            <div class='ri' name='likes'></div>
+        </div>
+    </template>
+    <%# Where all cards are rendered %>
+    <div id='recipient-results' class='recipient-list'>
+        <% @recipients.each do |r| %>
+            <div class='recipient-container'>
+                <div class='ri' name='name'><%= r.name %></div>
+                <div class='ri' name='relationship'><%= r.relationship&.name %></div>
+                <div class='ri' name='events'><%= r.events.map(&:name).join(", ") %></div>
+                <div class='ri' name='likes'><%= r.likes %></div>
+            </div>
+        <% end %>
+    </div>
+</main>
+<%= javascript_import_module_tag 'controllers/recipients/search' %>
