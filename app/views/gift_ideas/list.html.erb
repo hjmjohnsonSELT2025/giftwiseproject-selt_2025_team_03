@@ -8,14 +8,17 @@
 
     <nav>
       <ul class="nav-menu">
-        <li class="nav-item active">
-          <span>Dashboard</span>
+        <li class="nav-item">
+          <%= link_to 'Dashboard', dashboard_path, class: 'nav-link' %>
         </li>
         <li class="nav-item">
           <span>Events</span>
         </li>
         <li class="nav-item">
           <span>Recipients</span>
+        </li>
+        <li class="nav-item active">
+          <span>Gift Ideas</span>
         </li>
         <li class="nav-item">
           <span>Purchases</span>
@@ -36,8 +39,8 @@
         <a href="#" class="view-all-link">View All →</a>
       </div>
 
-      <% if @upcoming_gifts.any? %>
-        <% @upcoming_gifts.each do |giftt| %>
+      <% if !@uncoming_gifts.nil? and @upcoming_gifts.any? %>
+        <% @upcoming_gifts.each do |gift| %>
           <div class="gift-card">
             <div class="gift-info">
               <div class="gift-name"><%= gift.title %></div>
@@ -65,7 +68,7 @@
         <% end %>
       <% else %>
         <div class="empty-state">
-          <p>No upcoming events. Create your first event to get started!</p>
+          <p>No upcoming gifts or events. Create your first event or gift to get started!</p>
         </div>
       <% end %>
       <div class="gift-placeholder">
