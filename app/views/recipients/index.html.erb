@@ -1,62 +1,122 @@
-<%= render "shared/sidebar_layout" %>
-<main class='main-content'>
-    <div class='top-bar'>
-        <h1 class='page-title'>Recipients</h1>
-        <%= render 'shared/profile_dropdown' %>
+    <%= render "shared/sidebar_layout" %>
+
+    <main class="main-content" data-controller="recipients">
+    <div class="top-bar">
+    <h1 class="page-title">Recipients</h1>
+    <%= render "shared/profile_dropdown" %>
     </div>
-    <div class='view-options container'>
-        <input 
-          type='text' 
-          placeholder='Search for recipient' 
-          id='search-recipients' 
-          class='input-field'
-          data-search-url='<%= search_recipients_path %>'
-        >
-        <div class='container'>
-            <div class='view-button' id='filter-option'>
-                [Filter]
+
+    <div class="view-options container">
+    <input 
+        type="text" 
+        placeholder="Search for recipient" 
+        id="search-recipients" 
+        class="input-field"
+        data-search-url="<%= search_recipients_path %>"
+        data-recipients-target="search"
+        data-action="input->recipients#onSearch"
+    >
+    <div class="container">
+        <div class="view-button" id="filter-option">[Filter]</div>
+        <div class="view-button" id="sort-option">[Sort]</div>
+    </div>
+    </div>
+
+    <%# Template for a recipient card view mode %>
+    <template id="recipient-card" data-recipients-target="cardTemplate">
+    <div class="recipient-container" data-recipient-id="">
+        <div class="recipient-header">
+        <div class="ri" name="name"></div>
+        <div class="ri" name="relationship"></div>
+        </div>
+        <div class="recipient-body">
+        <div class="recipient-details">
+            <div class="detail-row">
+            <div class="detail-label">Events</div>
+            <div class="detail-value">
+                <div class="ri" name="events"></div>
             </div>
-            <div class='view-button' id='sort-option'>
-                [Sort]
+            </div>
+            <div class="detail-row">
+            <div class="detail-label">Interests</div>
+            <div class="detail-value">
+                <div class="ri" name="likes"></div>
+            </div>
             </div>
         </div>
-    </div>
-    <%# Template for a recipient card %>
-    <template id='recipient-card'>
-        <div class='recipient-container'>
-            <div class='recipient-header'>
-                <div class='ri' name='name'></div>
-                <div class='ri' name='relationship'></div>
+        <div class="recipient-options">
+            <div class="image-background">
+            <a class="view-button edit-link"
+                href="#"
+                data-action="click->recipients#edit"
+                data-recipients-id-param="">
+                <%= image_tag "edit.png", alt: "Edit recipient", class: "icon" %>
+            </a>
             </div>
-            <div class='recipient-body'>
-                <div class='recipient-details'>
-                    <div class='detail-row'>
-                        <div class='detail-label'>Events</div>
-                        <div class='detail-value'>
-                            <div class='ri' name='events'></div>
-                        </div>
-                    </div>
-                    <div class='detail-row'>
-                        <div class='detail-label'>Interests</div>
-                        <div class='detail-value'>
-                            <div class='ri' name='likes'></div>
-                        </div>
-                    </div>
-                </div>
-                <div class='recipient-options'>
-                    <a class='view-button edit-link' href='#'><%= image_tag "edit.png", alt: "Edit recipient", class: "icon" %></a>
-                    <a class='view-button delete-link' href='#'><%= image_tag "trash.png", alt: "Delete recipient", class: "icon" %></a>
-                </div>
+            <div class="image-background">
+            <a class="view-button delete-link"
+                href="#">
+                <%= image_tag "trash.png", alt: "Delete recipient", class: "icon" %>
+            </a>
             </div>
         </div>
+        </div>
+    </div>
     </template>
+
+    <%# Template for recipient card edit mode %>
+    <template id="recipient-card-edit" data-recipients-target="editTemplate">
+    <div class="recipient-container recipient-edit" data-recipient-id="">
+        <div class="recipient-header">
+        <input type="text"
+                name="name"
+                class="input-field"
+                placeholder="Name">
+        </div>
+        <div class="recipient-body">
+        <div class="recipient-details">
+            <div class="detail-row">
+            <div class="detail-label">Events</div>
+            <div class="detail-value">
+                <input type="text"
+                        name="events"
+                        class="input-field"
+                        placeholder="Events (comma-separated)">
+            </div>
+            </div>
+            <div class="detail-row">
+            <div class="detail-label">Interests</div>
+            <div class="detail-value">
+                <textarea name="likes"
+                        class="input-field"
+                        rows="2"
+                        placeholder="Interests"></textarea>
+            </div>
+            </div>
+        </div>
+
+        <div class="recipient-options">
+            <button type="button"
+                    class="view-button"
+                    data-action="click->recipients#cancelEdit">
+            Cancel
+            </button>
+            <button type="button"
+                    class="view-button"
+                    data-action="click->recipients#saveEdit"
+                    data-recipients-id-param="">
+            Save
+            </button>
+        </div>
+        </div>
+    </div>
+    </template>
+
     <%# Node for template card to be rendered at %>
-    <div id='recipient-results' class='recipients-list'>
+    <div id="recipient-results"
+        class="recipients-list"
+        data-recipients-target="results">
     </div>
 </main>
-<button class='add-button' href="<%= new_recipient_path %>">+</button>
-<%= javascript_import_module_tag 'controllers/recipients/search' %>
-<%# 
-Events:      Christmas, Mom's Birthday
-Interests:   Jewelry, family time, gardening, plants
- %>
+
+<%= link_to "+", new_recipient_path, class: "add-button" %>

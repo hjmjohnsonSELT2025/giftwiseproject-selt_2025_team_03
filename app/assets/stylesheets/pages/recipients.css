@@ -106,8 +106,30 @@
 .recipient-body {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    padding-right: 15px;
 }
-
+.image-background {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--brown-accent);
+    border-radius: 10px;
+    padding: 10px;
+    width: 60px;
+    height: 60px;
+    transition: all .3s ease;
+}
+.image-background:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+.add-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 @media (max-width: 900px) {
     .recipient-list { grid-template-columns: 1fr;}
 }

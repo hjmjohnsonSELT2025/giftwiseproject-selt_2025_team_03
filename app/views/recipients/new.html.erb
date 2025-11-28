@@ -1,32 +1,37 @@
-<%= render layout: 'shared/primary_layout' do %>
-    <%= form_with model: @recipient, url: recipients_path, method: :post, class: "create-recipient" do |r| %>
-    <div class='decorative-line'></div>
-    <h1 class='heading'>Add New Recipient</h1>
-    <%# Name (Required) %>
-    <div class='input-group'>
-        <%= r.label :name, "Name", name: "recipient[name]", class: "input-label" %>
-        <%= r.text_field :name, max_length: 30, placeholder: "Mom", class: "input-field required" %>
+<%= render "shared/sidebar_layout" %>
+
+<main class="main-content">
+    <div class="top-bar">
+        <h1 class="page-title">Add New Recipient</h1>
+        <%= render "shared/profile_dropdown" %>
     </div>
 
-    <%# BDay  (optional) %>
-    <div class='input-group'>
-        <%= r.label :birthday, "Birthday", name: "recipient[birthday]" %>
+    <div class="form-card">
+        <%= form_with model: @recipient, class: "create-recipient" do |r| %>
+        <div class="decorative-line"></div>
+    <h1 class="heading">Add New Recipient</h1>
+
+    <%# Name (required) %>
+    <div class="input-group">
+        <%= r.label :name, "Name", class: "input-label" %>
+        <%= r.text_field :name,
+            maxlength: 30,
+            placeholder: "Mom",
+            class: "input-field required" %>
+    </div>
+
+     <%# Birthday (optional) %>
+    <div class="input-group">
+        <%= r.label :birthday, "Birthday", class: "input-label" %>
         <%= r.date_field :birthday, class: "input-field" %>
     </div>
 
-    <%# Relationship (optional) %>
+    <%# Relationship  %>
 
-
-    <%# Likes (optional) %>
-
-    <%# Dislikes (optional) %>
-
-    <%# Options %>
-    <div class='footer'>
-        <%= r.submit "Save"%>
-        <%= link_to "Cancel", recipients_path %>
+    <div class="footer">
+        <%= r.submit "Save", class: "primary-button" %>
+        <%= link_to "Cancel", recipients_path, class: "link-button" %>
     </div>
-    <% end %>
-    <% end %>
-
-
+<% end %>
+</div>
+</main>

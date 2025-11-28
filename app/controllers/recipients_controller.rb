@@ -42,7 +42,9 @@ class RecipientsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    
+  end
   def update
     if @recipient.update(recipient_params)
       redirect_to recipients_path, notice: "Recipient updated."
