@@ -33,7 +33,7 @@
   <!-- Main List Content -->
   <main class="main-content">
     <!-- Gift Ideas List -->
-    <div class="gifts-section">
+    <div class="events-section">
       <div class="section-header">
         <h2 class="section-title">Upcoming Gifts</h2>
         <a href="#" class="view-all-link">View All →</a>
@@ -77,7 +77,7 @@
 
       <!-- Button to add a gift-->
       <%= form_with model: @gift_idea, url: add_gifts_path, method: :get, class: "gift-list-form" do |u| %>
-        <%= submit_tag "New Gift", class: "more-gits-to-list-button" %>
+        <%= submit_tag "New Gift", class: "login-button" %>
       <% end %>
       <%= javascript_import_module_tag "controllers/gift_ideas/add" %>
     </div>

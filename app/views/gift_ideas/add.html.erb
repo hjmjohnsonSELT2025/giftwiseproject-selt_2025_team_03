@@ -1,0 +1,40 @@
+<%= render layout: 'shared/primary_layout' do %>
+  <%= form_with model: @gift_idea, url: gift_ideas_path, method: :post, class: "register-form" do |u| %>
+    <div class="decorative-line"></div>
+
+    <h1 class="register-heading">Add a New Gift</h1>
+    
+    <div class="input-group">       <!--------------- Title --------------->
+      <%= u.label :title, "Title", name: "gift_idea[title]", class: "input-label" %>
+      <%= u.text_field :title, max_length: 30, placeholder: "", class: "input-field required" %>
+    </div>
+
+    <div class="input-group">       <!--------------- Price --------------->
+      <%= u.label :price, "Price", class: "input-label" %>
+      <%= u.text_field :price, max_length: 30, placeholder: "", class: "input-field required" %>
+    </div>
+
+    <div class="input-group">       <!--------------- Status --------------->
+      <%= u.label :status, "Status", class: "input-label" %>
+      <%= u.text_field :status, placeholder: "", class: "input-field email-field required" %>
+    </div>
+
+    <div class="input-group">       <!--------------- Url --------------->
+      <%= u.label :url, "Url Link", class: "input-label" %>
+      <%= u.text_field :url, placeholder: "", class: "input-field required" %>
+    </div>
+
+    <div class='input-group'>       <!--------------- Notes --------------->
+      <%= u.label :notes, "Notes", class: "input-label"%>
+      <%= u.text_field :notes, placeholder: "", class: "input-field required" %>
+    </div>
+
+    <div class='input-group'>       <!--------------- Recipient ID --------------->
+      <%= u.label :recipient_id, "ID of the Recipient", class: "input-label" %>
+      <%= u.text_field :recipient_id, placeholder: "", class: "input-field required" %>
+    </div>
+
+    <%= u.submit "Create my gift", class: "login-button" %>
+  <% end %>
+<% end %>
+<%= javascript_import_module_tag "controllers/gift_ideas/new_gift_idea" %>
