@@ -8,7 +8,8 @@ Rails.application.routes.draw do
   root "users#login"
 
   get 'dashboard', to: 'dashboard#index', as: 'dashboard'
-  
+  resources :events
+
   # logging in/out
   get "/login", :to => "users#login", as: :login
   post '/login', :to => 'users#authorize'
