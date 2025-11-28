@@ -1,3 +1,4 @@
+
 .recipients_index {
     background-color: var(--dark-blue-bg);
     color: var(--light-text);
@@ -11,7 +12,7 @@
 .recipient-container {
     background-color: #2d4293;
     border-radius: 24px;
-    padding: 20px 24px;
+    padding: 12px 10px 10px 20px;
     box-shadow: 0 12px 35px rgba(0,0,0,.35);
 }
 .recipient-header {
@@ -89,6 +90,24 @@
     background-color: rgba(241, 250, 140, 0.18);
     color: #151515;
 }
+.icon {
+    width: 30px;
+    height: auto;
+}
+.recipient-container {
+    display: flex;
+    flex-direction: column;
+}
+.recipient-options {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+.recipient-body {
+    display: flex;
+    flex-direction: row;
+}
+
 @media (max-width: 900px) {
     .recipient-list { grid-template-columns: 1fr;}
 }

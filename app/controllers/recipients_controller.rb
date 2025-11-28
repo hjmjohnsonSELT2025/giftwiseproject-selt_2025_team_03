@@ -17,6 +17,7 @@ class RecipientsController < ApplicationController
       render json: {
         recipients: recipients.map { |r| 
         {
+          id: r.id,
           name: r.name,
           relationship: r.relationship,
           events: r.events.map(&:name),
@@ -29,12 +30,13 @@ class RecipientsController < ApplicationController
 
   def new 
     @recipient = current_user.recipients.new
+    @recipient.id = current_user.recipients.count + 1
   end
 
   def create 
     @recipient = current_user.recipients.new(recipient_params)
     if @recipient.save
-      redirect_to recipients_path, notice: "Recipient created."
+      redirect_to recipients_path(@current_user), notice: "Recipient created."
     else
       render :new, status: :unprocessable_entity
     end
