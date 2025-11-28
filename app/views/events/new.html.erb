@@ -49,6 +49,31 @@
         </div>
       </div>
 
+      <!-- Recipients Section -->
+      <div class='form-section'>
+        <h2 class='section-title'>Recipients</h2>
+        <div class='input-group'>
+          <label class='input-label'>Select Recipients</label>
+          <div class='recipient-selector'>
+            <% if @recipients.any? %>
+              <% @recipients.each do |recipient| %>
+                <div class='recipient-item'>
+                  <%= check_box_tag 'recipient_ids[]', recipient.id, false,
+                                    class: 'recipient-checkbox',
+                                    id: "recipient_#{recipient.id}" %>
+                  <%= label_tag "recipient_#{recipient.id}", recipient.name, class: 'recipient-name' %>
+                </div>
+              <% end %>
+            <% else %>
+              <div class='empty-state' style='padding: 20px; text-align: center; opacity: 0.7;'>
+                <p>No recipients available. <%= link_to "Add a recipient", new_recipient_path %> first.</p>
+              </div>
+            <% end %>
+          </div>
+          <div class='help-text'>Choose who will receive gifts for this event</div>
+        </div>
+      </div>
+
       <div class='button-group'>
         <%= f.submit "Create Event", class: "submit-button" %>
         <%= link_to "Cancel", events_path, class: "cancel-button" %>

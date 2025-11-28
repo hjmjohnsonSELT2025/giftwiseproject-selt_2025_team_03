@@ -107,3 +107,57 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
     cursor: pointer;
 }
+
+.recipient-selector {
+    background-color: rgba(35, 53, 114, 0.6);
+    border: 2px solid var(--input-border);
+    border-radius: 10px;
+    padding: 16px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.recipient-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.recipient-item:hover {
+    background-color: rgba(157, 111, 87, 0.2);
+}
+
+.recipient-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--brown-accent);
+}
+
+.recipient-name {
+    font-size: 15px;
+    cursor: pointer;
+}
+
+/* Scrollbar styling */
+.recipient-selector::-webkit-scrollbar {
+    width: 8px;
+}
+
+.recipient-selector::-webkit-scrollbar-track {
+    background: rgba(35, 53, 114, 0.4);
+    border-radius: 4px;
+}
+
+.recipient-selector::-webkit-scrollbar-thumb {
+    background: var(--brown-accent);
+    border-radius: 4px;
+}
+
+.recipient-selector::-webkit-scrollbar-thumb:hover {
+    background: #b88968;
+}
