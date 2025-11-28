@@ -8,11 +8,9 @@ Rails.application.routes.draw do
   root "users#login"
 
   get 'dashboard', to: 'dashboard#index', as: 'dashboard'
-
-  get "/preview_profile", to: "preview#profile"
+  resources :events
 
   # logging in/out
-  get "/", :to => "users#login"
   get "/login", :to => "users#login", as: :login
   post '/login', :to => 'users#authorize'
   delete '/logout', :to => 'users#logout', as: :logout
@@ -20,10 +18,9 @@ Rails.application.routes.draw do
   post 'users/check_email', :to => "users#check_email"
   post 'users/check_username', :to => "users#check_username"
   # recipients
-  #resources :recipients, only: []
-  # gift_ideas
-  get "/list_gifts", :to => "gift_ideas#list", as: :list_gifts
-  get "/add_gifts", :to => "gift_ideas#add", as: :add_gifts
-  post "/add_gifts", :to => "gift_ideas#list"
-  resources :gift_ideas, only: [:new, :create, :show]
+  resources :recipients do
+    collection do
+      get :search
+    end
+  end
 end

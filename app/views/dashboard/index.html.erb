@@ -1,47 +1,13 @@
 <div class="dashboard-container">
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="logo">
-      <div class="logo-icon"></div>
-      <span>GiftWise</span>
-    </div>
-
-    <nav>
-      <ul class="nav-menu">
-        <li class="nav-item active">
-          <span>Dashboard</span>
-        </li>
-        <li class="nav-item">
-          <span>Events</span>
-        </li>
-        <li class="nav-item">
-          <span>Recipients</span>
-        </li>
-        <li class="nav-item">
-          <%= link_to 'Gift Ideas', list_gifts_path, class: 'nav-link' %>
-        </li>
-        <li class="nav-item">
-          <span>Purchases</span>
-        </li>
-        <li class="nav-item">
-          <span>Settings</span>
-        </li>
-      </ul>
-    </nav>
-  </aside>
+  <%# Sidebar %>
+  <%= render "shared/sidebar_layout" %>
 
   <!-- Main Content -->
   <main class="main-content">
     <!-- Top Bar -->
     <div class="top-bar">
       <h1 class="page-title">Dashboard</h1>
-      <div class="user-profile" id='profile-link'>
-        <div class="user-info">
-          <div class="user-name"><%= @user.first_name %> <%= @user.last_name %></div>
-          <div class="user-role">Gift Coordinator</div>
-        </div>
-        <div class="user-avatar"></div>
-      </div>
+      <%= render "shared/profile_dropdown" %>
     </div>
 
     <!-- Stats Grid -->
@@ -179,13 +145,5 @@
 
 <!-- Floating Add Button -->
 <button class="add-button">+</button>
-<%# Profile popup menu %>
-<template id='profile-popup'>
-  <div class='menu'>
-    <div class='menu-options'>
-      <a class='menu-option-item stat-card' href="<%= users_profile rescue '#' %>">Profile Settings</a>
-      <%= link_to "Logout", logout_path, data: { turbo_method: :delete }, class: 'menu-option-item stat-card' %>
-    </div>
-  </div>
-</template>
+<%# Profile Menu %>
 <%= javascript_import_module_tag "controllers/users/dashboard/profile_script" %>

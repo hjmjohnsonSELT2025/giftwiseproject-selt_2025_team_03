@@ -1,0 +1,83 @@
+<%= render "shared/sidebar_layout" %>
+<main class='main-content'>
+  <div class='top-bar'>
+    <h1 class='page-title'>Create New Event</h1>
+    <%= render 'shared/profile_dropdown' %>
+  </div>
+
+  <div class='form-container'>
+    <%= form_with model: @event, url: events_path, method: :post, class: "event-form" do |f| %>
+
+      <!-- Basic Information Section -->
+      <div class='form-section'>
+        <h2 class='section-title'>Basic Information</h2>
+        <div class='form-grid'>
+          <div class='input-group'>
+            <%= f.label :name, "Event Name", class: "input-label required" %>
+            <%= f.text_field :name, class: "input-field", placeholder: "e.g., Christmas 2025", required: true %>
+            <div class='help-text'>Give your event a memorable name</div>
+          </div>
+
+          <div class='input-group'>
+            <%= f.label :date, "Event Date", class: "input-label required" %>
+            <%= f.date_field :date, class: "input-field", required: true %>
+          </div>
+        </div>
+
+        <div class='form-grid' style='margin-top: 24px;'>
+          <div class='input-group'>
+            <%= f.label :location, "Location", class: "input-label" %>
+            <%= f.text_field :location, class: "input-field", placeholder: "e.g., Home, Restaurant" %>
+          </div>
+
+          <div class='input-group'>
+            <%= f.label :theme, "Theme", class: "input-label" %>
+            <%= f.text_field :theme, class: "input-field", placeholder: "e.g., Winter Wonderland" %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Budget Section -->
+      <div class='form-section'>
+        <h2 class='section-title'>Budget</h2>
+        <div class='form-grid'>
+          <div class='input-group'>
+            <%= f.label :budget, "Total Budget ($)", class: "input-label" %>
+            <%= f.number_field :budget, class: "input-field", placeholder: "0.00", step: "0.01", min: "0" %>
+            <div class='help-text'>Set an optional budget for this event</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recipients Section -->
+      <div class='form-section'>
+        <h2 class='section-title'>Recipients</h2>
+        <div class='input-group'>
+          <label class='input-label'>Select Recipients</label>
+          <div class='recipient-selector'>
+            <% if @recipients.any? %>
+              <% @recipients.each do |recipient| %>
+                <div class='recipient-item'>
+                  <%= check_box_tag 'recipient_ids[]', recipient.id, false,
+                                    class: 'recipient-checkbox',
+                                    id: "recipient_#{recipient.id}" %>
+                  <%= label_tag "recipient_#{recipient.id}", recipient.name, class: 'recipient-name' %>
+                </div>
+              <% end %>
+            <% else %>
+              <div class='empty-state' style='padding: 20px; text-align: center; opacity: 0.7;'>
+                <p>No recipients available. <%= link_to "Add a recipient", new_recipient_path %> first.</p>
+              </div>
+            <% end %>
+          </div>
+          <div class='help-text'>Choose who will receive gifts for this event</div>
+        </div>
+      </div>
+
+      <div class='button-group'>
+        <%= f.submit "Create Event", class: "submit-button" %>
+        <%= link_to "Cancel", events_path, class: "cancel-button" %>
+      </div>
+    <% end %>
+  </div>
+</main>
