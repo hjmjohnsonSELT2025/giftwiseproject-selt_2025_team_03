@@ -30,7 +30,6 @@ class RecipientsController < ApplicationController
 
   def new 
     @recipient = current_user.recipients.new
-    @recipient.id = current_user.recipients.count + 1
   end
 
   def create 

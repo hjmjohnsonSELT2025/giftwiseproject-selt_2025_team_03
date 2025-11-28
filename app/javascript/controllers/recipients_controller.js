@@ -165,43 +165,80 @@ export default class extends Controller {
         $editCard.replaceWith($displayCard)
     }
 
-    saveEdit(event) {
-        event.preventDefault()
-        const $editCard = $(event.currentTarget).closest("[data-recipient-id]")
-        const id = $editCard.data("recipientId")
-        if (!id) return
-        const editURL = $()
-        const $nameIn = $editCard.find("input[name='name']")
-        const $eventsIn = $editCard.find("input[name='events']")
-        const $likesIn = $editCard.find("textarea[name='likes']")
+saveEdit(event) {
+    event.preventDefault()
 
-        const payload = {
-            id: id,
-            name: $nameIn.val(),
-            events: ($eventsIn.val() || "")
-                .split(",")
-                .map((s) => s.trim())
-                .filter(Boolean),
-            likes: $likesIn.val(),
-        }
-        
-        $.ajax({
-            url: `/recipients/${id}`,
-            method: 'PATCH',
-            dataType: "json",
-            data: payload,
-            headers: {
-                "X-CSRF-Token": $("meta[name='csrf-token']").attr("content")
-            },
-        })
-        .done(() => {
-        
-        })
-        .error((err) => {
-            console.error("Failed to edit recipient: ", err)
-        })
-        this.fetchAndRender(this.searchTarget.value.trim())
+    const cardNative = event.currentTarget.closest("[data-recipient-id]")
+    if (!cardNative) {
+        console.warn("saveEdit: no card found for button", event.currentTarget)
+        return
     }
+
+    const $editCard = $(cardNative)
+    const id = $editCard.data("recipientId")
+    if (!id) {
+        console.warn("saveEdit: no recipientId on card", $editCard.get(0))
+        return
+    }
+
+    const $nameIn   = $editCard.find("input[name='name']")
+    const $eventsIn = $editCard.find("input[name='events']")
+    const $likesIn  = $editCard.find("textarea[name='likes']")
+    const $relationship = $editCard.find("input[name='relationship']")
+    const $birthday = $editCard.find("input[name='birthday']") // fixed quote
+
+    const relationship = $relationship.length ? $relationship.val().trim() : ""
+    const birthday     = $birthday.length     ? $birthday.val().trim()     : ""
+
+    const name   = ($nameIn.val()   || "").trim()
+    const likes  = ($likesIn.val()  || "").trim()
+    const events = ($eventsIn.val() || "")
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean)
+
+    $.ajax({
+        url: `/recipients/${id}`,
+        method: "PATCH",
+        dataType: "json",
+        data: {
+            recipient: {
+                name:  name,
+                likes: likes,
+                relationship: relationship,
+                birthday: birthday
+            }
+        },
+        headers: {
+            "X-CSRF-Token": $("meta[name='csrf-token']").attr("content")
+        }
+    })
+    .done((data) => {
+        if (data && data.recipient) {
+            this.recipientsById[id] = data.recipient
+        } else if (this.recipientsById[id]) {
+            this.recipientsById[id].name  = name
+            this.recipientsById[id].likes = likes
+            this.recipientsById[id].relationship = relationship
+            this.recipientsById[id].birthday     = birthday
+        }
+
+        const currentQuery = this.hasSearchTarget
+            ? this.searchTarget.value.trim()
+            : ""
+        this.fetchAndRender(currentQuery)
+    })
+    .fail((xhr) => {
+        console.error(
+            "Failed to edit recipient:",
+            xhr.status,
+            xhr.responseText
+        )
+    })
+    window.location.reload()
+}
+
+
     destroy(event) {
         const id = event.params.id
         if (!id) {
@@ -222,8 +259,8 @@ export default class extends Controller {
         .done(() => {
             this.element.closest(".recipient-container")?.remove()
         })
-        .error((err) => {
-            console.error("Failed to delete recipient:", err)
+        .fail((err) => {
+            console.error("Failed to delete recipient:", err.responseText)
         })
     }
 }
