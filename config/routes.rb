@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   root "users#login"
 
   get 'dashboard', to: 'dashboard#index', as: 'dashboard'
-
+  
   # logging in/out
   get "/login", :to => "users#login", as: :login
   post '/login', :to => 'users#authorize'
@@ -17,5 +17,9 @@ Rails.application.routes.draw do
   post 'users/check_email', :to => "users#check_email"
   post 'users/check_username', :to => "users#check_username"
   # recipients
-  resources :recipients
+  resources :recipients do
+    collection do
+      get :search
+    end
+  end
 end
