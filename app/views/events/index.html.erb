@@ -1,0 +1,21 @@
+<%= render "shared/sidebar_layout" %>
+<main class='main-content'>
+  <div class='top-bar'>
+    <h1 class='page-title'>Create New Event</h1>
+    <%= render 'shared/profile_dropdown' %>
+  </div>
+
+  <div class='form-container'>
+    <%= form_with model: @event, url: events_path, method: :post, class: "event-form" do |f| %>
+      <h2>Basic Information</h2>
+
+      <%= f.label :name, "Event Name" %>
+      <%= f.text_field :name, class: "input-field", required: true %>
+
+      <%= f.label :date, "Event Date" %>
+      <%= f.date_field :date, class: "input-field", required: true %>
+
+      <%= f.submit "Create Event", class: "submit-button" %>
+    <% end %>
+  </div>
+</main>
