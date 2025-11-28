@@ -13,7 +13,7 @@ $(() => {
         "event-color-4",
         "event-color-5"
     ];
-    const eventColorMap = {};
+    let eventColorMap = {};
     let colorIndex = 0;
     const eventColorClass = (name) => {
         if (!name) return colorClasses[0];
@@ -28,16 +28,16 @@ $(() => {
     const renderRecipients = (recipients) => {
         $results.empty();
         recipients.forEach((rec) => {
-            const frag = template.content.cloneNode(true);
-            const $frag = $(frag);
+            let frag = template.content.cloneNode(true);
+            let $frag = $(frag);
             $frag.find("[name='name']").text(`${rec?.name ?? ""}`);
             $frag.find("[name='relationship']").text(`${rec?.relationship ?? ""}`);
             
             
-            const $events = $frag.find("[name='events']").text(`${rec?.events ?? ""}`);
+            let $events = $frag.find("[name='events']").text(`${rec?.events ?? ""}`);
             $events.empty();
             (rec.events || []).forEach((eventName) => {
-                const $pill = $("<span></span>");
+                let $pill = $("<span></span>");
                 $pill
                 .addClass('event-pill')
                 .addClass(eventColorClass(eventName))
@@ -50,7 +50,7 @@ $(() => {
         });
     };
     $input.on('input', function() {
-        const query = $(this).val().trim();
+        let query = $(this).val().trim();
         clearTimeout(timeout);
         timeout = setTimeout(function() {
             $.getJSON($searchURL, {query: query})
