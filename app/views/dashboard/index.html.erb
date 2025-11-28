@@ -18,7 +18,7 @@
           <span>Recipients</span>
         </li>
         <li class="nav-item">
-          <span>Gift Ideas</span>
+          <%= link_to 'Gift Ideas', list_gifts_path, class: 'nav-link' %>
         </li>
         <li class="nav-item">
           <span>Purchases</span>
@@ -35,7 +35,7 @@
     <!-- Top Bar -->
     <div class="top-bar">
       <h1 class="page-title">Dashboard</h1>
-      <div class="user-profile">
+      <div class="user-profile" id='profile-link'>
         <div class="user-info">
           <div class="user-name"><%= @user.first_name %> <%= @user.last_name %></div>
           <div class="user-role">Gift Coordinator</div>
@@ -179,3 +179,13 @@
 
 <!-- Floating Add Button -->
 <button class="add-button">+</button>
+<%# Profile popup menu %>
+<template id='profile-popup'>
+  <div class='menu'>
+    <div class='menu-options'>
+      <a class='menu-option-item stat-card' href="<%= users_profile rescue '#' %>">Profile Settings</a>
+      <%= link_to "Logout", logout_path, data: { turbo_method: :delete }, class: 'menu-option-item stat-card' %>
+    </div>
+  </div>
+</template>
+<%= javascript_import_module_tag "controllers/users/dashboard/profile_script" %>

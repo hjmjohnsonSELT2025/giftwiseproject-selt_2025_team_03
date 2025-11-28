@@ -1,7 +1,7 @@
 {
   "RSpec": {
     "coverage": {
-      "/mnt/c/Users/blake/SELT_2025/giftwise/giftwiseproject-selt_2025_team_03/app/channels/application_cable/channel.rb": {
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/channels/application_cable/channel.rb": {
         "lines": [
           0,
           0,
@@ -11,7 +11,7 @@
         "branches": {
         }
       },
-      "/mnt/c/Users/blake/SELT_2025/giftwise/giftwiseproject-selt_2025_team_03/app/channels/application_cable/connection.rb": {
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/channels/application_cable/connection.rb": {
         "lines": [
           0,
           0,
@@ -21,40 +21,12 @@
         "branches": {
         }
       },
-      "/mnt/c/Users/blake/SELT_2025/giftwise/giftwiseproject-selt_2025_team_03/app/controllers/application_controller.rb": {
-        "lines": [
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/mnt/c/Users/blake/SELT_2025/giftwise/giftwiseproject-selt_2025_team_03/app/controllers/dashboard_controller.rb": {
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/controllers/application_controller.rb": {
         "lines": [
           0,
           0,
           0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/mnt/c/Users/blake/SELT_2025/giftwise/giftwiseproject-selt_2025_team_03/app/controllers/users_controller.rb": {
-        "lines": [
-          0,
-          0,
           null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
           0,
           0,
           0,
@@ -62,26 +34,7 @@
           0,
           0,
           0,
-          0,
           null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
           0,
           0,
           0,
@@ -95,90 +48,27 @@
         "branches": {
         }
       },
-      "/mnt/c/Users/blake/SELT_2025/giftwise/giftwiseproject-selt_2025_team_03/app/helpers/application_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/mnt/c/Users/blake/SELT_2025/giftwise/giftwiseproject-selt_2025_team_03/app/helpers/dashboard_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/mnt/c/Users/blake/SELT_2025/giftwise/giftwiseproject-selt_2025_team_03/app/helpers/pages_helper.rb": {
-        "lines": [
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/mnt/c/Users/blake/SELT_2025/giftwise/giftwiseproject-selt_2025_team_03/app/jobs/application_job.rb": {
-        "lines": [
-          0,
-          null,
-          null,
-          null,
-          null,
-          null,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/mnt/c/Users/blake/SELT_2025/giftwise/giftwiseproject-selt_2025_team_03/app/mailers/application_mailer.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/mnt/c/Users/blake/SELT_2025/giftwise/giftwiseproject-selt_2025_team_03/app/models/application_record.rb": {
-        "lines": [
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/mnt/c/Users/blake/SELT_2025/giftwise/giftwiseproject-selt_2025_team_03/app/models/event.rb": {
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/controllers/dashboard_controller.rb": {
         "lines": [
           0,
           0,
           0,
           0,
           0,
-          null,
           0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          null,
           0,
           0,
           0,
           null,
+          null,
+          0,
           0,
           0,
           0,
           null,
           0,
-          0,
-          0,
           null,
+          0,
           0,
           0,
           0,
@@ -188,7 +78,240 @@
         "branches": {
         }
       },
-      "/mnt/c/Users/blake/SELT_2025/giftwise/giftwiseproject-selt_2025_team_03/app/models/event_recipient.rb": {
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/controllers/gift_ideas_controller.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/controllers/recipients/recipients_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/controllers/users_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/helpers/application_helper.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/helpers/dashboard_helper.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/helpers/gift_ideas_helper.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/helpers/pages_helper.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/jobs/application_job.rb": {
+        "lines": [
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/mailers/application_mailer.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/application_record.rb": {
+        "lines": [
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/event.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/event_recipient.rb": {
         "lines": [
           0,
           0,
@@ -201,7 +324,7 @@
         "branches": {
         }
       },
-      "/mnt/c/Users/blake/SELT_2025/giftwise/giftwiseproject-selt_2025_team_03/app/models/gift_idea.rb": {
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/gift_idea.rb": {
         "lines": [
           0,
           0,
@@ -221,7 +344,7 @@
         "branches": {
         }
       },
-      "/mnt/c/Users/blake/SELT_2025/giftwise/giftwiseproject-selt_2025_team_03/app/models/recipient.rb": {
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/recipient.rb": {
         "lines": [
           0,
           0,
@@ -235,7 +358,7 @@
         "branches": {
         }
       },
-      "/mnt/c/Users/blake/SELT_2025/giftwise/giftwiseproject-selt_2025_team_03/app/models/user.rb": {
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/user.rb": {
         "lines": [
           null,
           null,
@@ -259,6 +382,6 @@
         }
       }
     },
-    "timestamp": 1764042274
+    "timestamp": 1764210029
   }
 }

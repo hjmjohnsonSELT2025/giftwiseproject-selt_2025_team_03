@@ -1,0 +1,67 @@
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-icon"></div>
+      <span>GiftWise</span>
+    </div>
+
+    <nav>
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <%= link_to 'Dashboard', dashboard_path, class: 'nav-link' %>
+        </li>
+        <li class="nav-item">
+          <span>Events</span>
+        </li>
+        <li class="nav-item">
+          <span>Recipients</span>
+        </li>
+        <li class="nav-item active">
+          <span>Gift Ideas</span>
+        </li>
+        <li class="nav-item">
+          <span>Purchases</span>
+        </li>
+        <li class="nav-item">
+          <span>Settings</span>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Main List Content -->
+  <main class="main-content">
+    <!-- Gift Ideas List -->
+    <div class="events-section">
+      <div class="section-header">
+        <h2 class="section-title">Upcoming Gifts</h2>
+        <a href="#" class="view-all-link">View All →</a>
+      </div>
+
+      <% if !@upcoming_gifts.nil? and @upcoming_gifts.any? %>
+        <% @upcoming_gifts.each do |gift| %>
+          <div class="event-card">
+            <div class="event-info">
+              <div class="event-name"><%= gift.title %></div>
+              <div class="event-date"><%= gift.updated_at.strftime("%B %d, %Y") %></div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="empty-state">
+          <p>No upcoming gifts or events. Create your first event or gift to get started!</p>
+        </div>
+      <% end %>
+      <div class="event-placeholder">
+        <div class="event-line"></div>
+      </div>
+
+      <!-- Button to add a gift-->
+      <%= form_with model: @gift_idea, url: add_gifts_path, method: :get, class: "gift-list-form" do |u| %>
+        <%= submit_tag "New Gift", class: "login-button" %>
+      <% end %>
+      <%= javascript_import_module_tag "controllers/gift_ideas/add" %>
+    </div>
+  </main>
+</div>
