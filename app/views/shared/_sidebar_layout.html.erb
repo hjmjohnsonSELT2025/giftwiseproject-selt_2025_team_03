@@ -19,11 +19,11 @@
         </li>
     <% end %>
 
-    <%#= link_to events_path class: 'nav-link', data: {turbo: false} do %>
-        <li class="nav-item<%#= ' active' if current_page?(events_path)%>">
-            <span>Events</span>
+      <%= link_to new_event_path, class: 'nav-link', data: {turbo: false} do %>
+        <li class="nav-item<%= ' active' if controller_name == 'events'%>">
+          <span>Events</span>
         </li>
-    <%# end %>
+      <% end %>
 
     <%= link_to recipients_path class: "nav-link", data: {turbo: false} do %>
         <li class="nav-item<%= ' active' if current_page?(recipients_path)%>">
