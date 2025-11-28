@@ -13,12 +13,22 @@ RSpec.describe User, type: :model do
   end
 
   it 'rejects user without username' do
-    user = User.new(email: 'test@example.com', password: 'password123')
+    user = User.new(email: 'test@example.com', password: 'password123', first_name: 'Test', last_name: 'User')
     expect(user).not_to be_valid
   end
 
   it 'rejects user without email' do
-    user = User.new(username: 'testuser', password: 'password123')
+    user = User.new(username: 'testuser', password: 'password123', first_name: 'Test', last_name: 'User')
+    expect(user).not_to be_valid
+  end
+
+  it 'rejects user without first name' do
+    user = User.new(username: 'testuser', email: 'test@example.com', password: 'password123', last_name: 'User')
+    expect(user).not_to be_valid
+  end
+
+  it 'rejects user without last name' do
+    user = User.new(username: 'testuser', email: 'test@example.com', password: 'password123', first_name: 'Test')
     expect(user).not_to be_valid
   end
 
@@ -54,5 +64,24 @@ RSpec.describe User, type: :model do
     user.recipients.create(name: 'Mom')
     user.recipients.create(name: 'Dad')
     expect(user.recipients.count).to eq(2)
+  end
+
+  it 'has many events' do
+    user = User.create(username: 'testuser', email: 'test@example.com', password: 'password123', first_name: 'Test', last_name: 'User')
+    user.events.create(name: 'Christmas', date: Date.today)
+    user.events.create(name: 'Birthday', date: Date.today)
+    expect(user.events.count).to eq(2)
+  end
+
+  it 'deletes associated recipients when deleted' do
+    user = User.create(username: 'testuser', email: 'test@example.com', password: 'password123', first_name: 'Test', last_name: 'User')
+    user.recipients.create(name: 'Mom')
+    expect { user.destroy }.to change(Recipient, :count).by(-1)
+  end
+
+  it 'deletes associated events when deleted' do
+    user = User.create(username: 'testuser', email: 'test@example.com', password: 'password123', first_name: 'Test', last_name: 'User')
+    user.events.create(name: 'Christmas', date: Date.today)
+    expect { user.destroy }.to change(Event, :count).by(-1)
   end
 end
