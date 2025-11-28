@@ -39,30 +39,12 @@
         <a href="#" class="view-all-link">View All →</a>
       </div>
 
-      <% if !@uncoming_gifts.nil? and @upcoming_gifts.any? %>
+      <% if !@upcoming_gifts.nil? and @upcoming_gifts.any? %>
         <% @upcoming_gifts.each do |gift| %>
-          <div class="gift-card">
-            <div class="gift-info">
-              <div class="gift-name"><%= gift.title %></div>
-              <div class="gift-date"><%= event.updated_at.strftime("%B %d, %Y") %></div>
-              <div class="event-meta">
-                <div class="meta-item">
-                  <span><%= pluralize(event.days_until, 'day') %> left</span>
-                </div>
-                <div class="meta-item">
-                  <span><%= pluralize(event.recipients.count, 'recipient') %></span>
-                </div>
-              </div>
-            </div>
-            <div class="circular-progress">
-              <% percentage = event.budget_percentage %>
-              <% degrees = (percentage * 3.6).round %>
-              <div class="progress-ring" style="background: conic-gradient(var(--brown-accent) 0deg <%= degrees %>deg, rgba(157, 111, 87, 0.2) <%= degrees %>deg 360deg);">
-                <div class="progress-inner">
-                  <div class="progress-value">$<%= event.total_spent.round %></div>
-                  <div class="progress-label">of $<%= event.budget.to_i %></div>
-                </div>
-              </div>
+          <div class="event-card">
+            <div class="event-info">
+              <div class="event-name"><%= gift.title %></div>
+              <div class="event-date"><%= gift.updated_at.strftime("%B %d, %Y") %></div>
             </div>
           </div>
         <% end %>
@@ -71,8 +53,8 @@
           <p>No upcoming gifts or events. Create your first event or gift to get started!</p>
         </div>
       <% end %>
-      <div class="gift-placeholder">
-        <div class="gift-line"></div>
+      <div class="event-placeholder">
+        <div class="event-line"></div>
       </div>
 
       <!-- Button to add a gift-->

@@ -5,7 +5,7 @@
     <h1 class="register-heading">Add a New Gift</h1>
     
     <div class="input-group">       <!--------------- Title --------------->
-      <%= u.label :title, "Title", name: "gift_idea[title]", class: "input-label" %>
+      <%= u.label :title, "Title", class: "input-label" %>
       <%= u.text_field :title, max_length: 30, placeholder: "", class: "input-field required" %>
     </div>
 
@@ -16,7 +16,7 @@
 
     <div class="input-group">       <!--------------- Status --------------->
       <%= u.label :status, "Status", class: "input-label" %>
-      <%= u.text_field :status, placeholder: "", class: "input-field email-field required" %>
+      <%= u.select :status, options_for_select(%w[idea backlogged purchased delivered wrapped liked]) %>
     </div>
 
     <div class="input-group">       <!--------------- Url --------------->
@@ -30,11 +30,14 @@
     </div>
 
     <div class='input-group'>       <!--------------- Recipient ID --------------->
-      <%= u.label :recipient_id, "ID of the Recipient", class: "input-label" %>
-      <%= u.text_field :recipient_id, placeholder: "", class: "input-field required" %>
+      <%= u.label :event_recipient_id, "ID of the Recipient", class: "input-label" %>
+      <%= u.text_field :event_recipient_id, placeholder: "", class: "input-field required" %>
     </div>
 
     <%= u.submit "Create my gift", class: "login-button" %>
+    <div class="login-button">
+      <%= link_to 'Cancel', list_gifts_path%>
+    </div>
   <% end %>
 <% end %>
 <%= javascript_import_module_tag "controllers/gift_ideas/new_gift_idea" %>
