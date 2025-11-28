@@ -10,7 +10,7 @@ class RecipientsController < ApplicationController
       query = params[:query].to_s.strip
       recipients = if query.present?
         pattern = "%#{query.downcase}%"
-        @scope.where("recipients.name LIKE ?", pattern)
+        @scope.where("LOWER(recipients.name) LIKE ?", pattern)
       else
         @scope.order(:name)
       end
@@ -25,7 +25,6 @@ class RecipientsController < ApplicationController
       }
       }, status: :ok
   end
-
   def show; end
 
   def new 

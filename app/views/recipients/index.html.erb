@@ -21,25 +21,35 @@
             </div>
         </div>
     </div>
+    <%# Template for a recipient card %>
     <template id='recipient-card'>
         <div class='recipient-container'>
-            <%# 'ri' short for recipient item %>
-            <div class='ri' name='name'></div>
-            <div class='ri' name='relationship'></div>
-            <div class='ri' name='events'></div>
-            <div class='ri' name='likes'></div>
+            <div class='recipient-header'>
+                <div class='ri' name='name'></div>
+                <div class='ri' name='relationship'></div>
+            </div>
+            <div class='recipient-details'>
+                <div class='detail-row'>
+                    <div class='detail-label'>Events</div>
+                    <div class='detail-value'>
+                        <div class='ri' name='events'></div>
+                    </div>
+                </div>
+                <div class='detail-row'>
+                    <div class='detail-label'>Interests</div>
+                    <div class='detail-value'>
+                        <div class='ri' name='likes'></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </template>
-    <%# Where all cards are rendered %>
-    <div id='recipient-results' class='recipient-list'>
-        <% @recipients.each do |r| %>
-            <div class='recipient-container'>
-                <div class='ri' name='name'><%= r.name %></div>
-                <div class='ri' name='relationship'><%= r.relationship&.name %></div>
-                <div class='ri' name='events'><%= r.events.map(&:name).join(', ') %></div>
-                <div class='ri' name='likes'><%= r.likes %></div>
-            </div>
-        <% end %>
+    <%# Node for template card to be rendered at %>
+    <div id='recipient-results' class='recipients-list'>
     </div>
 </main>
 <%= javascript_import_module_tag 'controllers/recipients/search' %>
+<%# 
+Events:      Christmas, Mom's Birthday
+Interests:   Jewelry, family time, gardening, plants
+ %>
