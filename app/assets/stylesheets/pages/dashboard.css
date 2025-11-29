@@ -59,6 +59,10 @@
     gap: 12px;
 }
 
+.nav-menu a {
+    text-decoration: none;
+    color: var(--light-text);
+}
 .nav-item.active {
     background-color: var(--brown-accent);
     color: white;

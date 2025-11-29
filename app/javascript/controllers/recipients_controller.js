@@ -189,7 +189,7 @@ saveEdit(event) {
     const $likesIn  = $editCard.find("textarea[name='likes']")
     const $dislikesIn = $editCard.find("textarea[name='dislikes']")
     const $relationship = $editCard.find("input[name='relationship']")
-    const $birthday = $editCard.find("input[name='birthday']") // fixed quote
+    const $birthday = $editCard.find("input[name='birthday']")
 
     const relationship = $relationship.length ? $relationship.val().trim() : ""
     const birthday     = $birthday.length     ? $birthday.val().trim()     : ""
