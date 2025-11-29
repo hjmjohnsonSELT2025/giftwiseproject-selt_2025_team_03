@@ -4,7 +4,7 @@ Given("I am on the dashboard") do
   @user = User.find_by(username: "testuser") ||
           User.create!(
             username: "testuser",
-            email: "testuser@example.com", # <--- required
+            email: "testuser@example.com",
             password: "password",
             first_name: "Test",
             last_name: "User"

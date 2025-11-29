@@ -1,33 +1,35 @@
-Feature: Recipient Management
-  As a gift giver
-  I want to view and manage my recipients
-  So that I can track gift ideas for them
+Feature: Manage recipients
+  As a user
+  I want to view, search, and add recipients
+  So that I can organize gift information
 
   Background:
-    Given I am on the Recipients page
-    Then I should see a header "My Recipients"
-    And I should see a button "Add Recipient"
-    And I should see the list of all recipients
+    Given a test user exists with username "testuser", password "password", first name "Test", and last name "User"
+    And I am logged in as "testuser"
 
-  Scenario: user with no recipients added
-    Given the user has no recipients added
-    Then I should see no recipients in the list
+  Scenario: View recipients list
+    Given the following recipients exist:
+      | Name      | Relationship | Likes         |
+      | Mom       | Parent       | Gardening     |
+      | Alex      | Sibling      | Gaming        |
+    When I visit the recipients page
+    Then I should see recipient "Mom"
+    And I should see recipient "Alex"
 
-  Scenario: Viewing a recipients details
-    Given a recipient exists
-    When I click the button "View" for that recipient
-    Then I should be taken to the recipient "View" page
+  Scenario: Search for a recipient
+    Given the following recipients exist:
+      | Name      | Relationship | Likes     |
+      | Grandpa   | Relative     | Fishing   |
+      | Sarah     | Friend       | Reading   |
+    When I visit the recipients page
+    And I fill in "search-recipients" with "Grandpa"
+    Then I should see recipient "Grandpa"
+    And I should not see recipient "Sarah"
 
-  Scenario: Editing a recipient
-    Given a recipient exists
-    When I click the button "Edit" for that recipient
-    Then I should be taken to the recipient "Edit" page
-
-  Scenario: Deleting a recipient
-    Given a recipient exists
-    When I click the button "Delete" for that recipient
-    Then I should remain on the "Recipients" page
-
-  Scenario: Adding a new recipient
-    When I click the button "Add Recipient"
-    Then I should see the new recipient form
+  Scenario: Add a new recipient
+    When I visit the add new recipient page
+    And I fill in "recipient_name" with "Uncle Joe"
+    And I select "Relative" from "recipient_relationship"
+    And I fill in "recipient_likes" with "Golf"
+    And I click "Save recipient"
+    Then I should see recipient "Uncle Joe"

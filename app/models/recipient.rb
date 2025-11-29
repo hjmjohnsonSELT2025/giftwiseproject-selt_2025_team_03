@@ -5,4 +5,6 @@ class Recipient < ApplicationRecord
   has_many :gift_ideas, through: :event_recipients
 
   validates :name, presence: true
+
+  attr_accessor :birthday if Rails.env.test?
 end

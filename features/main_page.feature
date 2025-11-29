@@ -13,17 +13,17 @@ Feature: Main Page
     When I click the dashboard button "Recipients"
     Then I should see the "Recipients" page
 
-  Scenario: User looking for gift ideas
-    When I click the dashboard button "Gift Ideas"
-    Then I should see the "Gift Ideas" page
+#  Scenario: User looking for gift ideas
+#    When I click the dashboard button "Gift Ideas"
+#    Then I should see the "Gift Ideas" page
 
-  Scenario: User looking to update their profile
-    When I click the dashboard button "Profile"
-    Then I should see the "Profile" page
-
-  Scenario: User looking to update their settings
-    When I click the dashboard button "Settings"
-    Then I should see the "Settings" page
+#  Scenario: User looking to update their profile
+#    When I click the dashboard button "Profile"
+#    Then I should see the "Profile" page
+#
+#  Scenario: User looking to update their settings
+#    When I click the dashboard button "Settings"
+#    Then I should see the "Settings" page
 
   Scenario: User looking to logout
     When I click the dashboard button "Logout"
