@@ -33,17 +33,16 @@
     opacity: .85;
 }
 .recipient-details {
-    display: flex; flex-direction: column;
-    gap: 6px;
+    display: flex; flex-direction: row;
+    gap: 20px;
 }
 .detail-row {
-    display: flex; 
+    display: flex; flex-direction: column;
     align-items: flex-start;
-    gap: 12px; line-height: 1.5;
     font-size: 14px;
 }
 .detail-label {
-    flex: 0 0 80px;
+    flex: 0 0 auto;
     font-weight: 500;
     opacity: .9;
 }
@@ -245,6 +244,17 @@
     cursor: pointer;
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+.view .ri[name='likes'] {
+    background-color: rgba(0, 255, 0, 0.4);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.view .ri[name='dislikes'] {
+    background-color: rgba(255, 0, 0, 0.4);
+    padding: 10px;
+    border-radius: 10px;
 }
 @media (max-width: 900px) {
     .recipient-list { grid-template-columns: 1fr;}

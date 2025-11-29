@@ -78,6 +78,7 @@ export default class extends Controller {
                 })
 
             $frag.find("[name='likes']").text(rec.likes || "")
+            $frag.find("[name='dislikes']").text(rec.dislikes || "")
             const $delete = $frag.find(".delete-link")
             $delete
                 .attr("href", `/recipients/${rec.id}`)
@@ -111,11 +112,12 @@ export default class extends Controller {
         const $nameIn = $cardEdit.find("input[name='name']")
         const $eventsIn = $cardEdit.find("input[name='events']")
         const $likesIn = $cardEdit.find("textarea[name='likes']")
+        const $dislikesIn = $cardEdit.find("textarea[name='dislikes']")
 
         $nameIn.val(rec.name || "")
         $eventsIn.val((rec.events || []).join(", "))
         $likesIn.val(rec.likes || "")
-
+        $dislikesIn.val(rec.dislikes || "")
         const $save = $cardEdit.find("[data-action*='saveEdit']")
         $save.attr("data-recipients-id-param", id)
 
@@ -153,6 +155,7 @@ export default class extends Controller {
             })
 
         $displayCard.find("[name='likes']").text(rec.likes || "")
+        $displayCard.find("[name='dislikes']").text(rec.dislikes || "")
 
         const $editLink = $displayCard.find(".edit-link")
         const $deleteLink = $displayCard.find(".delete-link")
@@ -184,6 +187,7 @@ saveEdit(event) {
     const $nameIn   = $editCard.find("input[name='name']")
     const $eventsIn = $editCard.find("input[name='events']")
     const $likesIn  = $editCard.find("textarea[name='likes']")
+    const $dislikesIn = $editCard.find("textarea[name='dislikes']")
     const $relationship = $editCard.find("input[name='relationship']")
     const $birthday = $editCard.find("input[name='birthday']") // fixed quote
 
@@ -192,6 +196,7 @@ saveEdit(event) {
 
     const name   = ($nameIn.val()   || "").trim()
     const likes  = ($likesIn.val()  || "").trim()
+    const dislikes = ($dislikesIn.val() || "").trim()
     const events = ($eventsIn.val() || "")
         .split(",")
         .map((s) => s.trim())
@@ -205,6 +210,7 @@ saveEdit(event) {
             recipient: {
                 name:  name,
                 likes: likes,
+                dislikes: dislikes,
                 relationship: relationship,
                 birthday: birthday
             }
@@ -219,6 +225,7 @@ saveEdit(event) {
         } else if (this.recipientsById[id]) {
             this.recipientsById[id].name  = name
             this.recipientsById[id].likes = likes
+            this.recipientsById[id].dislikes = dislikes
             this.recipientsById[id].relationship = relationship
             this.recipientsById[id].birthday     = birthday
         }

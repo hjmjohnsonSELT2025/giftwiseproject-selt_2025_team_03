@@ -22,7 +22,7 @@
 
     <%# Template for a recipient card view mode %>
     <template id="recipient-card" data-recipients-target="cardTemplate">
-    <div class="recipient-container" data-recipient-id="">
+    <div class="recipient-container view" data-recipient-id="">
         <div class="recipient-header">
         <div class="ri" name="name"></div>
         <div class="ri" name="relationship"></div>
@@ -30,16 +30,22 @@
         <div class="recipient-body">
         <div class="recipient-details">
             <div class="detail-row">
-            <div class="detail-label">Events</div>
-            <div class="detail-value">
-                <div class="ri" name="events"></div>
-            </div>
+                <div class="detail-label">Events</div>
+                <div class="detail-value">
+                    <div class="ri" name="events"></div>
+                </div>
             </div>
             <div class="detail-row">
-            <div class="detail-label">Interests</div>
-            <div class="detail-value">
-                <div class="ri" name="likes"></div>
+                <div class="detail-label">Interests</div>
+                <div class="detail-value">
+                    <div class="ri" name="likes"></div>
+                </div>
             </div>
+            <div class='detail-row'>
+                <div class='detail-label'>Dislikes</div>
+                <div class='detail-value'>
+                    <div class='ri' name='dislikes'></div>
+                </div>
             </div>
         </div>
         <div class="recipient-options">
@@ -83,13 +89,24 @@
             </div>
             </div>
             <div class="detail-row">
-            <div class="detail-label">Interests</div>
-            <div class="detail-value">
-                <textarea name="likes"
-                        class="input-field"
-                        rows="2"
-                        placeholder="Interests"></textarea>
+                <div class="detail-label">Likes</div>
+                <div class="detail-value">
+                    <textarea name="likes"
+                            class="input-field"
+                            rows="2"
+                            placeholder="Interests"></textarea>
+                </div>
             </div>
+            <%# Dislikes %>
+            <div class='detail-row'>
+                <div class='detail-label'>Dislikes</div>
+                <div class='detail-value'>
+                    <textarea name='dislikes'
+                              class='input-field'
+                              rows='2'
+                              placeholder='Dislikes'
+                    ></textarea>
+                </div>
             </div>
         </div>
 

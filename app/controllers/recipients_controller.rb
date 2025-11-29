@@ -21,7 +21,8 @@ class RecipientsController < ApplicationController
           name: r.name,
           relationship: r.relationship,
           events: r.events.map(&:name),
-          likes: r.likes
+          likes: r.likes,
+          dislikes: r.dislikes
         }
       }
       }, status: :ok
