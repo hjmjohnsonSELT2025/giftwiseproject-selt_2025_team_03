@@ -1,6 +1,151 @@
 {
   "RSpec": {
     "coverage": {
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/helpers/application_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/helpers/dashboard_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/helpers/gift_ideas_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/helpers/pages_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/controllers/users_controller.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          1,
+          0,
+          0,
+          null,
+          1,
+          null,
+          null,
+          1,
+          2,
+          2,
+          null,
+          2,
+          0,
+          0,
+          0,
+          null,
+          2,
+          2,
+          null,
+          null,
+          1,
+          null,
+          1,
+          null,
+          1,
+          3,
+          3,
+          2,
+          2,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          null,
+          1,
+          2,
+          2,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          3,
+          null,
+          null
+        ]
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/controllers/application_controller.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          1,
+          5,
+          null,
+          null,
+          1,
+          5,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          null,
+          1,
+          5,
+          null,
+          null
+        ]
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/user.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          3,
+          null,
+          null,
+          null
+        ]
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
       "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/channels/application_cable/channel.rb": {
         "lines": [
           0,
@@ -13,33 +158,6 @@
       },
       "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/channels/application_cable/connection.rb": {
         "lines": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/controllers/application_controller.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          null,
           0,
           0,
           0,
@@ -78,92 +196,148 @@
         "branches": {
         }
       },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/controllers/events_controller.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
       "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/controllers/gift_ideas_controller.rb": {
         "lines": [
           0,
+          0,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
           0
         ],
         "branches": {
         }
       },
-      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/controllers/recipients/recipients_controller.rb": {
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/controllers/recipients_controller.rb": {
         "lines": [
           0,
           0,
           0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          null,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/controllers/users_controller.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
           0,
           0,
           0,
@@ -181,14 +355,6 @@
           0,
           0,
           0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
           0,
           0,
           0,
@@ -199,43 +365,48 @@
           0,
           0,
           null,
+          0,
+          0,
+          0,
           null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
           null,
           0,
           0,
           0,
           0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/helpers/application_helper.rb": {
-        "lines": [
           0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/helpers/dashboard_helper.rb": {
-        "lines": [
           0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/helpers/gift_ideas_helper.rb": {
-        "lines": [
           0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/helpers/pages_helper.rb": {
-        "lines": [
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
           0,
           0
         ],
@@ -258,15 +429,6 @@
       "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/mailers/application_mailer.rb": {
         "lines": [
           0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/application_record.rb": {
-        "lines": [
           0,
           0,
           0
@@ -328,7 +490,9 @@
         "lines": [
           0,
           0,
+          0,
           null,
+          0,
           0,
           0,
           0,
@@ -357,31 +521,8 @@
         ],
         "branches": {
         }
-      },
-      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/user.rb": {
-        "lines": [
-          null,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0
-        ],
-        "branches": {
-        }
       }
     },
-    "timestamp": 1764210029
+    "timestamp": 1764383865
   }
 }
