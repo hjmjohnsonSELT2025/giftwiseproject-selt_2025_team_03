@@ -30,7 +30,6 @@ class RecipientsController < ApplicationController
 
   def new 
     @recipient = current_user.recipients.new
-    @recipient.id = current_user.recipients.count + 1
   end
 
   def create 
@@ -42,7 +41,9 @@ class RecipientsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    
+  end
   def update
     if @recipient.update(recipient_params)
       redirect_to recipients_path, notice: "Recipient updated."
