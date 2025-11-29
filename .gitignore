@@ -50,3 +50,4 @@ final_development
 /.resultset.json
 final_development-shm
 final_development-wal
+.DS_Store
