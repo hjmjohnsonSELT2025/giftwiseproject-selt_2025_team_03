@@ -32,4 +32,5 @@ Rails.application.routes.draw do
   get "/list_gifts", :to => "gift_ideas#list", as: :list_gifts
   get "/add_gifts", :to => "gift_ideas#add", as: :add_gifts
   post "/add_gifts", :to => "gift_ideas#list"
+  get "/search_gifts", :to => "gift_ideas#search", as: :search_gifts
 end
