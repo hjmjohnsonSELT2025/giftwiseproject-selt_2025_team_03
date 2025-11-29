@@ -9,25 +9,6 @@
   </div>
 
 
-  <div class='view-options container'>
-    <input 
-      type='text' 
-      placeholder='Search for gift' 
-      id='search-gifts' 
-      class='input-field'
-      data-search-url='<%= search_gifts_path %>'
-    >
-    <div class='container'>
-        <div class='view-button' id='filter-option'>
-            [Filter]
-        </div>
-        <div class='view-button' id='sort-option'>
-            [Sort]
-        </div>
-    </div>
-  </div>
-
-
   <div class="events-section">
     <% if !@gift_ideas.nil? and @gift_ideas.any? %>
       <% @gift_ideas.each do |gift| %>
@@ -36,16 +17,6 @@
             <div class="event-name"><%= gift.title %></div>
             <div class="event-name"><%= gift.status %></div>
             <div class="event-date"><%= gift.updated_at.strftime("%B %d, %Y") %></div>
-            <div class='recipient-options'>
-              <%= form_with model: @gift_idea, url: edit_gifts_path, method: :get, class: "gift-list-form" do |u| %>
-                <%= image_tag "trash.png", alt: "Delete recipient", class: 'view-button edit-link' %>
-              <% end %>
-
-              <a class='view-button edit-link' data-action="click->gift_ideas#edit"
-              href='#'><%= image_tag "edit.png", alt: "Edit recipient", class: "icon" %></a>
-              <a class='view-button delete-link' data-action="click->gift_ideas#delete"
-              href='#'><%= image_tag "trash.png", alt: "Delete recipient", class: "icon" %></a>
-            </div>
           </div>
         </div>
       <% end %>
