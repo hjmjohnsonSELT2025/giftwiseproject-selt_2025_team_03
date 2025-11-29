@@ -48,3 +48,5 @@ final_development
 /coverage/
 /coverage.data
 /.resultset.json
+final_development-shm
+final_development-wal
