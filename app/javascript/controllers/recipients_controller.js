@@ -1,5 +1,4 @@
 import { Controller } from "@hotwired/stimulus"
-import $ from "jquery"
 
 export default class extends Controller {
     static targets = ["search", "results", "cardTemplate", "editTemplate"]
@@ -38,15 +37,23 @@ export default class extends Controller {
     }
 
     fetchAndRender(query = "") {
-        $.getJSON(this.searchUrl, { query })
-            .done((data) => {
-                this.renderRecipients(data.recipients || [])
-            })
-            .fail((xhr) => {
-                console.error(
-                    `Search failed---\n\t Status: ${xhr.status} \n\t Response: ${xhr.responseText}`
-                )
-            })
+        $.ajax({
+            url: this.searchUrl,
+            method: "GET",
+            dataType: "json",
+            data: {
+                query
+            },
+            headers: {
+                "X-CSRF-Token": $("meta[name='csrf-token']").attr("content")
+            }
+        })
+        .done((resp) => {
+            this.renderRecipients(resp.recipients || [])
+        })
+        .fail((xhr) => {
+            console.error(`Search failed: \n\t Status; ${xhr.status} \n\t Response: ${xhr.responseText}`)
+        })
     }
 
     renderRecipients(recipients) {

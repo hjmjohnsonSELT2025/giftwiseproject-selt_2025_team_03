@@ -1,4 +1,4 @@
-<details class='profile-dropdown' id='profile-dropdown-menu'>
+<details class='profile-dropdown' id='profile-dropdown-menu' data-controller="profile-menu">
     <summary class='user-profile' id='profile-link' aria-haspopup='menu'>
         <div class='user-info'>
         <div class='user-name'><%= @current_user.first_name %> <%= @current_user.last_name %></div>
@@ -16,4 +16,3 @@
         </div>
     </div>
 </details>
-<%= javascript_import_module_tag "controllers/shared/profile-dropdown" %>

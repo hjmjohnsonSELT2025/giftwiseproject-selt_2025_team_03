@@ -1,4 +1,4 @@
-<%= render layout: 'shared/primary_layout' do %>
+<%= render layout: 'shared/primary_layout', data: { controller: "new-user" } do %>
   <%= form_with model: @user, url: users_path, method: :post, class: "register-form" do |u| %>
     <div class="decorative-line"></div>
 
@@ -46,4 +46,3 @@
     </div>
   <% end %>
 <% end %>
-<%= javascript_import_module_tag "controllers/users/new_user" %>
