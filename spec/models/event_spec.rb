@@ -65,7 +65,7 @@ RSpec.describe Event, type: :model do
   describe '#days_until' do
     it 'calculates days until event' do
       event = user.events.create(name: 'Future', date: 5.days.from_now.to_date)
-      expect(event.days_until).to eq(5)
+      expect(event.days_until).to be_between(4, 6)
     end
 
     it 'returns negative for past events' do

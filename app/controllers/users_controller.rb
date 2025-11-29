@@ -32,7 +32,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to dashboard_path, notice: "Welcome, #{@user.username}!"
     else
-      Rails.logger.warn "Failed to create an account: #{user.errors.full_messages.to_sentence}"
+      Rails.logger.warn "Failed to create an account: #{@user.errors.full_messages.to_sentence}"
       render :new, status: :unprocessable_entity
     end
   end
