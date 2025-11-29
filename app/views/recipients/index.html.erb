@@ -43,20 +43,20 @@
             </div>
         </div>
         <div class="recipient-options">
-            <div class="image-background">
             <a class="view-button edit-link"
                 href="#"
                 data-action="click->recipients#edit"
                 data-recipients-id-param="">
-                <%= image_tag "edit.png", alt: "Edit recipient", class: "icon" %>
+                <div class="image-background">
+                    <%= image_tag "edit.png", alt: "Edit recipient", class: "icon" %>
+                </div>
             </a>
-            </div>
-            <div class="image-background">
             <a class="view-button delete-link"
                 href="#">
-                <%= image_tag "trash.png", alt: "Delete recipient", class: "icon" %>
+                <div class="image-background">
+                    <%= image_tag "trash.png", alt: "Delete recipient", class: "icon" %>
+                </div>
             </a>
-            </div>
         </div>
         </div>
     </div>

@@ -222,6 +222,30 @@
 .recipient-form .link-button {
     padding-inline: 16px;
 }
+.recipient-edit .recipient-body {
+    flex-direction: column;
+}
+.recipient-edit .recipient-details {
+    margin-bottom: 2em;
+}
+.recipient-edit .recipient-options {
+    justify-content: center;
+}
+.recipient-edit .view-button {
+    display: block;
+    padding: 8px 12px; margin: 0;
+    border-radius: 12px; border: 1px solid rgba(239,237,241,.24);
+    background-color: var(--dark-blue-bg);
+    color: var(--light-text);
+    text-decoration: none; text-align: center;
+    transition: all .3s;
+    cursor: default;
+}
+.recipient-edit .view-button:hover {
+    cursor: pointer;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
 @media (max-width: 900px) {
     .recipient-list { grid-template-columns: 1fr;}
 }
