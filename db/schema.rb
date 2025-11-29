@@ -43,7 +43,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_28_050146) do
     t.integer "event_recipient_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
     t.index ["event_recipient_id"], name: "index_gift_ideas_on_event_recipient_id"
+    t.index ["user_id"], name: "index_gift_ideas_on_user_id"
   end
 
   create_table "recipients", force: :cascade do |t|
@@ -73,5 +75,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_28_050146) do
   add_foreign_key "event_recipients", "recipients"
   add_foreign_key "events", "users"
   add_foreign_key "gift_ideas", "event_recipients"
+  add_foreign_key "gift_ideas", "users"
   add_foreign_key "recipients", "users"
 end
