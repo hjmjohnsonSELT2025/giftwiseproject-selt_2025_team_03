@@ -58,6 +58,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'simplecov', require: false
   gem 'capybara'
+  gem 'rails-controller-testing'
 end
 
 group :development do
