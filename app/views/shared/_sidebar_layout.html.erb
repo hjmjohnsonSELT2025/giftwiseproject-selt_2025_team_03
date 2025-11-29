@@ -19,13 +19,14 @@
         </li>
     <% end %>
 
-<!--        TODO: Uncomment once page established. -->
+<!--        TODO: Uncomment once page established.
     <%# Events %>
     <%#= link_to events_path class: 'nav-link', data: {turbo: false} do %>
         <li class="nav-item<%#= ' active' if current_page?(events_path)%>">
             <span>Events</span>
         </li>
       <%# end %>
+-->
 
     <%# Recipients %>
     <%= link_to recipients_path class: "nav-link", data: {turbo: false} do %>
@@ -40,7 +41,7 @@
         <li class="nav-item<%#= ' active' if current_page?(gift_ideas_path)%>">
             <span>Gift Ideas</span>
         </li>
-    <%# end %>
+    <% end %>
 
 <!--        TODO: Create layout
     <%# Purchases %>
