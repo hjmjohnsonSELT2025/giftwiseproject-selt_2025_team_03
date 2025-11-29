@@ -19,14 +19,14 @@
         </li>
     <% end %>
 
-<!--        TODO: Uncomment once page established.
+<!--        TODO: Uncomment once page established. -->
     <%# Events %>
-    <%#= link_to events_path class: 'nav-link', data: {turbo: false} do %>
-        <li class="nav-item<%#= ' active' if current_page?(events_path)%>">
+    <%= link_to new_event_path class: 'nav-link', data: {turbo: false} do %>
+        <li class="nav-item<%= ' active' if current_page?(new_event_path)%>">
             <span>Events</span>
         </li>
-      <%# end %>
--->
+      <% end %>
+
 
     <%# Recipients %>
     <%= link_to recipients_path class: "nav-link", data: {turbo: false} do %>
@@ -35,13 +35,12 @@
         </li>
     <% end %>
 
-<!--        TODO: Uncomment once page established. -->
     <%# Gift Ideas %>
-    <%#= link_to gift_ideas_path class: 'nav-link', data: {turbo: false} do %>
-        <li class="nav-item<%#= ' active' if current_page?(gift_ideas_path)%>">
+    <%= link_to list_gifts_path class: 'nav-link', data: {turbo: false} do %>
+        <li class="nav-item<%= ' active' if current_page?(list_gifts_path)%>">
             <span>Gift Ideas</span>
         </li>
-    <%# end %>
+    <% end %>
 
 <!--        TODO: Create layout
     <%# Purchases %>

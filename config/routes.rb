@@ -9,7 +9,6 @@ Rails.application.routes.draw do
 
   get 'dashboard', to: 'dashboard#index', as: 'dashboard'
   resources :events
-
   get "/preview_profile", to: "preview#profile"
 
   # logging in/out
