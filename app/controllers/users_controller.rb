@@ -24,15 +24,15 @@ class UsersController < ApplicationController
   end
   def new
     #@user = User.new
-    @user = User.new
+    @user = User.new(params[:user])
   end
   def create
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to user_path(@user), notice: "Welcome, #{@user.username}!"
+      redirect_to dashboard_path, notice: "Welcome, #{@user.username}!"
     else
-      Rails.logger.warn "Failed to create an account: #{user.errors.full_messages.to_sentence}"
+      Rails.logger.warn "Failed to create an account: #{@user.errors.full_messages.to_sentence}"
       render :new, status: :unprocessable_entity
     end
   end

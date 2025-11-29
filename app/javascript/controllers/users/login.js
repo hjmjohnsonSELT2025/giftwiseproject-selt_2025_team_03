@@ -1,4 +1,4 @@
-$(function() {
+document.addEventListener("turbo:load", function() {
     const required = [$("#username"), $("#password")];
     const empty = (item) => {
         return item.val().trim().length === 0;

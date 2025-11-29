@@ -1,0 +1,38 @@
+<!-- Sidebar -->
+<%# Sidebar %>
+<%= render "shared/sidebar_layout" %>
+
+<main class="main-content">
+  <div class='top-bar'>
+    <h1 class='page-title'>Gift Ideas</h1>
+    <%= render 'shared/profile_dropdown' %>
+  </div>
+
+
+  <div class="events-section">
+    <% if !@gift_ideas.nil? and @gift_ideas.any? %>
+      <% @gift_ideas.each do |gift| %>
+        <div class="event-card">
+          <div class="event-info">
+            <div class="event-name"><%= gift.title %></div>
+            <div class="event-name"><%= gift.status %></div>
+            <div class="event-date"><%= gift.updated_at.strftime("%B %d, %Y") %></div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="empty-state">
+        <p>No upcoming gifts or events. Create your first event or gift to get started!</p>
+      </div>
+    <% end %>
+    <div class="event-placeholder">
+      <div class="event-line"></div>
+    </div>
+
+    
+    <%= form_with model: @gift_idea, url: add_gifts_path, method: :get, class: "gift-list-form" do |u| %>
+      <%= submit_tag "New Gift", class: "login-button" %>
+    <% end %>
+    <%= javascript_import_module_tag "controllers/gift_ideas/add" %>
+  </div>
+</main>

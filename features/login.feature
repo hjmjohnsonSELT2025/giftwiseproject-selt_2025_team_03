@@ -1,31 +1,30 @@
-Feature: Account Creation
+Feature: User Login
+  As a returning user
+  I want to log in
+  So that I can access my dashboard
 
   Background:
-    Given I am on the registration page
-    Then I should see the button: Create Account
-    And I should see the fillable field: name, email, password, age, occupation
-    And I should see link on the bottom: "Already have an account? Login"
+    Given a user exists with username "testuser" and password "password123"
+    And I am on the login page
 
-  Scenario:
-    When I enter all the necessary information correctly
-    And I click the button: Create Account
-    Then I should see the flash message: "Account Created"
-    And I should be redirected to "Dashboard" page
+  Scenario: Login page displays expected fields and buttons
+    Then I should see the field "Username"
+    And I should see the field "Password"
+    And I should see the button "Login"
+    And I should see the link "Register"
 
-  Scenario: invalid password entered
-    When I enter a password that does not meet requirements
-    Then I should see the flash message: “Invalid Password: Password should be at least 8 characters, contain at least one letter, symbol and number”
-    And my password field should be emptied
-    And I should be prompted to enter the password again
+  Scenario: Register link redirects to the registration page
+    When I click the link "Register"
+    Then I should be on the registration page
 
-  Scenario: invalid age entered
-    When I enter an age that does not meet requirements, 0-115
-    Then I should see the flash message: “Invalid Age: Please enter a valid age”
-    And my age field should be emptied
-    And I should be prompted to enter the age again
+  Scenario: Successful login redirects to dashboard
+    When I fill in login field with "Username" with "testuser"
+    And I fill in login field with "Password" with "password123"
+    And I click the login field button "Login"
+    Then I should be on the dashboard page
 
-  Scenario: invalid email entered
-    When I enter an email that does not meet requirements
-    Then I should see the flash message: “Invalid Email: Please enter a valid email”
-    And my email field should be emptied
-    And I should be prompted to enter the email again
+  Scenario: Unsuccessful login redirects to dashboard
+    When I fill in login field with "Username" with "testuser"
+    And I fill in login field with "Password" with "wrongPassword"
+    And I click the login field button "Login"
+    Then I should be on the login page

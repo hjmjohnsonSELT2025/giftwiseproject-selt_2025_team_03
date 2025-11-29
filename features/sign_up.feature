@@ -1,27 +1,31 @@
-Feature: User Registration
+Feature: Account Creation
   As a new user
-  I want to create an account with my personal information
-  So that I can start planning gifts and get personalized suggestions
+  I want to register an account
+  So that I can log in and use the application
 
   Background:
-    Given I am on the login page
-    Then I should see the button: login, register
-    And I should see the fillable field: username, password
+    Given I am on the registration page
+    Then I should see the registration form fields
+    And I should see the button "Create my account"
+    And I should see the login link
 
-  Scenario: first time user seeking to register
-    When I click the button: register
-    Then I should see the "registration" page
+  Scenario: Successful registration
+    When I fill in the registration form with valid details
+    And I click the user registration button "Create my account"
+    Then I should be redirected to the dashboard page
 
-  Scenario: user successfully signing in
-    When I fill in the fillable field: username, password
-    And I click the button: login
-    And the following fillable fields are valid: username, password
-    Then I should see the "Dashboard" page
+  Scenario: Invalid password entered
+    When I enter an invalid password
+    And I click the user registration button "Create my account"
+    And the password fields should be cleared
+    And I should still be on the registration page
 
-  Scenario: user unsuccessfully signing in
-    When I fill in the fillable field: username, password
-    And I click the button: login
-    And then the following fillable fields are not valid: username, password
-    Then I should see the flash message claiming “Invalid login”
-    And I should see the “login” page
+  Scenario: Invalid email entered
+    When I enter an invalid email
+    And I click the user registration button "Create my account"
+    And the email field should be cleared
+    And I should still be on the registration page
 
+  Scenario: Missing required fields
+    When I submit the form with missing fields
+    And I should still be on the registration page

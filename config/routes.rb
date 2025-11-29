@@ -8,14 +8,29 @@ Rails.application.routes.draw do
   root "users#login"
 
   get 'dashboard', to: 'dashboard#index', as: 'dashboard'
+  resources :events
+
+  get "/preview_profile", to: "preview#profile"
 
   # logging in/out
+  get "/", :to => "users#login"
   get "/login", :to => "users#login", as: :login
   post '/login', :to => 'users#authorize'
-  delete '/logout', :to => 'users#logout'
+  delete '/logout', :to => 'users#logout', as: :logout
   resources :users, only: [:new, :create, :show]
   post 'users/check_email', :to => "users#check_email"
   post 'users/check_username', :to => "users#check_username"
   # recipients
-  resources :recipients
+  resources :recipients do
+    collection do
+      get :search
+    end
+  end
+  # gift_ideas
+  resources :gift_ideas, only: [:new, :create, :show]
+  get "/list_gifts", :to => "gift_ideas#list", as: :list_gifts
+  get "/add_gifts", :to => "gift_ideas#add", as: :add_gifts
+  post "/add_gifts", :to => "gift_ideas#list"
+  #get "/edit_gift", :to => "gift_idea#edit"
+  #get "/search_gifts", :to => "gift_ideas#search", as: :search_gifts
 end

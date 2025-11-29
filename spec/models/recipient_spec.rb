@@ -22,4 +22,17 @@ RSpec.describe Recipient, type: :model do
     recipient = user.recipients.create(name: 'Mom')
     expect { user.destroy }.to change(Recipient, :count).by(-1)
   end
+
+  it 'has many events through event_recipients' do
+    recipient = user.recipients.create(name: 'Mom')
+    event = user.events.create(name: 'Christmas', date: Date.today)
+    recipient.events << event
+    expect(recipient.events.count).to eq(1)
+  end
+
+  it 'can store likes and dislikes' do
+    recipient = user.recipients.create(name: 'Mom', likes: 'gardening', dislikes: 'sports')
+    expect(recipient.likes).to eq('gardening')
+    expect(recipient.dislikes).to eq('sports')
+  end
 end
