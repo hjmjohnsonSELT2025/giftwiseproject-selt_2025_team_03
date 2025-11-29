@@ -142,7 +142,7 @@
 }
 
 .recipient-form-card {
-    background-color: #2d4293; /* matches .recipient-container */
+    background-color: #2d4293; 
     border-radius: 24px;
     padding: 24px 24px 20px;
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
@@ -150,7 +150,6 @@
     max-width: 640px;
 }
 
-/* Inner layout */
 
 .recipient-form .form-header {
     margin-bottom: 16px;
@@ -191,8 +190,6 @@
     color: var(--light-text);
 }
 
-/* Slightly tighten field visuals to feel like other forms */
-
 .recipient-form .input-field {
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.12);
@@ -210,8 +207,6 @@
     outline: 2px solid rgba(255, 255, 255, 0.28);
     outline-offset: 0;
 }
-
-/* Footer buttons */
 
 .recipient-form .form-footer {
     margin-top: 24px;
