@@ -26,7 +26,7 @@ class GiftIdeasController < ApplicationController
 
   def list
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
-    @upcoming_gifts = current_user.gift_ideas
+    @gift_ideas = current_user.gift_ideas.order(:title) 
     render :list
   end
 
