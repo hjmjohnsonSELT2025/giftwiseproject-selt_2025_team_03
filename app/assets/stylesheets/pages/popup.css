@@ -30,6 +30,10 @@
         transform .08s ease,
         padding-left .08s ease;
 }
+ a {
+    text-decoration: none;
+    color: var(--light-text);
+}
 
 
 
