@@ -6,6 +6,9 @@ eagerLoadControllersFrom("controllers", application)
 import recipients_controller from "controllers/recipients_controller"
 application.register("recipients", recipients_controller)
 
+import new_recipient_controller from "controllers/new_recipient_controller"
+application.register("new-recipient", new_recipient_controller)
+
 import login_controller from "controllers/login_controller"
 application.register("login", login_controller)
 
@@ -14,3 +17,4 @@ application.register("profile-menu", profile_controller)
 
 import new_user_controller from "controllers/new_user_controller"
 application.register("new-user", new_user_controller)
+

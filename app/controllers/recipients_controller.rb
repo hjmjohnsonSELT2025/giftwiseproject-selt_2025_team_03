@@ -31,6 +31,7 @@ class RecipientsController < ApplicationController
 
   def new 
     @recipient = current_user.recipients.new
+    @events = current_user.events.order(:name)
   end
 
   def create 
@@ -43,7 +44,7 @@ class RecipientsController < ApplicationController
   end
 
   def edit
-    
+    @event = current_user.events.order(:name)
   end
   def update
     if @recipient.update(recipient_params)
@@ -64,7 +65,7 @@ class RecipientsController < ApplicationController
   end
 
   def recipient_params
-    params.require(:recipient).permit(:name, :birthday, :relationship, :likes, :dislikes)
+    params.require(:recipient).permit(:name, :birthday, :relationship, :relationship_other, :likes, :dislikes, event_ids: [])
   end
 
   def set_scope

@@ -1,6 +1,6 @@
 <%= render "shared/sidebar_layout" %>
 
-<main class="main-content">
+<main class="main-content" data-controller="new-recipient">
   <div class="top-bar">
     <h1 class="page-title">Add New Recipient</h1>
     <%= render "shared/profile_dropdown" %>
@@ -35,15 +35,17 @@
 
           <%# Relationship %>
           <div class="input-group">
-            <%= r.label :relationship, "Relationship", class: "input-label" %>
+            <%= r.label :relationship, "Relationship (optional)", class: "input-label" %>
             <%= r.select :relationship,
                   options_for_select(
                     ["Parent", "Sibling", "Partner", "Child", "Relative",
                      "Friend", "Coworker", "Other"],
-                    @recipient.relationship
-                  ),
+                    @recipient.relationship),
                   { include_blank: "Select relationship" },
-                  class: "input-field" %>
+                  class: "input-field", id: "relationship-selector" %>
+            <div class='input-group hidden' id='other-relationship-wrap'>
+              <%= r.text_field :relationship_other, maxlength: 50, placeholder: "Other", class: "input-field" %>
+            </div>
           </div>
 
           <%# Birthday %>
@@ -72,8 +74,8 @@
         </div>
 
         <div class="form-footer">
-          <%= r.submit "Save recipient", class: "primary-button" %>
-          <%= link_to "Cancel", recipients_path, class: "link-button" %>
+          <%= r.submit "Save recipient", class: "button primary" %>
+          <%= link_to "Cancel", recipients_path, class: "button" %>
         </div>
       <% end %>
     </div>
