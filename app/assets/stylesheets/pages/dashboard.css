@@ -1,5 +1,6 @@
 /* Dashboard page styles */
 
+
 .dashboard_index {
     background-color: var(--dark-blue-bg);
     color: var(--light-text);
@@ -162,11 +163,22 @@
 }
 
 .stat-icon {
+    display: flex;
     width: 40px;
     height: 40px;
     border-radius: 10px;
     background: linear-gradient(135deg, var(--brown-accent), #b88968);
     margin-bottom: 12px;
+    align-items: center;
+    justify-content: center;
+}
+.stat-icon svg {
+    color:white;
+    width: 26px;
+    height: auto;
+}
+.stat-icon svg {
+    fill:white;
 }
 
 .stat-value {
