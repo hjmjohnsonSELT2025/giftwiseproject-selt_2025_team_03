@@ -5,7 +5,7 @@
   --accent: var(--prim-1-c, #9d6f57);
   --accent-strong: var(--prim-0-c, #6c4c3a);
   --radius: 18px;
-
+  
   display: grid;
   grid-template:
     "col1  col2  options" auto
@@ -22,11 +22,12 @@
 .recipient-container.view .col1 { grid-area: col1; display: grid; gap: 14px; }
 .recipient-container.view .col2 { grid-area: col2; display: grid; gap: 14px; }
 .recipient-container.view .options {
-  grid-area: options;
-  display: grid;
+  /*grid-area: options; */
+  display: flex;
   align-content: start;
   justify-items: end;
   gap: 12px;
+  margin-right: 4px;
 }
 
 
@@ -330,5 +331,27 @@ input[type=submit].primary {
   cursor: pointer;
 }
 
-
-
+.search-form {
+  display: flex;
+  align-items: flex-start;
+}
+.search-button {
+background-color: var(--brown-accent);
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  margin-left: -35px;
+  cursor: pointer;
+  transition: transform .08s ease, border-color .2s ease, background .2s ease;
+}
+.search-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+  border-color: var(--accent);
+}

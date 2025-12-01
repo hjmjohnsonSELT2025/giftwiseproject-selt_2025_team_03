@@ -1,21 +1,31 @@
-    <%= render "shared/sidebar_layout" %>
+<%= render "shared/sidebar_layout" %>
 
-    <main class="main-content">
+<main class="main-content">
     <div class="top-bar">
-    <h1 class="page-title">Recipients</h1>
-    <%= render "shared/profile_dropdown" %>
+        <h1 class="page-title">Recipients</h1>
+        <%= render "shared/profile_dropdown" %>
     </div>
 
     <div class="view-options container">
-    <!-- id='search-recipients', class='input-field' -->
-    <%= form_with url: recipients_path, method: :get, 
-        data: { controller: "recipients", turbo_frame: "recipients_list" },
-        class: "search-form" do %>
-        <input type='search' name='query' class='input-field' value="<%= params[:query].to_s %>"
-            placeholder="Search for recipient...">
-    <% end %>
+        <!-- id='search-recipients', class='input-field' -->
+        <%= form_with url: recipients_path, 
+                    method: :get, 
+                    data: { 
+                        controller: "recipients", 
+                        turbo_frame: "recipients_list" 
+                    },
+                    class: "search-form" do %>
+
+            <%= text_field_tag :query,
+                            params[:query].to_s,
+                            type: "search",
+                            class: "input-field",
+                            placeholder: "Search for recipient..." %>
+            <%= button_tag type: "submit", class: "search-button", title: "Search" do %>
+                <%= icon :search, class: "icon" %>
+            <% end %>
+        <% end %>
     </div>
-    
     <%= render @recipients %>
 </main>
 
