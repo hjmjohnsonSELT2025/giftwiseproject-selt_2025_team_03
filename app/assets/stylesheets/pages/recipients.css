@@ -1,18 +1,126 @@
-.view, .recipient-container {
+body {
+  background-color: var(--dark-blue-bg);
+  color: white;
+}
+main {
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
-
-.view, .col {
+.recipient-container.view {
+  background-color: #2d4293;
   display: flex;
   flex-direction: row;
-  gap: 8px;
+  min-height: 200px;
+  border-radius: 16px;
+  padding: 10px 20px;
 }
 
-.view .row {
+ .col1, .col2, .options {
   display: flex;
   flex-direction: column;
-  
-  /*! order: ; */
-  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding: 10px;
+  margin: 5px;
+}
+.col1, .col2 { flex: 2; }
+.options {
+  flex: 0.6;
+}
+
+.col1 .recipient-header {
+  display: flex;
+  gap: 20px;
+  flex-direction: row;
+  font-size: 18pt;
+  font-weight: bold;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  border-bottom: 1px solid var(--brown-accent);
+  margin-bottom: 1em;
+}
+.col1 .recipient-header.detail-label {
+  justify-self: center;
+}
+.name {
+  padding-right: 20px;
+}
+.events {
+  display: flex;
+  flex-direction: column;
+}
+/*
+.events .detail-label {
+  align-self: center;
+  text-align: center;
+  padding-bottom: 5px;
+  width: 20%;
+  color: black;
+  font-weight: bold;
+  border-bottom: 0.2px dashed white;
+}
+*/
+.events .details {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 20px;
+  gap: 20px;
+}
+.value {
+  padding: 10px;
+  border: 2px solid rgba(255,0,0,.5);
+  border-radius: 20px;
+}
+.likes, .dislikes {
+  display: flex;
+  height: 50%;
+  flex-direction: column;
+}
+.detail-label {
+  align-self: flex-start;
+  width: 40%;
+  text-align: left;
+  color: var(--text-light);
+  margin-bottom: 5px;
+}
+.likes .details {
+  color: #aaffab;
+}
+.dislikes .details {
+  color: #ff6666;
+}
+.options {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.option {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+  background-color: var(--brown-accent);
+  align-items: center;
+  justify-content: center;
+  transition: all .3s ease;
+}
+.option:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  transform: scale(1.1);
+}
+.option::after {
+  transform: scale(1.0);
+}
+
+.icon {
+  width: 32px;
+  height: auto;
+}
+
+.add-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :recipients do
     collection do
       get :search
+      
     end
   end
   # gift_ideas
