@@ -43,9 +43,7 @@ class RecipientsController < ApplicationController
   def create
     attrs = recipient_params.to_h
     attrs[:birthday] = nil if attrs[:birthday].blank?
-    if attrs[:relationship_other].present?
-      attrs[:relationship] = attrs[:relationship_other]
-    end
+    
     attrs.delete(:relationship_other)
     @recipient = current_user.recipients.new(attrs)
     if @recipient.save
@@ -58,15 +56,14 @@ class RecipientsController < ApplicationController
 
   def edit
     @events = current_user.events.order(:name)
+    unless RecipientsController::REL_OPTIONS.include?(@recipient.relationship)
+        @recipient.relationship_other = @recipient.relationship
+        @recipient.relationship = "Other"
+    end
   end
   
   def update
-    attrs = recipient_params.to_h
-    attrs[:birthday] = nil if attrs[:birthday].blank?
-    if attrs[:relationship_other].present?
-      attrs[:relationship] = attrs[:reltionship_other]
-    end
-    attrs.delete(:relationship_other)
+    attrs = normalized_params
     if @recipient.update(attrs)
       redirect_to recipients_path, notice: "Recipient updated."
     else
@@ -81,12 +78,26 @@ class RecipientsController < ApplicationController
   end
 
   private
+  REL_OPTIONS = ["Parent", "Sibling", "Partner/Spouse", "Child", "Relative", "Friend", "Coworker", "Other"]
   def set_recipient
     @recipient = @current_user.recipients.find(params[:id])
   end
 
   def recipient_params
-    params.require(:recipient).permit(:name, :birthday, :relationship, :relationship_other, :likes, :dislikes, event_ids: [])
+    params.require(:recipient).permit(:name, :birthday, :relationship, :likes, :dislikes, event_ids: [])
+  end
+
+  def normalized_params
+    attrs = recipient_params.to_h
+    # bday
+    attrs[:birthday] = nil if attrs[:birthday].blank?
+    # other--
+    if attrs[:relationship] == "Other"
+      other = attrs[:relationship_other].to_s.strip
+      attrs[:relationship] = other if other.present?
+    end
+    attrs.delete(:relationship_other)
+    attrs
   end
 
   def set_scope

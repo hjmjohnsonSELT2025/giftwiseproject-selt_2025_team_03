@@ -1,6 +1,6 @@
 <%# New/update form for recipient %>
 <%= form_with model: @recipient, 
-              class: "patch-recipient" do |f| %>
+              class: "patch-recipient", data: {controller: "new-recipient"} do |f| %>
     <div class='decorative-line'></div>
     <div class='form-header'>
         <h2 class='heading'>Recipient details</h2>
@@ -20,10 +20,9 @@
                 ["Parent", "Sibling", "Partner/Spouse", "Child", "Relative",
                 "Friend", "Coworker", "Other"], @recipient.relationship),
                 {include_blank: "Select relationship" },
-                class: "input-field", id: "relationship-selector" 
-        %>
+                class: "input-field", id: "relationship-selector" %>
         <div class='input-group hidden' id='other-relationship-wrap'>
-            <%= f.text_field :relationship_other, maxlength: 50, placeholder: "Other", class: "input-field" %>
+            <%= f.text_field :relationship_other, maxlength: 50, placeholder: "Other", class: "input-field", id: "other-text-field" %>
         </div>
     </div>
 

@@ -8,7 +8,7 @@ export default class extends Controller {
         
         const toggle = () => {
             const isOther = this.$select.val() === "Other"
-            this.$area.prop("hidden", !isOther)
+            $(this.$area).toggleClass("hidden", !isOther)
         }
         toggle()
         this.$select.on('change', toggle)
