@@ -44,7 +44,7 @@ class RecipientsController < ApplicationController
   end
 
   def edit
-    @event = current_user.events.order(:name)
+    @events = current_user.events.order(:name)
   end
   def update
     if @recipient.update(recipient_params)
