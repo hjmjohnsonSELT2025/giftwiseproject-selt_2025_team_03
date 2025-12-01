@@ -34,11 +34,18 @@ class RecipientsController < ApplicationController
     @events = current_user.events.order(:name)
   end
 
-  def create 
-    @recipient = current_user.recipients.new(recipient_params)
+  def create
+    attrs = recipient_params.to_h
+    attrs[:birthday] = nil if attrs[:birthday].blank?
+    if attrs[:relationship_other].present?
+      attrs[:relationship] = attrs[:relationship_other]
+    end
+    attrs.delete(:relationship_other)
+    @recipient = current_user.recipients.new(attrs)
     if @recipient.save
       redirect_to recipients_path(@current_user), notice: "Recipient created."
     else
+      @events = current_user.events.order(:name)
       render :new, status: :unprocessable_entity
     end
   end
@@ -46,10 +53,18 @@ class RecipientsController < ApplicationController
   def edit
     @events = current_user.events.order(:name)
   end
+  
   def update
-    if @recipient.update(recipient_params)
+    attrs = recipient_params.to_h
+    attrs[:birthday] = nil if attrs[:birthday].blank?
+    if attrs[:relationship_other].present?
+      attrs[:relationship] = attrs[:reltionship_other]
+    end
+    attrs.delete(:relationship_other)
+    if @recipient.udpate(attrs)
       redirect_to recipients_path, notice: "Recipient updated."
     else
+      @events = current_user.events.order(:name)
       render :edit, status: :unprocessable_entity
     end
   end

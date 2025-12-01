@@ -295,7 +295,6 @@ body { margin: 0; }
 #recipient_likes { color: #aaffab; }
 #recipient_dislikes { color: #ff6666; }
 
-/* Footer buttons */
 .patch-recipient .form-footer {
   grid-column: 1 / -1;
   display: flex;
