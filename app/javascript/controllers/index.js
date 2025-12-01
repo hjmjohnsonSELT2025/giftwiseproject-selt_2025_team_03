@@ -3,8 +3,6 @@ import { application } from "controllers/application"
 import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
 eagerLoadControllersFrom("controllers", application)
 
-import recipients_controller from "controllers/recipients_controller"
-application.register("recipients", recipients_controller)
 
 import new_recipient_controller from "controllers/new_recipient_controller"
 application.register("new-recipient", new_recipient_controller)

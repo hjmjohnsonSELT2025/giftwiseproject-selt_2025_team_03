@@ -3,7 +3,13 @@ class RecipientsController < ApplicationController
   before_action :set_recipient, only: [:show, :edit, :update, :destroy]
   before_action :set_scope, only: [:index, :search]
   def index
-    @recipients = @current_user.recipients.order(:name)    
+    @recipients = @current_user.recipients
+      .includes(:events)
+      .order(:name)
+    if params[:query].present?
+      q = "%#{params[:query].downcase}%"
+      @recipients = @recipients.where("LOWER(recipients.name) LIKE ?", q)
+    end
   end
 
   def search
@@ -61,7 +67,7 @@ class RecipientsController < ApplicationController
       attrs[:relationship] = attrs[:reltionship_other]
     end
     attrs.delete(:relationship_other)
-    if @recipient.udpate(attrs)
+    if @recipient.update(attrs)
       redirect_to recipients_path, notice: "Recipient updated."
     else
       @events = current_user.events.order(:name)

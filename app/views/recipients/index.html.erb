@@ -7,18 +7,15 @@
     </div>
 
     <div class="view-options container">
-    <input 
-        type="text" 
-        placeholder="Search for recipient" 
-        id="search-recipients" 
-        class="input-field"
-        data-search-url="<%= search_recipients_path %>"
-        data-recipients-target="search"
-        data-action="input->recipients#onSearch"
-    >
-    <div class="container">
+    <!-- id='search-recipients', class='input-field' -->
+    <%= form_with url: recipients_path, method: :get, 
+        data: { controller: "recipients", turbo_frame: "recipients_list" },
+        class: "search-form" do %>
+        <input type='search' name='query' class='input-field' value="<%= params[:query].to_s %>"
+            placeholder="Search for recipient...">
+    <% end %>
     </div>
-    </div>
+    
     <%= render @recipients %>
 </main>
 
