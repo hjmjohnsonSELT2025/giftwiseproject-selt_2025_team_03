@@ -9,7 +9,8 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
   validates :first_name, :last_name, presence: true
-
+  validates :password, presence: true, on: :create
+  
   before_save :downcase_email
   private
   def downcase_email

@@ -2,7 +2,7 @@
 <%= render layout: 'shared/primary_layout', data: { controller: "login" } do %>  
   <%= form_with url: login_path, 
                 method: :post, 
-                data: { turbo: false, action: "turbo:submit-start->users--login#submitStart" },
+                data: { action: "turbo:submit-start->users--login#submitStart" },
                 class: "sign-in-form" do %>
     <div class="decorative-line"></div>
     <h1 class="sign-in-heading">Sign in</h1>

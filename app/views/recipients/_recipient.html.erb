@@ -3,7 +3,17 @@
         <div class='col1'>
             <div class='recipient-header'>
                 <div class='name'><%= recipient.name %></div>
-                <div class='ri'><%= recipient.relationship.presence || '' %></div>
+                <div class='ri'>
+                    <% if recipient.relationship.present? %>
+                        <% if recipient.relationship == "Other" && recipient.relationship_other.present? %>
+                            <%= recipient.relationship_other %>
+                        <% else %>
+                            <%= recipient.relationship %>
+                        <% end %>
+                    <% else %>
+                        <%= "" %>
+                    <% end %>
+                </div>
             </div>
 
             <div class='events'>

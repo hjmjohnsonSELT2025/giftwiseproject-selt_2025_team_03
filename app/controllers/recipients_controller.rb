@@ -13,25 +13,13 @@ class RecipientsController < ApplicationController
   end
 
   def search
-      query = params[:query].to_s.strip
-      recipients = if query.present?
-        pattern = "%#{query.downcase}%"
-        @scope.where("LOWER(recipients.name) LIKE ?", pattern)
-      else
-        @scope.order(:name)
-      end
-      render json: {
-        recipients: recipients.map { |r| 
-        {
-          id: r.id,
-          name: r.name,
-          relationship: r.relationship,
-          events: r.events.map(&:name),
-          likes: r.likes,
-          dislikes: r.dislikes
-        }
-      }
-      }, status: :ok
+    query = params[:query].to_s.strip
+    if query.present?
+      pattern = "%#{query.downcase}%"
+      @scope.where("LOWER(recipients.name) LIKE ?", pattern)
+    else
+      @scope.order(:name)
+    end
   end
   def show; end
 
@@ -41,13 +29,10 @@ class RecipientsController < ApplicationController
   end
 
   def create
-    attrs = recipient_params.to_h
-    attrs[:birthday] = nil if attrs[:birthday].blank?
-    
-    attrs.delete(:relationship_other)
+    attrs = normalized_params
     @recipient = current_user.recipients.new(attrs)
     if @recipient.save
-      redirect_to recipients_path(@current_user), notice: "Recipient created."
+      redirect_to recipients_path, notice: "Recipient created."
     else
       @events = current_user.events.order(:name)
       render :new, status: :unprocessable_entity
@@ -56,10 +41,6 @@ class RecipientsController < ApplicationController
 
   def edit
     @events = current_user.events.order(:name)
-    unless RecipientsController::REL_OPTIONS.include?(@recipient.relationship)
-        @recipient.relationship_other = @recipient.relationship
-        @recipient.relationship = "Other"
-    end
   end
   
   def update
@@ -78,25 +59,19 @@ class RecipientsController < ApplicationController
   end
 
   private
-  REL_OPTIONS = ["Parent", "Sibling", "Partner/Spouse", "Child", "Relative", "Friend", "Coworker", "Other"]
-  def set_recipient
-    @recipient = @current_user.recipients.find(params[:id])
-  end
-
+  RELATIONSHIP_DEFAULTS = ["Parent", "Sibling", "Partner/Spouse", "Child", "Relative", "Friend", "Coworker", "Other"]
+  
   def recipient_params
-    params.require(:recipient).permit(:name, :birthday, :relationship, :likes, :dislikes, event_ids: [])
+    params.require(:recipient).permit(:name, :birthday, :relationship, :relationship_other, :likes, :dislikes, event_ids: [])
   end
-
+  def set_recipient
+    @recipient = current_user.recipients.find(params[:id])
+  end
   def normalized_params
     attrs = recipient_params.to_h
-    # bday
-    attrs[:birthday] = nil if attrs[:birthday].blank?
-    # other--
-    if attrs[:relationship] == "Other"
-      other = attrs[:relationship_other].to_s.strip
-      attrs[:relationship] = other if other.present?
+    attrs.each do |key, val|
+        attrs[key] = nil if val.blank?
     end
-    attrs.delete(:relationship_other)
     attrs
   end
 

@@ -1,0 +1,65 @@
+<% form_url = @user.persisted? ? profile_path : users_path %>
+
+<%= render "shared/primary_layout" do %>
+  <%= form_with model: @user, class: "register-form", url: form_url do |u| %>
+
+    <div class="form-header">
+      <div class="decorative-line"></div>
+      <% if current_user.present? %>
+        <h1 class="register-heading">Update Profile</h1>
+      <% else %>
+        <h1 class="register-heading">Register</h1>
+      <% end %>
+    </div>
+
+    <div class="input-group">
+      <%= u.label :first_name, "First Name", class: "input-label" %>
+      <%= u.text_field :first_name, max_length: 30, class: "input-field required" %>
+    </div>
+
+    <div class="input-group">
+      <%= u.label :last_name, "Last Name", class: "input-label" %>
+      <%= u.text_field :last_name, max_length: 30, class: "input-field required" %>
+    </div>
+
+    <div class="input-group">
+      <%= u.label :email, "Email", class: "input-label" %>
+      <%= u.text_field :email, class: "input-field email-field required" %>
+    </div>
+
+    <div class="input-group">
+      <%= u.label :username, "Username", class: "input-label" %>
+      <%= u.text_field :username, class: "input-field required" %>
+    </div>
+
+    <div class="input-group">
+      <%= u.label :password, "Password", class: "input-label" %>
+      <%= u.password_field :password, class: "input-field" %>
+    </div>
+
+    <div class="input-group">
+      <%= u.label :password_confirmation, "Confirm password", class: "input-label" %>
+      <%= u.password_field :password_confirmation, class: "input-field" %>
+    </div>
+
+    <div class="input-group">
+      <%= u.label :birthday, "Birthday", class: "input-label" %>
+      <%= u.date_field :birthday, class: "input-field" %>
+    </div>
+
+    <div class="form-actions">
+      <% if current_user.present? %>
+        <div class='action-footer'>
+          <%= button_to "Cancel", dashboard_path, method: :get, class: "login-button cancel" %>
+          <%= u.submit "Save", class: "login-button" %>
+        </div>
+      <% else %>
+        <%= u.submit "Create my account", class: "login-button" %>
+        <div class="bottom-link">
+          <p>Already have an account? <%= link_to "Login", login_path %></p>
+        </div>
+      <% end %>
+    </div>
+
+  <% end %>
+<% end %>

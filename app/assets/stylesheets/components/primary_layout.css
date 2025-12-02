@@ -1,14 +1,16 @@
 /* Shared primary layout styles - used by both login and register pages */
 
 .users_login,
-.users_new {
+.users_new,
+.users_edit {
     background-color: var(--dark-blue-bg);
     color: var(--light-text);
 }
 
 /* Main container */
 .users_login .sign-in-container,
-.users_new .sign-in-container {
+.users_new .sign-in-container,
+.users_edit .sign-in-container {
     min-height: 100vh;
     width: 66.666%;
     padding: 80px 60px;
@@ -22,7 +24,8 @@
 
 /* Brown circle in left corner */
 .users_login .decorative-circle,
-.users_new .decorative-circle {
+.users_new .decorative-circle,
+.users_edit .decorative-circle {
     position: absolute;
     top: -180px;
     left: -150px;
@@ -36,7 +39,8 @@
 
 /* Large brown rectangle on the right - 1/3 width, full height */
 .users_login .brown-rectangle,
-.users_new .brown-rectangle {
+.users_new .brown-rectangle,
+.users_edit .brown-rectangle {
     position: fixed;
     top: 0;
     right: 0;
@@ -48,7 +52,8 @@
 
 /* GiftWise header in top right on brown rectangle */
 .users_login .giftwise-header,
-.users_new .giftwise-header {
+.users_new .giftwise-header,
+.users_edit .giftwise-header {
     position: fixed;
     top: 50px;
     right: 60px;
@@ -61,7 +66,8 @@
 
 /* Three  white rectangles at bottom of brown rectangle */
 .users_login .brown-rectangle-bars,
-.users_new .brown-rectangle-bars {
+.users_new .brown-rectangle-bars,
+.users_edit .brown-rectangle-bars {
     position: fixed;
     bottom: 60px;
     right: 0;
@@ -73,7 +79,8 @@
 }
 
 .users_login .white-bar,
-.users_new .white-bar {
+.users_new .white-bar,
+.users_edit .white-bar {
     width: 100%;
     height: 8px;
     background-color: #ffffff;
@@ -82,7 +89,8 @@
 
 /* Brown decorative line - left aligned with form */
 .users_login .decorative-line,
-.users_new .decorative-line {
+.users_new .decorative-line,
+.users_edit .decorative-line {
     width: 60px;
     height: 5px;
     background-color: var(--brown-accent);
@@ -95,7 +103,8 @@
 
 /* Sign in/Register heading - left aligned with form */
 .users_login .sign-in-heading,
-.users_new .register-heading {
+.users_new .register-heading,
+.users_edit .register-heading {
     font-size: 36px;
     font-weight: 600;
     color: var(--light-text);
@@ -108,7 +117,8 @@
 
 /* Form styling - centered in left area */
 .users_login .sign-in-form,
-.users_new .register-form {
+.users_new .register-form,
+.users_edit .register-form {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -143,4 +153,38 @@
 .users_login .bottom-link a:hover,
 .users_new .bottom-link a:hover {
     opacity: 0.8;
+}
+
+.action-footer {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+.action-footer .login-button.cancel {
+    background-color: #2d4293;
+    color: white;
+}
+@media (min-width: 1024px) {
+  .users_new .register-form,
+  .users_edit .register-form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 40px;
+      row-gap: 24px;
+      max-width: 700px;
+  }
+
+  /* header and actions span full width */
+  .users_new .form-header,
+  .users_edit .form-header,
+  .users_new .form-actions,
+  .users_edit .form-actions {
+      grid-column: 1 / -1;
+  }
+
+  
+  .users_new .register-form .input-group,
+  .users_edit .register-form .input-group {
+      margin-bottom: 0;
+  }
 }

@@ -1,18 +1,22 @@
-<details class='profile-dropdown' id='profile-dropdown-menu' data-controller="profile-menu">
+<details class='profile-dropdown' id='profile-dropdown-menu' data-controller="profile-dropdown">
     <summary class='user-profile' id='profile-link' aria-haspopup='menu'>
         <div class='user-info'>
-        <div class='user-name'><%= @current_user.first_name %> <%= @current_user.last_name %></div>
-        <div class='user-role'>Gift Coordinator</div>
+            <div class='user-name'><%= @current_user.first_name %> <%= @current_user.last_name %></div>
+            <div class='user-role'>Gift Coordinator</div>
         </div>
-        <div class='user-avatar'></div>
+        <div class='user-avatar'>
+            <%= @current_user.first_name[0] || "" %><%= @current_user.last_name[0] || "" %>
+        </div>
     </summary>
     <div class='menu' role='menu' aria-labelledby='profile-link' id='profile-menu-details'>
         <div class='menu-options'>
-        <!-- <a class='menu-option-item stat-card' role='menuitem' href='%<%= users_profile rescue "/" %>'>Proile Settings</a> -->
-        <%= link_to "Logout", logout_path,
-            data: { turbo_method: :delete },
-            class: "menu-option-item stat-card",
+        <%= button_to "Edit Profile", edit_profile_path, method: :get, class: "menu-option-item", role: "menuitem" %>
+        <%= button_to "Logout", logout_path,
+            method: :delete,
+            class: "menu-option-item",
             role: "menuitem" %>
         </div>
     </div>
 </details>
+
+

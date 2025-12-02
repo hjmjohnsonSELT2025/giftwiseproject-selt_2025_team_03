@@ -19,7 +19,7 @@
               options_for_select(
                 ["Parent", "Sibling", "Partner/Spouse", "Child", "Relative",
                 "Friend", "Coworker", "Other"], @recipient.relationship),
-                {include_blank: "Select relationship" },
+                {include_blank: "None" },
                 class: "input-field", id: "relationship-selector" %>
         <div class='input-group hidden' id='other-relationship-wrap'>
             <%= f.text_field :relationship_other, maxlength: 50, placeholder: "Other", class: "input-field", id: "other-text-field" %>

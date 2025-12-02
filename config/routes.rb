@@ -17,13 +17,14 @@ Rails.application.routes.draw do
   post '/login', :to => 'users#authorize'
   delete '/logout', :to => 'users#logout', as: :logout
   resources :users, only: [:new, :create, :show]
+  resource :profile, only: [:edit, :update], controller: "users"
+
   post 'users/check_email', :to => "users#check_email"
   post 'users/check_username', :to => "users#check_username"
   # recipients
   resources :recipients do
     collection do
       get :search
-      
     end
   end
   # gift_ideas
