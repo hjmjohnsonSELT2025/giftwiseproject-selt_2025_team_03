@@ -163,6 +163,9 @@
 .action-footer .login-button.cancel {
     background-color: #2d4293;
     color: white;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 @media (min-width: 1024px) {
   .users_new .register-form,

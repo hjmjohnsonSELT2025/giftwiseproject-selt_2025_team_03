@@ -50,7 +50,7 @@
     <div class="form-actions">
       <% if current_user.present? %>
         <div class='action-footer'>
-          <%= button_to "Cancel", dashboard_path, method: :get, class: "login-button cancel" %>
+          <%= link_to "Cancel", dashboard_path, class: "login-button cancel" %>
           <%= u.submit "Save", class: "login-button" %>
         </div>
       <% else %>
