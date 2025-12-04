@@ -1,0 +1,132 @@
+<%= render "shared/sidebar_layout" %>
+<main class='main-content' data-controller="events-search">
+  <div class='top-bar'>
+    <h1 class='page-title'>Events</h1>
+    <%= render 'shared/profile_dropdown' %>
+  </div>
+
+  <div class='view-options'>
+    <input
+      type='text'
+      placeholder='Search for event'
+      id='search-events'
+      class='input-field'
+      data-search-url='<%= search_events_path %>'
+      data-events-search-target="input"
+      data-action="input->events-search#search"
+    >
+    <%= link_to "Add Event", new_event_path, class: "login-button" %>
+  </div>
+
+  <%# Template for an event card %>
+  <template id='event-card'>
+    <div class='event-container' data-event-id=''>
+      <div class='event-header'>
+        <div>
+          <div class='event-name' name='name'></div>
+          <div class='event-date' name='date'></div>
+        </div>
+      </div>
+      <div class='event-details'>
+        <div class='detail-row'>
+          <div class='detail-label'>Location</div>
+          <div class='detail-value'>
+            <div name='location'></div>
+          </div>
+        </div>
+        <div class='detail-row'>
+          <div class='detail-label'>Theme</div>
+          <div class='detail-value'>
+            <div name='theme'></div>
+          </div>
+        </div>
+        <div class='detail-row'>
+          <div class='detail-label'>Budget</div>
+          <div class='detail-value'>
+            <div name='budget'></div>
+          </div>
+        </div>
+        <div class='detail-row'>
+          <div class='detail-label'>Recipients</div>
+          <div class='detail-value'>
+            <div name='recipients'></div>
+          </div>
+        </div>
+        <div class='detail-row'>
+          <div class='detail-label'>Days Until</div>
+          <div class='detail-value'>
+            <div name='days_until'></div>
+          </div>
+        </div>
+      </div>
+      <div class='event-actions'>
+        <a href='#' class='event-action-link' data-action='view'>View</a>
+        <a href='#' class='event-action-link' data-action='edit'>Edit</a>
+        <%= link_to "Delete", "#",
+                    method: :delete,
+                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                    class: "event-action-link delete-link" %>
+      </div>
+    </div>
+  </template>
+
+  <%# Node for template card to be rendered at - NOW WITH SERVER-RENDERED EVENTS %>
+  <div id='event-results' class='events-list' data-events-search-target="results">
+    <% if @events.empty? %>
+      <div class='empty-state'>
+        <p>No events yet. Create your first event to get started!</p>
+      </div>
+    <% else %>
+      <% @events.each do |event| %>
+        <div class='event-container' data-event-id='<%= event.id %>'>
+          <div class='event-header'>
+            <div>
+              <div class='event-name'><%= event.name %></div>
+              <div class='event-date'><%= event.date.strftime("%B %d, %Y") %></div>
+            </div>
+          </div>
+          <div class='event-details'>
+            <div class='detail-row'>
+              <div class='detail-label'>Location</div>
+              <div class='detail-value'>
+                <div><%= event.location || "N/A" %></div>
+              </div>
+            </div>
+            <div class='detail-row'>
+              <div class='detail-label'>Theme</div>
+              <div class='detail-value'>
+                <div><%= event.theme || "N/A" %></div>
+              </div>
+            </div>
+            <div class='detail-row'>
+              <div class='detail-label'>Budget</div>
+              <div class='detail-value'>
+                <div>$<%= event.budget || 0 %></div>
+              </div>
+            </div>
+            <div class='detail-row'>
+              <div class='detail-label'>Recipients</div>
+              <div class='detail-value'>
+                <div><%= event.recipients.count %> recipients</div>
+              </div>
+            </div>
+            <div class='detail-row'>
+              <div class='detail-label'>Days Until</div>
+              <div class='detail-value'>
+                <div><%= event.days_until %> days</div>
+              </div>
+            </div>
+          </div>
+          <div class='event-actions'>
+            <%= link_to "View", event_path(event), class: "event-action-link" %>
+            <%= link_to "Edit", edit_event_path(event), class: "event-action-link" %>
+            <%= link_to "Delete", event_path(event),
+                        method: :delete,
+                        data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                        class: "event-action-link delete-link" %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</main>
