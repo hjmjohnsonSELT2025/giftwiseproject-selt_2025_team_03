@@ -4,7 +4,7 @@ Given("I am on the dashboard") do
   @user = User.find_by(username: "testuser") ||
           User.create!(
             username: "testuser",
-            email: "testuser@example.com", # <--- required
+            email: "testuser@example.com",
             password: "password",
             first_name: "Test",
             last_name: "User"
@@ -32,8 +32,16 @@ Then("I should see a list of recent activity") do
   expect(page).to have_text("Recent Activity")
 end
 
-When("I click the button {string}") do |button|
-  click_button(button)
+When("I click the dashboard button {string}") do |button_text|
+  if button_text == "Profile"
+    find('#profile-link').click          # open dropdown
+    find('a', text: 'Profile Settings').click
+  elsif button_text == "Logout"
+    find('#profile-link').click          # open dropdown
+    find('a', text: 'Logout').click
+  else
+    click_on(button_text)                # everything else works normally
+  end
 end
 
 Then("I should see the {string} page") do |text|

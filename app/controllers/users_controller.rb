@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_authorization, :only => [:show, :logout]
+  before_action :require_authorization, :only => [:show, :logout, :edit, :update]
   before_action :redirect_if_authorized, :only => [:login, :new, :create]
 
   def show
@@ -9,6 +9,19 @@ class UsersController < ApplicationController
   def login
 
   end
+  def edit
+    @user = current_user
+  end
+
+  def update
+    @user = current_user
+    if @user.update(user_params)
+      redirect_to dashboard_path, notice: "Profile updated."
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   def authorize 
     username = params[:username].to_s.strip
     user = User.where('lower(username) = ?', username.downcase).first
@@ -23,8 +36,7 @@ class UsersController < ApplicationController
     end
   end
   def new
-    #@user = User.new
-    @user = User.new(params[:user])
+    @user = User.new
   end
   def create
     @user = User.new(user_params)
@@ -32,7 +44,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to dashboard_path, notice: "Welcome, #{@user.username}!"
     else
-      Rails.logger.warn "Failed to create an account: #{user.errors.full_messages.to_sentence}"
+      Rails.logger.warn "Failed to create an account: #{@user.errors.full_messages.to_sentence}"
       render :new, status: :unprocessable_entity
     end
   end

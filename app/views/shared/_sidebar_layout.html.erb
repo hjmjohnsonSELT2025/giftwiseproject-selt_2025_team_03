@@ -12,43 +12,55 @@
 
 <nav>
     <ul class="nav-menu">
-    
+    <%# Dashboard %>
     <%= link_to dashboard_path class: 'nav-link', data: {turbo: false}  do %>
         <li class="nav-item<%= ' active' if current_page?(dashboard_path)%>">
             <span>Dashboard</span>
         </li>
     <% end %>
 
-      <%= link_to new_event_path, class: 'nav-link', data: {turbo: false} do %>
-        <li class="nav-item<%= ' active' if controller_name == 'events'%>">
-          <span>Events</span>
+<!--        TODO: Uncomment once page established. -->
+    <%# Events %>
+    <%= link_to new_event_path class: 'nav-link', data: {turbo: false} do %>
+        <li class="nav-item<%= ' active' if current_page?(new_event_path)%>">
+            <span>Events</span>
         </li>
       <% end %>
 
+
+    <%# Recipients %>
     <%= link_to recipients_path class: "nav-link", data: {turbo: false} do %>
         <li class="nav-item<%= ' active' if current_page?(recipients_path)%>">
             <span>Recipients</span>
         </li>
     <% end %>
 
+    <%# Gift Ideas %>
     <%= link_to list_gifts_path class: 'nav-link', data: {turbo: false} do %>
-        <li class="nav-item<%#= ' active' if current_page?(list_gifts_path)%>">
+        <li class="nav-item<%= ' active' if current_page?(list_gifts_path)%>">
             <span>Gift Ideas</span>
         </li>
     <% end %>
 
-
+<!--        TODO: Create layout
+    <%# Purchases %>
     <%#= link_to purchases_path class: "nav-link", data: {turbo: false} do %>
         <li class="nav-item<%#= ' active' if current_page?(purchases_path)%>">
             <span>Purchases</span>
-        </li>
+        </li> 
     <%# end %>
+-->
 
+<!--        TODO: Create layout
+
+    <%# Settings %>
     <%#= link_to settings_path class: 'nav-link', data: {turbo: false} do %>
         <li class="nav-item<%#= ' active' if current_page?(settings_path)%>">
             <span>Settings</span>
         </li>
     <%# end %>
+-->
+
     </ul>
 </nav>
 </aside>

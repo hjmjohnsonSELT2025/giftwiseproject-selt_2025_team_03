@@ -40,6 +40,15 @@
 /app/assets/builds/*
 !/app/assets/builds/.keep
 final_development
+
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-*
+
+/coverage/
+/coverage.data
+/.resultset.json
 final_development-shm
 final_development-wal
+.DS_Store
 final_test

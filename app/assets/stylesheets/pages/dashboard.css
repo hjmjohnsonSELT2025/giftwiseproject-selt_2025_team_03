@@ -1,5 +1,6 @@
 /* Dashboard page styles */
 
+
 .dashboard_index {
     background-color: var(--dark-blue-bg);
     color: var(--light-text);
@@ -59,6 +60,10 @@
     gap: 12px;
 }
 
+.nav-menu a {
+    text-decoration: none;
+    color: var(--light-text);
+}
 .nav-item.active {
     background-color: var(--brown-accent);
     color: white;
@@ -110,6 +115,7 @@
 
 .user-profile:hover {
     transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .user-avatar {
@@ -158,11 +164,22 @@
 }
 
 .stat-icon {
+    display: flex;
     width: 40px;
     height: 40px;
     border-radius: 10px;
     background: linear-gradient(135deg, var(--brown-accent), #b88968);
     margin-bottom: 12px;
+    align-items: center;
+    justify-content: center;
+}
+.stat-icon svg {
+    color:white;
+    width: 26px;
+    height: auto;
+}
+.stat-icon svg {
+    fill:white;
 }
 
 .stat-value {

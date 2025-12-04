@@ -30,11 +30,17 @@
         transform .08s ease,
         padding-left .08s ease;
 }
+ a {
+    text-decoration: none;
+    color: var(--light-text);
+}
 
 
 
 .profile-dropdown > summary { list-style: none; }
 .profile-dropdown > summary::-webkit-details-marker { display: none; }
+
+
 
 .profile-dropdown {
     position: relative;
@@ -44,4 +50,29 @@
     right: 0;
     top: calc(100% + 8px);
     z-index: 1000;
+}
+.profile-dropdown button {
+    display: inline-flex; 
+    justify-content: center;
+    align-items: center;
+    padding: 10px 16px;
+    width: 150px;
+    font-size: 11pt;
+    outline: none;
+    border: none;
+    color: var(--light-text);
+    font-family: inherit;
+    border-radius: 9px;
+    transition: all .2s ease;
+    background-color: var(--dark-blue-bg);
+    cursor: pointer;
+}
+.profile-dropdown button:hover {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+.user-avatar {
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

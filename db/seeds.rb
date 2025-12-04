@@ -84,24 +84,28 @@ end
 
 # Find or create gift ideas
 GiftIdea.find_or_create_by!(event_recipient: er_christmas_dad, title: "Golf Club") do |g|
+  g.user = user
   g.price = 120
   g.status = "purchased"
   g.url = "https://golf"
 end
 
 GiftIdea.find_or_create_by!(event_recipient: er_christmas_mom, title: "Crockpot") do |g|
+  g.user = user
   g.price = 120
   g.status = "idea"
   g.url = "https://crockpot"
 end
 
 GiftIdea.find_or_create_by!(event_recipient: er_baby_shower_jane, title: "Baby Boy Clothes") do |g|
+  g.user = user
   g.price = 40
   g.status = "backlogged"
   g.url = "https://babies"
 end
 
 GiftIdea.find_or_create_by!(event_recipient: er_mom_birthday, title: "Gold Necklace") do |g|
+  g.user = user
   g.price = 120
   g.status = "purchased"
 end
