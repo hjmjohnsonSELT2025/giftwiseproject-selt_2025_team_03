@@ -13,22 +13,22 @@
     <!-- Stats Grid -->
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-icon"></div>
+        <div class="stat-icon"><%= icon :events, class: "icon" %></div>
         <div class="stat-value"><%= @total_events %></div>
         <div class="stat-label">Active Events</div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon"></div>
+        <div class="stat-icon"><%= icon :recipients, class: "icon" %></div>
         <div class="stat-value"><%= @total_recipients %></div>
         <div class="stat-label">Recipients</div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon"></div>
+        <div class="stat-icon"><%= icon :gift, class: "icon" %></div>
         <div class="stat-value"><%= @gifts_purchased_percentage %>%</div>
         <div class="stat-label">Gifts Purchased</div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon"></div>
+        <div class="stat-icon"><%= icon :money, class: "icon" %></div>
         <div class="stat-value">$<%= number_with_delimiter(@total_spent.round, delimiter: ',') %></div>
         <div class="stat-label">Total Spent</div>
       </div>
