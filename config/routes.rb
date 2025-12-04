@@ -8,7 +8,13 @@ Rails.application.routes.draw do
   root "users#login"
 
   get 'dashboard', to: 'dashboard#index', as: 'dashboard'
-  resources :events
+
+  resources :events do
+    collection do
+      get :search
+    end
+  end
+
   get "/preview_profile", to: "preview#profile"
 
   # logging in/out
