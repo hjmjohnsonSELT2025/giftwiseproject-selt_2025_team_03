@@ -73,3 +73,6 @@ end
 
 
 gem "tailwindcss-rails", "~> 4.4"
+
+# gem for communicating to openai (ChatGPT) for gift ideas [https://github.com/alexrudall/ruby-openai]
+gem "ruby-openai"
