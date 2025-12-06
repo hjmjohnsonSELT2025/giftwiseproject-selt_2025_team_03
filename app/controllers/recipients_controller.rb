@@ -33,7 +33,7 @@ class RecipientsController < ApplicationController
     attrs = normalized_params
     @recipient = current_user.recipients.new(attrs)
     if @recipient.save
-      redirect_to recipients_path, notice: "Recipient created."
+      redirect_to recipients_path(current_user), notice: "Recipient created."
     else
       @events = current_user.events.order(:name)
       render :new, status: :unprocessable_entity
@@ -56,7 +56,7 @@ class RecipientsController < ApplicationController
 
   def destroy
     @recipient.destroy
-    redirect_to recipients_path, notice: "Recipient deleted."
+    redirect_to recipients_path
   end
 
   private

@@ -26,7 +26,9 @@
             <% end %>
         <% end %>
     </div>
-    <%= render @recipients %>
+    <%= turbo_frame_tag "recipients_list" do %>
+        <%= render @recipients %>
+    <% end %>
 </main>
 
 <%= link_to "+", new_recipient_path, class: "add-button" %>
