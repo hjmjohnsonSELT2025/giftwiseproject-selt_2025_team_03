@@ -13,7 +13,7 @@ class GiftIdeasController < ApplicationController
   end
 
   def create
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    #@current_user ||= User.find(session[:user_id]) if session[:user_id]
     @gift_idea = current_user.gift_ideas.new(gift_idea_params)
     if @gift_idea.save
       session[:event_recipient_id] = @gift_idea.event_recipient_id

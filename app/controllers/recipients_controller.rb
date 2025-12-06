@@ -4,7 +4,7 @@ class RecipientsController < ApplicationController
   before_action :set_scope, only: [:index, :search]
 
   def index
-    @recipients = @current_user.recipients
+    @recipients = current_user.recipients
       .includes(:events)
       .order(:name)
     if params[:query].present?

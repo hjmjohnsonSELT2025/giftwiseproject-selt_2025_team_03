@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
-  before_action :require_login
+  before_action :require_authorization
   def index
     @user = current_user
     @upcoming_events = @user.events.upcoming.limit(5)

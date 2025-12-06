@@ -12,10 +12,10 @@ class ApplicationController < ActionController::Base
 
   def require_authorization
     return if logged_in?
-    redirect_to login_path
+    redirect_to login_path, alert: "Must be logged in to continue."
   end
 
   def redirect_if_authorized
-    redirect_to user_path(current_user) if logged_in?
+    redirect_to dashboard_path if logged_in?
   end
 end

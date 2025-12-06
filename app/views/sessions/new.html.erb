@@ -1,14 +1,15 @@
 <!-- Added elements to Login page for Theme from primary_layout -->
+
 <%= render layout: 'shared/primary_layout', data: { controller: "login" } do %>  
-  <%= form_with url: login_path, 
-                method: :post, 
+  <%= form_with url: session_path, 
+                method: :post,
                 data: { action: "turbo:submit-start->users--login#submitStart" },
                 class: "sign-in-form" do %>
     <div class="decorative-line"></div>
     <h1 class="sign-in-heading">Sign in</h1>
     <div class="input-group">
       <%= label_tag :username, "Username", class: "input-label" %>
-      <%= text_field_tag :username, nil, max_length: 20, placeholder: "", class: "input-field" %>
+      <%= text_field_tag :username, params[:username], max_length: 20, placeholder: "", class: "input-field" %>
     </div>
     <div class="input-group">
       <%= label_tag :password, "Password", class: "input-label" %>
@@ -19,4 +20,4 @@
       <p>Don't have an account? <%= link_to "Register", new_user_path %></p>
     </div>
   <% end %>
-  <% end %>
+<% end %>
