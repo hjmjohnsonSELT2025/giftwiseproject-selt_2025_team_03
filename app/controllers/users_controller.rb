@@ -1,39 +1,20 @@
 class UsersController < ApplicationController
-  before_action :require_authorization, :only => [:show, :logout, :edit, :update]
-  before_action :redirect_if_authorized, :only => [:login, :new, :create]
-  before_action :set_user, only: :show
+  before_action :require_authorization, except: [:new, :create]
+  before_action :set_user, only: [:show]
   before_action :ensure_profile_visible!, only: :show
   def show
-    @user = User.find(params[:id])
     redirect_to dashboard_path
-  end
-  def login
-
   end
   def edit
     @user = current_user
   end
-
   def update
     @user = current_user
     if @user.update(user_params)
       redirect_to dashboard_path, notice: "Profile updated."
     else
-      render :edit, status: :unprocessable_entity
-    end
-  end
-
-  def authorize 
-    username = params[:username].to_s.strip
-    user = User.where('lower(username) = ?', username.downcase).first
-    
-    if user&.authenticate(params[:password])
-      session[:user_id] = user.id
-      Rails.logger.debug "User #{username} successfully logged in"
-      redirect_to dashboard_path, notice: "Now logged in"
-    else
       Rails.logger.debug "Invalid credentials received."
-      redirect_to login_path, alert: "Invalid username/password."
+      render :edit, status: :unprocessable_entity, alert: "Invalid username/password."
     end
   end
   def new
@@ -49,13 +30,6 @@ class UsersController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-
-  # (logout)
-  def logout
-    session[:user_id] = nil
-    redirect_to root_path, notice: "Logged out."
-  end
-
   def check_email
     email = params[:email].to_s.strip.downcase
     if User.exists?(email: email)
@@ -66,19 +40,16 @@ class UsersController < ApplicationController
       render json: {available: true}, :status => :ok
     end
   end
-
-
-
   private
-  def user_params
-    params.require(:user).permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :birthday)
-  end
   def set_user
-      @user = User.find(params[:id])
+    @user = User.find(params[:id])
   end
   def ensure_profile_visible!
       return if @user == current_user
-      # return if @user.public_profile?
+      return if @user.public_profile?
       render status: :forbidden
+  end
+  def user_params
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :birthday, public_profile: false)
   end
 end

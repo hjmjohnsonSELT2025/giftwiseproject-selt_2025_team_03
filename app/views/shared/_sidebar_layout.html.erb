@@ -13,7 +13,7 @@
 <nav>
     <ul class="nav-menu">
     <%# Dashboard %>
-    <%= link_to dashboard_path class: 'nav-link', data: {turbo: false}  do %>
+    <%= link_to dashboard_path class: 'nav-link' do %>
         <li class="nav-item<%= ' active' if current_page?(dashboard_path)%>">
             <span>Dashboard</span>
         </li>
@@ -21,7 +21,7 @@
 
 
     <%# Events %>
-    <%= link_to events_path class: 'nav-link', data: {turbo: false} do %>
+    <%= link_to events_path class: 'nav-link'  do %>
         <li class="nav-item<%= ' active' if current_page?(events_path) || current_page?(new_event_path) || (controller_name == 'events')%>">
             <span>Events</span>
         </li>
