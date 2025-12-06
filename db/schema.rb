@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_01_040302) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_06_020104) do
   create_table "event_recipients", force: :cascade do |t|
     t.integer "event_id", null: false
     t.integer "recipient_id", null: false
@@ -58,6 +58,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_01_040302) do
     t.datetime "updated_at", null: false
     t.string "relationship"
     t.date "birthday"
+    t.string "relationship_other"
     t.index ["user_id"], name: "index_recipients_on_user_id"
   end
 

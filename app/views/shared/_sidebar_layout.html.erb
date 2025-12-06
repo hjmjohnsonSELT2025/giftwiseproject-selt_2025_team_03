@@ -29,7 +29,7 @@
 
 
     <%# Recipients %>
-    <%= link_to recipients_path class: "nav-link", data: {turbo: false} do %>
+    <%= link_to recipients_path class: "nav-link" do %>
         <li class="nav-item<%= ' active' if current_page?(recipients_path)%>">
             <span>Recipients</span>
         </li>

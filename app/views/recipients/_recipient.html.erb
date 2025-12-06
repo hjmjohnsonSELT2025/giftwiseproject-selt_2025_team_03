@@ -1,18 +1,30 @@
-<%= turbo_frame_tag dom_id(recipient) do %>
-    <div class='recipient-container view'>
+<%# Removed data: { controller: 'recipient' } %>
+<%= turbo_frame_tag dom_id(recipient) do %> 
+
+    <div class='recipient-container view'
+         <%# data-controller='recipient' %>
+         <%# data-action='click->recipient#click' %>
+         <%# data-recipient-selected-class='selected' %>
+    >
+
         <div class='col1'>
             <div class='recipient-header'>
-                <div class='name'><%= recipient.name %></div>
-                <div class='ri'>
-                    <% if recipient.relationship.present? %>
-                        <% if recipient.relationship == "Other" && recipient.relationship_other.present? %>
-                            <%= recipient.relationship_other %>
+                <div class='left'>
+                    <div class='name'><%= recipient.name %></div>
+                    <div class='ri'>
+                        <% if recipient.relationship.present? %>
+                            <% if recipient.relationship == "Other" && recipient.relationship_other.present? %>
+                                <%= recipient.relationship_other %>
+                            <% else %>
+                                <%= recipient.relationship %>
+                            <% end %>
                         <% else %>
-                            <%= recipient.relationship %>
+                            <%= "" %>
                         <% end %>
-                    <% else %>
-                        <%= "" %>
-                    <% end %>
+                    </div>
+                </div>
+                <div class='ri right'>
+                    <%#= icon (recipient.visible?) ? :eye : :eye_shut %>
                 </div>
             </div>
 
