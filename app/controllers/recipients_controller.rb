@@ -46,7 +46,7 @@ class RecipientsController < ApplicationController
   def update
     attrs = normalized_params
     if @recipient.update(attrs)
-      redirect_to recipients_path, notice: "Recipient updated."
+      redirect_to recipients_path
     else
       @events = current_user.events.order(:name)
       render :edit, status: :unprocessable_entity
