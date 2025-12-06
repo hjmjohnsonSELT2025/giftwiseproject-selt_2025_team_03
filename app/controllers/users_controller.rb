@@ -1,19 +1,13 @@
 class UsersController < ApplicationController
-  before_action :require_authorization, except: :new
-  before_action :set_user, only: :show
+  before_action :require_authorization, except: [:new, :create]
+  before_action :set_user, only: [:show]
   before_action :ensure_profile_visible!, only: :show
   def show
-    if @user == current_user
-      redirect_to dashboard_path
-    else
-      @recipients = @user.recipients.where(visible: true).order(:name)
-    end
+    redirect_to dashboard_path
   end
-
   def edit
     @user = current_user
   end
-
   def update
     @user = current_user
     if @user.update(user_params)
@@ -23,8 +17,6 @@ class UsersController < ApplicationController
       render :edit, status: :unprocessable_entity, alert: "Invalid username/password."
     end
   end
-
-
   def new
     @user = User.new
   end
@@ -38,9 +30,6 @@ class UsersController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-
-
-
   def check_email
     email = params[:email].to_s.strip.downcase
     if User.exists?(email: email)
@@ -51,11 +40,10 @@ class UsersController < ApplicationController
       render json: {available: true}, :status => :ok
     end
   end
-
-
-
   private
-
+  def set_user
+    @user = User.find(params[:id])
+  end
   def ensure_profile_visible!
       return if @user == current_user
       return if @user.public_profile?

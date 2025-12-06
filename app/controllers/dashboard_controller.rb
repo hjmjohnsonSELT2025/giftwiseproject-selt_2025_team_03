@@ -14,11 +14,4 @@ class DashboardController < ApplicationController
     @gifts_purchased_percentage = total_gifts > 0 ? ((purchased_gifts.to_f / total_gifts) * 100).round : 0
   end
 
-  private
-
-  def require_login
-    unless current_user
-      redirect_to login_path, alert: "You must be logged in to access this page."
-    end
-  end
 end

@@ -12,11 +12,20 @@ Rails.application.routes.draw do
 
 
   get 'dashboard', to: 'dashboard#index', as: 'dashboard'
-  resources :events
+  resources :events do
+    collection do
+      get :search
+    end
+  end
   get "/preview_profile", to: "preview#profile"
 
   # logging in/out
-  resources :users
+  resources :users, only: [:new, :create, :show] do
+    collection do
+      post :check_email
+      post :check_username
+    end
+  end
   resource :profile, only: [:edit, :update], controller: "users"
 
   post 'users/check_email', :to => "users#check_email"

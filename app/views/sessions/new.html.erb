@@ -2,14 +2,19 @@
 
 <%= render layout: 'shared/primary_layout', data: { controller: "login" } do %>  
   <%= form_with url: session_path, 
-                method: :post,
+                method: :post, 
                 data: { action: "turbo:submit-start->users--login#submitStart" },
                 class: "sign-in-form" do %>
     <div class="decorative-line"></div>
     <h1 class="sign-in-heading">Sign in</h1>
     <div class="input-group">
-      <%= label_tag :username, "Username", class: "input-label" %>
-      <%= text_field_tag :username, params[:username], max_length: 20, placeholder: "", class: "input-field" %>
+      <%= label_tag :username, class: "input-label label-error" do %>
+        Username
+        <% if flash[:invalid_credentials].present? %>
+          <span class='error'>Invalid username/password.</span>
+        <% end %>
+      <% end %>
+      <%= text_field_tag :username, nil, max_length: 20, placeholder: "", class: "input-field" %>
     </div>
     <div class="input-group">
       <%= label_tag :password, "Password", class: "input-label" %>
