@@ -46,7 +46,7 @@ class UsersController < ApplicationController
   end
   def ensure_profile_visible!
       return if @user == current_user
-      return if @user.public_profile?
+      #return if @user.public_profile?
       render status: :forbidden
   end
   def user_params

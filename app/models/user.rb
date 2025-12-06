@@ -21,14 +21,9 @@
 # end
 
 class User < ApplicationRecord
-    has_secure_password
-    has_many :recipients, :foreign_key => :user_id, :dependent => :destroy
+  has_secure_password
+  has_many :recipients, :foreign_key => :user_id, :dependent => :destroy
 
-<<<<<<< HEAD
-    has_many :friendships, :dependent => :destroy
-    has_many :friends, :through => :friendships
-    has_many :events, dependent: :destroy
-=======
   has_many :gift_ideas, dependent: :destroy
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
@@ -40,18 +35,5 @@ class User < ApplicationRecord
   def downcase_email!
     self.email = email.downcase if email.present?
   end
->>>>>>> origin/main
-
-    has_many :gift_ideas, dependent: :destroy
-    validates :username, presence: true, uniqueness: true
-    validates :email, presence: true, uniqueness: true
-    validates :first_name, :last_name, presence: true
-    validates :password_digest, presence: true, on: :create
-    before_save :downcase_email!
-
-    private
-    def downcase_email!
-        self.email = email.downcase if email.present?
-    end
 
 end

@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 
   def require_authorization
     return if logged_in?
-    redirect_to login_path, alert: "Must be logged in to continue."
+    redirect_to login_path
   end
 
   def redirect_if_authorized
