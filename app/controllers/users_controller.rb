@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   before_action :require_authorization, :only => [:show, :logout, :edit, :update]
   before_action :redirect_if_authorized, :only => [:login, :new, :create]
-
+  before_action :set_user, only: :show
+  before_action :ensure_profile_visible!, only: :show
   def show
     @user = User.find(params[:id])
     redirect_to dashboard_path
@@ -71,5 +72,13 @@ class UsersController < ApplicationController
   private
   def user_params
     params.require(:user).permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :birthday)
+  end
+  def set_user
+      @user = User.find(params[:id])
+  end
+  def ensure_profile_visible!
+      return if @user == current_user
+      # return if @user.public_profile?
+      render status: :forbidden
   end
 end

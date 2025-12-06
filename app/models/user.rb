@@ -11,9 +11,9 @@ class User < ApplicationRecord
   validates :first_name, :last_name, presence: true
   validates :password, presence: true, on: :create
   
-  before_save :downcase_email
+  before_save :downcase_email!
   private
-  def downcase_email
+  def downcase_email!
     self.email = email.downcase if email.present?
   end
 
