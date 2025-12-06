@@ -1,5 +1,5 @@
 class Event < ApplicationRecord
-  belongs_to :user
+  belongs_to :creator, class_name: "User", foreign_key: :user_id
   has_many :event_recipients, dependent: :destroy
   has_many :recipients, through: :event_recipients
   has_many :gift_ideas, through: :event_recipients

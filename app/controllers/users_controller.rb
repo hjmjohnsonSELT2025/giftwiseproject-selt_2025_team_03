@@ -1,10 +1,14 @@
 class UsersController < ApplicationController
   before_action :require_authorization, :only => [:show, :logout, :edit, :update]
   before_action :redirect_if_authorized, :only => [:login, :new, :create]
-
+  before_action :set_user, only: :show
+  before_action :ensure_profile_visible!, only: :show
   def show
-    @user = User.find(params[:id])
-    redirect_to dashboard_path
+    if @user == current_user
+      redirect_to dashboard_path
+    else
+      @recipients = @user.recipients.where(visible: true).order(:name)
+    end
   end
   def login
 
@@ -18,7 +22,8 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to dashboard_path, notice: "Profile updated."
     else
-      render :edit, status: :unprocessable_entity
+      Rails.logger.debug "Invalid credentials received."
+      render :edit, status: :unprocessable_entity, alert: "Invalid username/password."
     end
   end
 
@@ -69,7 +74,15 @@ class UsersController < ApplicationController
 
 
   private
+  def set_user
+      @user = User.find(params[:id])
+  end
+  def ensure_profile_visible!
+      return if @user == current_user
+      return if @user.public_profile?
+      render status: :forbidden
+  end
   def user_params
-    params.require(:user).permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :birthday)
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :birthday, public_profile: false)
   end
 end

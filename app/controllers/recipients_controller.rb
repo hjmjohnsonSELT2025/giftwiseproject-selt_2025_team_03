@@ -2,6 +2,7 @@ class RecipientsController < ApplicationController
   before_action :require_authorization
   before_action :set_recipient, only: [:show, :edit, :update, :destroy]
   before_action :set_scope, only: [:index, :search]
+
   def index
     @recipients = @current_user.recipients
       .includes(:events)
@@ -16,9 +17,9 @@ class RecipientsController < ApplicationController
     query = params[:query].to_s.strip
     if query.present?
       pattern = "%#{query.downcase}%"
-      @scope.where("LOWER(recipients.name) LIKE ?", pattern)
+      @recipients = @scope.where("LOWER(recipients.name) LIKE ?", pattern)
     else
-      @scope.order(:name)
+      @recipients = @scope.order(:name)
     end
   end
   def show; end
@@ -62,11 +63,12 @@ class RecipientsController < ApplicationController
   RELATIONSHIP_DEFAULTS = ["Parent", "Sibling", "Partner/Spouse", "Child", "Relative", "Friend", "Coworker", "Other"]
   
   def recipient_params
-    params.require(:recipient).permit(:name, :birthday, :relationship, :relationship_other, :likes, :dislikes, event_ids: [])
+    params.require(:recipient).permit(:name, :birthday, :relationship, :relationship_other, :likes, :dislikes, :visible, event_ids: [])
   end
   def set_recipient
     @recipient = current_user.recipients.find(params[:id])
   end
+  
   def normalized_params
     attrs = recipient_params.to_h
     attrs.each do |key, val|

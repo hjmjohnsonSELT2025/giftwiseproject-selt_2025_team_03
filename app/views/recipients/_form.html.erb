@@ -1,15 +1,31 @@
 <%# New/update form for recipient %>
 <%= form_with model: @recipient, 
               class: "patch-recipient", data: {controller: "new-recipient"} do |f| %>
-    <div class='decorative-line'></div>
+    
     <div class='form-header'>
         <h2 class='heading'>Recipient details</h2>
+        <div class='decorative-line'></div>
     </div>
+    <div></div>
 
     <%# Name %>
-    <div class='input-group required'>
-        <%= f.label :name, "Name" %>
-        <%= f.text_field :name, class: "input-field" %>
+    <div class='container'>
+        <div class='input-group required'>
+            <%= f.label :name, "Name" %>
+            <%= f.text_field :name, class: "input-field" %>
+        </div>
+        <% if current_user.public_profile? %>
+            <label class='checkbox-row'>
+                <%= f.check_box :visible %>
+                <span> Visible to friends </span>
+            </label>
+        <% else %>
+            <div class='checkbox-row' disabled>
+                <%= f.checkbox :visible, disabled: true%>
+                <span disabled> Visible to friends </span>
+            </div>
+        <% end %>
+       
     </div>
 
     <%# Relationship %>

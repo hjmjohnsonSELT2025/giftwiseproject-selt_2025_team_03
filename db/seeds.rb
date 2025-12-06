@@ -16,11 +16,12 @@ user = User.find_or_create_by!(email: "johndoe@gmail.com") do |u|
   u.first_name = "John"
   u.last_name = "Doe"
   u.birthday = Date.new(2003, 1, 1)
+  u.public_profile = true
   puts "Created test user"
 end
 
 # Find or create events
-christmas = Event.find_or_create_by!(user: user, name: "Christmas") do |e|
+christmas = Event.find_or_create_by!(creator: user, name: "Christmas") do |e|
   e.date = Date.new(2025, 12, 25)
   e.budget = 1000
   e.location = "Home"
@@ -28,7 +29,7 @@ christmas = Event.find_or_create_by!(user: user, name: "Christmas") do |e|
   puts "Created Christmas event"
 end
 
-mom_birthday = Event.find_or_create_by!(user: user, name: "Mom's birthday") do |e|
+mom_birthday = Event.find_or_create_by!(creator: user, name: "Mom's birthday") do |e|
   e.date = Date.new(2026, 2, 1)
   e.budget = 150
   e.location = "Restaurant"
@@ -36,7 +37,7 @@ mom_birthday = Event.find_or_create_by!(user: user, name: "Mom's birthday") do |
   puts "Created Mom's birthday event"
 end
 
-baby_shower = Event.find_or_create_by!(user: user, name: "Jane's Baby shower") do |e|
+baby_shower = Event.find_or_create_by!(creator: user, name: "Jane's Baby shower") do |e|
   e.date = Date.new(2026, 3, 1)
   e.budget = 100
   e.theme = "Baby Boy"
@@ -44,24 +45,27 @@ baby_shower = Event.find_or_create_by!(user: user, name: "Jane's Baby shower") d
 end
 
 # Find or create recipients
-dad = Recipient.find_or_create_by!(user: user, name: "Dad") do |r|
+dad = Recipient.find_or_create_by!(creator: user, name: "Dad") do |r|
   r.age = 51
   r.likes = "Golf, football, lawn care, movies"
   r.dislikes = "Technology, books"
+  r.visible = false
   puts "Created Dad recipient"
 end
 
-mom = Recipient.find_or_create_by!(user: user, name: "Mom") do |r|
+mom = Recipient.find_or_create_by!(creator: user, name: "Mom") do |r|
   r.age = 50
   r.likes = "Jewelry, family time, gardening, plants"
   r.dislikes = "Sports, disorganization"
+  r.visible = true
   puts "Created Mom recipient"
 end
 
-jane = Recipient.find_or_create_by!(user: user, name: "Jane") do |r|
+jane = Recipient.find_or_create_by!(creator: user, name: "Jane") do |r|
   r.age = 22
   r.likes = "Vintage items, books, traveling"
   r.dislikes = "Sports, movies, boardgames"
+  r.visible = true
   puts "Created Jane recipient"
 end
 

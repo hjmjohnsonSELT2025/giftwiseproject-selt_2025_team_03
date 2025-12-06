@@ -12,6 +12,11 @@
       <% end %>
     </div>
 
+    <div class='input-group'>
+      <label class='checkbox-label'>
+        <%= u.check_box :public_profile %>
+        <span>Make my profile public</span>
+    </div>
     <div class="input-group">
       <%= u.label :first_name, "First Name", class: "input-label" %>
       <%= u.text_field :first_name, max_length: 30, class: "input-field required" %>
