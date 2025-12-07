@@ -39,16 +39,28 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
-final_development
 
+# SQLite database files
+final_development
+final_development-shm
+final_development-wal
+final_test
+final_test-shm
+final_test-wal
 *.sqlite3
 *.sqlite3-journal
 *.sqlite3-*
 
+# Test coverage
 /coverage/
 /coverage.data
 /.resultset.json
-final_development-shm
-final_development-wal
+
+# macOS files
 .DS_Store
-final_test
+
+# IDE files (RubyMine/IntelliJ)
+.idea/
+
+# RBS collection files (Ruby type signatures - auto-generated)
+.gem_rbs_collection/

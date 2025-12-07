@@ -1,3 +1,9 @@
+.recipient-container.view,
+.recipient-container.view * {
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+}
 .recipient-container.view {
 	--panel: rgba(255, 255, 255, 0.06);
 	--panel-border: rgba(255, 255, 255, 0.14);
@@ -17,8 +23,19 @@
 	border-radius: var(--radius);
 	padding: 18px 20px;
 	box-shadow: 0 10px 28px rgba(0, 0, 0, .35);
+	transition: all 0.3s ease;
 }
 
+.recipient-container.view:hover {
+	cursor: pointer;
+	transform: scale(1.01);
+	box-shadow: 0 12px 29px rgba(0,0,0,.35);
+}
+
+.selected {
+	box-shadow: inset 0px 0px 10px rgba(0,0,0,.5);
+	filter: brightness(0.9);
+}
 .recipient-container.view .col1 {
 	grid-area: col1;
 	display: grid;
@@ -38,14 +55,23 @@
 	gap: 12px;
 	margin-right: 4px;
 }
-
-
 .col1 .recipient-header {
 	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	border-bottom: 1px solid var(--accent);
+}
+
+.col1 .recipient-header .left {
+	display: flex;
+	flex-direction: row;
 	align-items: baseline;
 	gap: 12px;
 	padding-bottom: 8px;
-	border-bottom: 1px solid var(--accent);
+}
+.col1 .recipient-header .right {
+	display: flex;
+	
 }
 
 .col1 .recipient-header .name {
@@ -123,6 +149,7 @@
 .icon {
 	width: 26px;
 	height: 26px;
+	color: white;
 }
 
 .input-field {
@@ -227,6 +254,19 @@ body {
 	transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
 }
 
+.patch-recipient .input-group-oneline {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+}
+
+.patch-recipient .input-group-oneline label {
+	padding: 0;
+	margin: 0;
+}
+
 .patch-recipient .input-field::placeholder,
 .patch-recipient textarea::placeholder {
 	color: rgba(255, 255, 255, 0.55);
@@ -284,6 +324,7 @@ body {
 }
 
 .patch-recipient input[type="checkbox"] {
+	margin: 0;
 	width: 18px;
 	height: 18px;
 	accent-color: var(--accent-strong);

@@ -1,16 +1,12 @@
 /* Shared primary layout styles - used by both login and register pages */
 
-.users_login,
-.users_new,
-.users_edit {
+body {
     background-color: var(--dark-blue-bg);
     color: var(--light-text);
 }
 
 /* Main container */
-.users_login .sign-in-container,
-.users_new .sign-in-container,
-.users_edit .sign-in-container {
+.sign-in-container {
     min-height: 100vh;
     width: 66.666%;
     padding: 80px 60px;
@@ -23,9 +19,10 @@
 }
 
 /* Brown circle in left corner */
-.users_login .decorative-circle,
-.users_new .decorative-circle,
-.users_edit .decorative-circle {
+.decorative-circle,
+.decorative-circle,
+.decorative-circle,
+.decorative-circle {
     position: absolute;
     top: -180px;
     left: -150px;
@@ -38,9 +35,10 @@
 }
 
 /* Large brown rectangle on the right - 1/3 width, full height */
-.users_login .brown-rectangle,
-.users_new .brown-rectangle,
-.users_edit .brown-rectangle {
+.brown-rectangle,
+.brown-rectangle,
+.brown-rectangle,
+.brown-rectangle {
     position: fixed;
     top: 0;
     right: 0;
@@ -51,9 +49,10 @@
 }
 
 /* GiftWise header in top right on brown rectangle */
-.users_login .giftwise-header,
-.users_new .giftwise-header,
-.users_edit .giftwise-header {
+.giftwise-header,
+.giftwise-header,
+.giftwise-header,
+.giftwise-header {
     position: fixed;
     top: 50px;
     right: 60px;
@@ -65,9 +64,10 @@
 }
 
 /* Three  white rectangles at bottom of brown rectangle */
-.users_login .brown-rectangle-bars,
-.users_new .brown-rectangle-bars,
-.users_edit .brown-rectangle-bars {
+.brown-rectangle-bars,
+.brown-rectangle-bars,
+.giftwise-header,
+.brown-rectangle-bars {
     position: fixed;
     bottom: 60px;
     right: 0;
@@ -78,9 +78,10 @@
     z-index: 1;
 }
 
-.users_login .white-bar,
-.users_new .white-bar,
-.users_edit .white-bar {
+.white-bar,
+.white-bar,
+.white-bar,
+.white-bar {
     width: 100%;
     height: 8px;
     background-color: #ffffff;
@@ -88,9 +89,10 @@
 }
 
 /* Brown decorative line - left aligned with form */
-.users_login .decorative-line,
-.users_new .decorative-line,
-.users_edit .decorative-line {
+.decorative-line,
+.decorative-line,
+.decorative-line,
+.decorative-line {
     width: 60px;
     height: 5px;
     background-color: var(--brown-accent);
@@ -102,9 +104,10 @@
 }
 
 /* Sign in/Register heading - left aligned with form */
-.users_login .sign-in-heading,
-.users_new .register-heading,
-.users_edit .register-heading {
+.sign-in-heading,
+.sign-in-heading,
+.register-heading,
+.register-heading {
     font-size: 36px;
     font-weight: 600;
     color: var(--light-text);
@@ -116,9 +119,9 @@
 }
 
 /* Form styling - centered in left area */
-.users_login .sign-in-form,
-.users_new .register-form,
-.users_edit .register-form {
+.sign-in-form,
+.register-form,
+.register-form {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -128,30 +131,30 @@
 }
 
 /* Bottom link styling */
-.users_login .bottom-link,
-.users_new .bottom-link {
+.bottom-link,
+.bottom-link {
     text-align: center;
     margin-top: 12px;
     font-size: 14px;
 }
 
-.users_login .bottom-link p,
-.users_new .bottom-link p {
+.bottom-link p,
+.bottom-link p {
     color: var(--light-text);
     opacity: 0.7;
     margin: 0;
 }
 
-.users_login .bottom-link a,
-.users_new .bottom-link a {
+.bottom-link a,
+.bottom-link a {
     color: var(--light-text);
     text-decoration: underline;
     font-weight: 500;
     opacity: 1;
 }
 
-.users_login .bottom-link a:hover,
-.users_new .bottom-link a:hover {
+.bottom-link a:hover,
+.bottom-link a:hover {
     opacity: 0.8;
 }
 
@@ -160,6 +163,7 @@
     flex-direction: row;
     gap: 20px;
 }
+
 .action-footer .login-button.cancel {
     background-color: #2d4293;
     color: white;
@@ -167,27 +171,41 @@
     align-items: center;
     text-align: center;
 }
+
+.label-error {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.label-error .error {
+  color: red;
+  font-size: 0.9rem;
+}
+
+
+
 @media (min-width: 1024px) {
-  .users_new .register-form,
-  .users_edit .register-form {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      column-gap: 40px;
-      row-gap: 24px;
-      max-width: 700px;
-  }
 
-  /* header and actions span full width */
-  .users_new .form-header,
-  .users_edit .form-header,
-  .users_new .form-actions,
-  .users_edit .form-actions {
-      grid-column: 1 / -1;
-  }
+    .register-form,
+    .register-form {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 40px;
+        row-gap: 24px;
+        max-width: 700px;
+    }
 
-  
-  .users_new .register-form .input-group,
-  .users_edit .register-form .input-group {
-      margin-bottom: 0;
-  }
+    /* header and actions span full width */
+    .form-header,
+    .form-header,
+    .form-actions,
+    .form-actions {
+        grid-column: 1 / -1;
+    }
+
+    .register-form .input-group,
+    .register-form .input-group {
+        margin-bottom: 0;
+    }
 }

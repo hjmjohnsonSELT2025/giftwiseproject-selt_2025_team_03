@@ -1,10 +1,12 @@
 <%# New/update form for recipient %>
 <%= form_with model: @recipient, 
               class: "patch-recipient", data: {controller: "new-recipient"} do |f| %>
-    <div class='decorative-line'></div>
+
     <div class='form-header'>
         <h2 class='heading'>Recipient details</h2>
+        <div class='decorative-line'></div>
     </div>
+    <div></div>
 
     <%# Name %>
     <div class='input-group required'>

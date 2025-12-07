@@ -11,8 +11,7 @@
         <%= form_with url: recipients_path, 
                     method: :get, 
                     data: { 
-                        controller: "recipients", 
-                        turbo_frame: "recipients_list" 
+                        turbo_frame: "recipients_list"
                     },
                     class: "search-form" do %>
 
@@ -26,7 +25,9 @@
             <% end %>
         <% end %>
     </div>
-    <%= render @recipients %>
+    <%= turbo_frame_tag "recipients_list" do %>
+        <%= render @recipients %>
+    <% end %>
 </main>
 
 <%= link_to "+", new_recipient_path, class: "add-button" %>
