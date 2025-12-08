@@ -76,4 +76,5 @@ end
 gem "tailwindcss-rails", "~> 4.4"
 
 # gem for communicating to openai (ChatGPT) for gift ideas [https://github.com/alexrudall/ruby-openai]
-gem "ruby-openai"
+gem "ruby-openai" # However, needs to pay for each response/feedback!
+gem "ruby_llm" # This one appears to have some free models though
