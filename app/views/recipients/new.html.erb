@@ -1,1 +1,11 @@
-<%= render "form"%>
+<div class='recipient-page'>
+    <div class='recipient-tabs'>
+        <%= link_to "Manual", new_recipient_path(mode: :manual),
+            class: "tab #{params[:mode] != 'lookup' ? 'active' : ''}"
+        %>
+        <%= link_to "Find by username", find_recipients_path(mode: :lookup),
+            class: "tab #{params[:mode] = 'lookup' ? 'active' : ''}"
+        %>
+    </div>
+    <%= render "form" %>
+</div>

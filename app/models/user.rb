@@ -23,6 +23,7 @@
 class User < ApplicationRecord
   has_secure_password
   has_many :recipients, :foreign_key => :user_id, :dependent => :destroy
+  has_many :events, dependent: :destroy
 
   has_many :gift_ideas, dependent: :destroy
   validates :username, presence: true, uniqueness: true

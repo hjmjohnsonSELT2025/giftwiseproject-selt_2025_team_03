@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show]
   before_action :ensure_profile_visible!, only: :show
   def show
+    
     redirect_to dashboard_path
   end
   def edit

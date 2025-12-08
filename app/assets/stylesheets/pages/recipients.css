@@ -195,29 +195,70 @@ body,
 body {
 	margin: 0;
 }
+/* Limit width & center the form on the page */
+.recipients_new {
+  padding: 32px 20px;
+  display: flex;
+  justify-content: center;
+}
 
 .patch-recipient {
-	--panel: rgba(255, 255, 255, 0.06);
-	--panel-border: rgba(255, 255, 255, 0.15);
-	--muted: var(--text-light, #fac1a2);
-	--accent: var(--prim-1-c, #9d6f57);
-	--accent-strong: var(--prim-0-c, #6c4c3a);
-	--radius: 14px;
-	--radius-sm: 10px;
+  --panel: rgba(255, 255, 255, 0.06);
+  --panel-border: rgba(255, 255, 255, 0.15);
+  --muted: var(--text-light, #fac1a2);
+  --accent: var(--prim-1-c, #9d6f57);
+  --accent-strong: var(--prim-0-c, #6c4c3a);
+  --radius: 14px;
+  --radius-sm: 10px;
 
-	color: #fff;
-	display: grid;
-	gap: 16px 18px;
-	grid-template-columns: 1fr 1fr;
+  color: #fff;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 24px;
+
+  max-width: 980px;
+  width: 100%;
+  background: var(--card-blue-bg);
+  border-radius: 18px;
+  border: 1px solid var(--panel-border);
+  padding: 24px 28px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
 }
 
-.recipients_new {
-	padding: 20px;
+/* Items that should span the full width */
+.patch-recipient .form-header,
+.patch-recipient .input-group.full-width,
+.patch-recipient .form-footer {
+  grid-column: 1 / -1;
 }
 
-.patch-recipient .input-group.full-width {
-	grid-column: 1 / -1;
+.patch-recipient .input-group-oneline {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px
 }
+
+.patch-recipient .form-header .heading {
+  margin: 0 0 12px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.patch-recipient .form-footer {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+
+@media (max-width: 900px) {
+  .patch-recipient {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 .patch-recipient .decorative-line {
 	height: 3px;
@@ -254,18 +295,7 @@ body {
 	transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
 }
 
-.patch-recipient .input-group-oneline {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	gap: 5px;
-}
 
-.patch-recipient .input-group-oneline label {
-	padding: 0;
-	margin: 0;
-}
 
 .patch-recipient .input-field::placeholder,
 .patch-recipient textarea::placeholder {
@@ -370,8 +400,8 @@ body {
 .button.primary,
 input.button.primary,
 input[type=submit].primary {
-	background: linear-gradient(180deg, var(--accent), var(--accent-strong));
-	border-color: rgba(0, 0, 0, 0.25);
+	flex: 1;
+	background-color: var(--brown-accent);
 	cursor: pointer;
 }
 

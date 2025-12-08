@@ -24,11 +24,7 @@
                     </div>
                 </div>
                 <div class='ri right'>
-<<<<<<< HEAD
-                    <%= icon (recipient.visible?) ? :eye : :eye_shut %>
-=======
                     <%#= icon (recipient.visible?) ? :eye : :eye_shut %>
->>>>>>> origin/main
                 </div>
             </div>
 
@@ -66,15 +62,7 @@
             
             <%= link_to recipient_path(recipient),
                 class: "option",
-<<<<<<< HEAD
-                data: { 
-                    turbo_method: :delete, 
-                    turbo_confirm: "Delete #{recipient.name}?",
-                    turbo_frame: "_top"
-                    } do %>
-=======
                 data: { turbo_method: :delete, turbo_confirm: "Delete #{recipient.name}?", turbo_frame: "_top" } do %>
->>>>>>> origin/main
                 <%= icon :trash, class: "icon" %>
             <% end %>
         </div>

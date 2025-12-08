@@ -14,13 +14,5 @@ application.register("profile-dropdown", profile_controller)
 import new_user_controller from "controllers/new_user_controller"
 application.register("new-user", new_user_controller)
 
-<<<<<<< HEAD
-import user_update_controller from "controllers/user_update_controller"
-application.register("current-user-update", user_update_controller)
-
-import recipient_controller from "controllers/recipient_controller"
-application.register("recipient", recipient_controller)
-=======
 //import user_update_controller from "controllers/user_update_controller"
 //application.register("current-user-update", user_update_controller)
->>>>>>> origin/main
