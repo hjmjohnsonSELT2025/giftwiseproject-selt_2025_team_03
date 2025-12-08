@@ -43,4 +43,11 @@ Rails.application.routes.draw do
   post "/add_gifts", :to => "gift_ideas#list"
   #get "/edit_gift", :to => "gift_idea#edit"
   #get "/search_gifts", :to => "gift_ideas#search", as: :search_gifts
+
+
+  Rails.application.routes.draw do
+    if Rails.env.development?
+      mount LetterOpenerWeb::Engine, at: "/letter_opener"
+    end
+  end
 end
