@@ -1,0 +1,23 @@
+<h1>Your Weekly GiftWise Summary 📊</h1>
+
+<h2>New Events This Week</h2>
+<% if @events.any? %>
+  <ul>
+    <% @events.each do |event| %>
+      <li><%= event.name %> — <%= event.date.strftime("%B %d, %Y") %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No new events were added this week.</p>
+<% end %>
+
+<h2>New Recipients This Week</h2>
+<% if @recipients.any? %>
+  <ul>
+    <% @recipients.each do |recipient| %>
+      <li><%= recipient.name %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No new recipients were added this week.</p>
+<% end %>
