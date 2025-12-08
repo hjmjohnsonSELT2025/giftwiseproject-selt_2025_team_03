@@ -516,6 +516,19 @@
         "branches": {
         }
       },
+      "C:/Users/aNel/OneDrive - University of Iowa/Documents/SCHOOL/Fall 2025/SELT/giftwiseproject-selt_2025_team_03/app/jobs/event_reminder_job.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
       "C:/Users/aNel/OneDrive - University of Iowa/Documents/SCHOOL/Fall 2025/SELT/giftwiseproject-selt_2025_team_03/app/mailers/application_mailer.rb": {
         "lines": [
           0,
@@ -529,6 +542,39 @@
       },
       "C:/Users/aNel/OneDrive - University of Iowa/Documents/SCHOOL/Fall 2025/SELT/giftwiseproject-selt_2025_team_03/app/mailers/event_mailer.rb": {
         "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
           0,
           0
         ],
@@ -597,6 +643,14 @@
           0,
           null,
           0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
           0,
           0,
           0,
@@ -681,6 +735,6 @@
         }
       }
     },
-    "timestamp": 1765174040
+    "timestamp": 1765175961
   }
 }
