@@ -1,6 +1,6 @@
 class ChatService < ApplicationRecord
     # Adapted to rubyllm
-    act_as_chat
+    acts_as_chat
 
     # Example, use with free? model of: gpt-oss-120b
 

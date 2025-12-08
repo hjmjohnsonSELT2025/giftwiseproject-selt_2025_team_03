@@ -55,6 +55,12 @@
             </div>
 
         </div>
+        <div class='col3'>
+            <%= form_with model: @gift_idea, url: model_gifts_path, method: :get, class: "gift-list-form" do |u| %>
+                <%= submit_tag "Generate Gift Idea", class: "login-button" %>
+            <% end %>
+            <%= javascript_import_module_tag "controllers/gift_ideas/model" %>
+        </div>
         <div class='options'>
             <%= link_to edit_recipient_path(recipient), class: "option" do %>
                 <%= icon :edit, class: "icon" %>

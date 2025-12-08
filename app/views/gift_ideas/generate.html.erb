@@ -1,0 +1,17 @@
+<!-- Sidebar -->
+<%# Sidebar %>
+<%= render "shared/sidebar_layout" %>
+
+<main class="main-content">
+  <div class='top-bar'>
+    <h1 class='page-title'>Gift Ideas</h1>
+    <%= render 'shared/profile_dropdown' %>
+  </div>
+
+  <div>
+    <%= form_with model: @gift_idea, url: obtain_gifts_path, method: :get, class: "gift-list-form" do |u| %>
+      <%= submit_tag "New Gift", class: "login-button" %>
+    <% end %>
+    <%= javascript_import_module_tag "controllers/gift_ideas/obtain" %>
+  </div>
+</main>

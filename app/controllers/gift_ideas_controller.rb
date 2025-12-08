@@ -35,6 +35,17 @@ class GiftIdeasController < ApplicationController
     render :add
   end
 
+  def model
+    @gift_idea = GiftIdea.new
+    render :generate
+  end
+
+  def obtain
+    @gift_idea = GiftIdea.new
+    # Change to have it pass in LLM values to the create/add method
+    render :add
+  end
+
   #def search
   #  query = params[:query].to_s.strip
   #  gifts = if query.present?
