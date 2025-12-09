@@ -42,12 +42,12 @@ class UsersController < ApplicationController
     end
   end
   def find
-        @query = params[:query]
-        @users = if @query.present?
-                    User.where("username ILIKE ?", "%#{@query}%")
-        else
-          []
-        end
+    if params[:query].present?
+      q = "%#{params[:query].downcase}%"
+      @users = User.where("LOWER(username) LIKE ?", q)
+    else
+      @users = nil
+    end
   end
   private
   def set_user
@@ -59,6 +59,6 @@ class UsersController < ApplicationController
       render status: :forbidden
   end
   def user_params
-    params.require(:user).permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :birthday, public_profile: false)
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :birthday, public_profile: false, likes: "", dislikes: "")
   end
 end

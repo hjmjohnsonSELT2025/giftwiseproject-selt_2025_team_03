@@ -279,13 +279,14 @@ body {
 .recipients-new {
     padding: 40px 64px 64px;
 }
-
+/*
 .recipients-new-tabs .tabs {
     padding: 0;
     background: transparent;
     border-bottom: 1px solid var(--input-border);
-    margin-bottom: 16px;
-}
+    margin-bottom: 50px;
+} 
+*/
 
 .recipients-new-form {
     margin-top: 16px;

@@ -3,6 +3,8 @@
     align-items: flex-end;
     gap: 16px;
     height: 52px;
+    border-bottom: 1px solid var(--input-border);
+    margin-bottom: 50px;
 }
 
 .tab {

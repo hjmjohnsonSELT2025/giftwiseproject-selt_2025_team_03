@@ -1,2 +1,22 @@
 <div class='page'>
+    <%= render "shared/sidebar_layout" %>
+    <div class='main-content recipients-new'>
+        <div class='page-top-bar'>
+            <h1 class='page-title'>Find New Recipient</h1>
+            <%= render "shared/profile_dropdown" %>
+        </div>
+        <div class='recipients-new-tabs'>
+            <%= render 'users/tabs_layout' %>
+        </div>
+        <%= render 'shared/search', 
+            endpoint: find_users_path,
+            method: :get, 
+            placeholder: "Find new recipient by username...",
+            data: { turbo_frame: "users_list" }
+            %>
+        <%= turbo_frame_tag "users_list" do %>
+            <%= if @users.present?; render @users end; %>
+        <% end %>
+    </div>
+    
 </div>

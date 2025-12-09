@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_06_020104) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_09_034952) do
   create_table "event_recipients", force: :cascade do |t|
     t.integer "event_id", null: false
     t.integer "recipient_id", null: false
@@ -73,6 +73,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_06_020104) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "public_profile"
+    t.string "likes"
+    t.string "dislikes"
   end
 
   add_foreign_key "event_recipients", "events"

@@ -1,11 +1,14 @@
-<% form_method = defined?(method) ? method : :post %>
-<% form_data = defined?(data) ? data : {} %>
+<%# Required args: `endpoint` %>
+<% form_method = local_assigns.fetch(:method, :post) %>
+<%# Optional args: `data`, `placeholder` %>
+<% form_data = local_assigns.fetch(:data, {}) %>
+<% placeholder_text = local_assigns.fetch(:placeholder, "") %>
 
 <%= form_with url: endpoint, method: form_method, data: form_data, class: "search-form", local: true do |f| %>
     
     <%= f.text_field :query,
         value: params[:query],
-        placeholder: placeholder || "Search by username...",
+        placeholder: placeholder,
         class: "input-field", 
         autocomplete: "off"
     %>
