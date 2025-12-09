@@ -6,18 +6,18 @@
   </div>
 
   <div class='view-options'>
-    <input
-      type='text'
-      placeholder='Search for event'
-      id='search-events'
-      class='input-field'
-      data-search-url='<%= search_events_path %>'
-      data-events-search-target="input"
-      data-action="input->events-search#search"
-    >
+    <%= text_field_tag :query,
+                       params[:query].to_s,
+                       type: "search",
+                       class: "input-field",
+                       placeholder: "Search for event...",
+                       data: {
+                         "events-search-target": "input",
+                         "search-url": search_events_path,
+                         action: "input->events-search#search"
+                       } %>
     <%= link_to "Add Event", new_event_path, class: "login-button" %>
   </div>
-
   <%# Template for an event card %>
   <template id='event-card'>
     <div class='event-container' data-event-id=''>
