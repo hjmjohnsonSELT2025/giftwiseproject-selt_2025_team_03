@@ -1,7 +1,7 @@
 <%# --------------------------------------------- %>
 <%#   Uncomment paths once routes are created.   %>
 <%# --------------------------------------------- %>
-
+<% %>
 
 <!-- Sidebar -->
 <aside class="sidebar">
@@ -30,7 +30,7 @@
 
     <%# Recipients %>
     <%= link_to recipients_path class: "nav-link" do %>
-        <li class="nav-item<%= ' active' if current_page?(recipients_path)%>">
+        <li class="nav-item<%= ' active' if controller_name == 'recipients'  %>">
             <span>Recipients</span>
         </li>
     <% end %>

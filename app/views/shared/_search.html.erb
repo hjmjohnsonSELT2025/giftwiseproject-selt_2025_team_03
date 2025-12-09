@@ -1,0 +1,16 @@
+<% form_method = defined?(method) ? method : :post %>
+<% form_data = defined?(data) ? data : {} %>
+
+<%= form_with url: endpoint, method: form_method, data: form_data, class: "search-form", local: true do |f| %>
+    
+    <%= f.text_field :query,
+        value: params[:query],
+        placeholder: placeholder || "Search by username...",
+        class: "input-field", 
+        autocomplete: "off"
+    %>
+
+    <%= button_tag type: "submit", class: "search-button", aria: { label: "Search" } do %>
+        <%= icon :search, class: "icon" %>
+    <% end %>
+<% end %>

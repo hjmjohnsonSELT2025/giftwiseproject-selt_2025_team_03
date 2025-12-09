@@ -41,6 +41,14 @@ class UsersController < ApplicationController
       render json: {available: true}, :status => :ok
     end
   end
+  def find
+        @query = params[:query]
+        @users = if @query.present?
+                    User.where("username ILIKE ?", "%#{@query}%")
+        else
+          []
+        end
+  end
   private
   def set_user
     @user = User.find(params[:id])

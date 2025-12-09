@@ -1,1 +1,19 @@
-<%= render "form", data: {controller: "new-user" } %>
+<div class="page">
+  <%= render "shared/sidebar_layout" %>
+
+  <div class="page-main">
+    <%= render "shared/profile_dropdown" %>
+
+    <header class="page-header">
+      <h1 class="page-title">Recipients</h1>
+    </header>
+
+    <section class="card card--recipient-new">
+      <%= render "users/tabs_layout" %>
+
+      <div class="card-body">
+        <%= render "form" %>
+      </div>
+    </section>
+  </div>
+</div>

@@ -57,14 +57,7 @@ class RecipientsController < ApplicationController
     @recipient.destroy
     redirect_to recipients_path, notice: "Recipient deleted."
   end
-  def find
-        @query = params[:query]
-        @users = if @query.present?
-                    User.where("username ILIKE ?", "%#{@query}%")
-        else
-          []
-        end
-  end
+
   private
   RELATIONSHIP_DEFAULTS = ["Parent", "Sibling", "Partner/Spouse", "Child", "Relative", "Friend", "Coworker", "Other"]
   

@@ -24,6 +24,8 @@ Rails.application.routes.draw do
     collection do
       post :check_email
       post :check_username
+      get :find
+      post :find
     end
   end
   resource :profile, only: [:edit, :update], controller: "users"
