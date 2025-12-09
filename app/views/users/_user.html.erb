@@ -1,5 +1,5 @@
 <%= turbo_frame_tag dom_id(user) do %>
-    <article class="user-card <%= 'is-expanded' if local_assigns[:expanded]%>">
+    <article class="user-card <%= 'is-expanded' if local_assigns[:expanded]%>" data-controller='user-card'>
         <%# header %>
         <header class='user-card__header'>
             <div class='user-card__avatar'>
@@ -44,35 +44,50 @@
                 </div>
             </section>
             <%# Actions %>
-            <section class='user-card__actions'>
-                <div class='user-card__actions-row'>
-                    <%= button_to "ADD TO MY RECIPIENTS LIST", 
-                        #add_recipient_path(user),
-                        "#",
-                        method: :post,
-                        class: 'user-card__button user-card__button--primary' %>
+            <section class="user-card__actions">
+                <!-- PRIMARY ROW -->
+                <div class="user-card__actions-row">
+                    <div class="user-card__action">
+                        <%= button_to "ADD TO MY RECIPIENTS LIST",
+                            #add_recipient_path(user),
+                            '#',
+                            method: :post,
+                            class: "user-card__button user-card__button--primary" %>
+                        <div class="user-card__hint">
+                            *OPTION DOESN'T NOTIFY USER
+                        </div>
+                    </div>
+                <div class="user-card__action">
                     <%= button_to "ADD TO AN EVENT",
                         #add_to_event_path(user),
                         '#',
-                        method: :post,
-                        class: 'user-card__button user-card__button--primary' %>
+                        method: :get,
+                        class: "user-card__button user-card__button--primary" %>
+                        <div class="user-card__hint">
+                            *OPTION DOESN'T NOTIFY USER
+                        </div>
+                    </div>
                 </div>
-                <div class='user-card__hint-row'>
-                    <span class='user-card__hint'>*OPTION DOESN'T NOTIFY USER</span>
-                    <span class='user-card__hint'>*OPTION DOESN'T NOTIFY USER</span>
-                </div>
-                <div class='user-card__actions-row user-card__actions-row--secondary'>
-                    <%= button_to "SEND AN INVITE TO AN EVENT",
-                        #invite_to_event_path(user),
-                        '#',
-                        method: :post,
-                        class: 'user-card__button user-card__button--secondary' %>
-                    <button type='button'
-                            class='user-card__button user-card__button--ghost'>CANCEL</button>
-                </div>
-                <div class='user-card__hint-row'>
-                    <span class='user-card__hint user-card__hint--alert'>
-                        *OPTION DOES NOTIFY USER</span>
+
+                <!-- SECONDARY ROW -->
+                <div class="user-card__actions-row user-card__actions-row--secondary">
+                    <div class="user-card__action">
+                        <%= button_to "SEND AN INVITE TO AN EVENT",
+                            #invite_to_event_path(user),
+                            '#',
+                            method: :post,
+                            class: "user-card__button user-card__button--secondary" %>
+                        <div class="user-card__hint user-card__hint--alert">
+                            *OPTION DOES NOTIFY USER
+                        </div>
+                    </div>
+                    <div class="user-card__action">
+                        <button type="button"
+                            class="user-card__button user-card__button--ghost"
+                            data-action="user-card#collapse">
+                            CANCEL
+                        </button>
+                    </div>
                 </div>
             </section>
         </div>
