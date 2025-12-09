@@ -1,25 +1,35 @@
+<% clickable = local_assigns.fetch(:clickable, true) %>
+
 <%= turbo_frame_tag dom_id(user) do %>
-    <article class="user-card <%= 'is-expanded' if local_assigns[:expanded]%>" data-controller='user-card'>
+    <% no_events = current_user.events.none? %>
+    <article class="user-card <%= 'is-expanded' if local_assigns[:expanded]%>" 
+             data-controller=<%= clickable ? 'user-card' : nil %>>
         <%# header %>
         <header class='user-card__header'>
-            <div class='user-card__avatar'>
-                <div class='user-card__initials'>
-                    <%= user.first_name[0].upcase %>
-                    <%= user.last_name[0].upcase%>
+            <div class='user-card__left'>
+                <div class='user-card__avatar'>
+                    <div class='user-card__initials'>
+                        <%= user.first_name[0].upcase %>
+                        <%= user.last_name[0].upcase%>
+                    </div>
+                </div>
+                <div class='user-card__identity'>
+                    <div class='user-card__username'>@<%= user.username %></div>
+                    <div class='user-card__divider'></div>
+                    <div class='user-card__names'>
+                        <div class='user-card__name-block'>
+                            <div class='user-card__name'><%= user.first_name %></div>
+                            <div class='user-card__label'>FIRST NAME</div>
+                        </div>
+                        <div class='user-card__name-block'>
+                            <div class='user-card__name'><%= user.last_name %></div>
+                            <div class='user-card__label'>LAST NAME</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class='user-card__identity'>
-                <div class='user-card__username'>@<%= user.username %></div>
-                <div class='user-card__divider'></div>
-                <div class='user-card__names'>
-                    <div class='user-card__name-block'>
-                        <div class='user-card__name'><%= user.first_name %></div>
-                        <div class='user-card__label'>FIRST NAME</div>
-                    </div>
-                    <div class='user-card__name-block'>
-                        <div class='user-card__name'><%= user.last_name %></div>
-                        <div class='user-card__label'>LAST NAME</div>
-                    </div>
+            <div class='user-card__right'>
+                <div class='user-card__add-friend'>
                 </div>
             </div>
         </header>
@@ -48,31 +58,46 @@
                 <!-- PRIMARY ROW -->
                 <div class="user-card__actions-row">
                     <div class="user-card__action">
-                        <%= button_to "ADD TO MY RECIPIENTS LIST",
-                            #add_recipient_path(user),
-                            '#',
-                            method: :post,
-                            class: "user-card__button user-card__button--primary" %>
+                        <%= link_to "ADD TO MY RECIPIENT LIST",
+                            new_recipient_path(user_id: user.id),
+                            class: "user-card__button user-card__button--primary",
+                            data: {turbo_frame: "_top"}
+                            %>
                         <div class="user-card__hint">
                             *OPTION DOESN'T NOTIFY USER
                         </div>
                     </div>
-                <div class="user-card__action">
-                    <%= button_to "ADD TO AN EVENT",
-                        #add_to_event_path(user),
-                        '#',
-                        method: :get,
-                        class: "user-card__button user-card__button--primary" %>
-                        <div class="user-card__hint">
-                            *OPTION DOESN'T NOTIFY USER
+                    <% no_events = current_user.events.none? %>
+                    <div class="user-card__action">
+                        <% if no_events %>
+                            <%= render "shared/tooltip", text: "Must create an event before inviting users." do %>
+                                <%= button_to "SEND AN INVITE TO AN EVENT",
+                                #invite_to_event_path(user),
+                                new_event_invitation_user_path(user),
+                                disabled: no_events,
+                                method: :get,
+                                data: { turbo_frame: "_top" },
+                                class: "user-card__button user-card__button--secondary" %>
+                            <% end %>
+                        <% else %>
+                        <%= button_to "SEND AN INVITE TO AN EVENT",
+                            #invite_to_event_path(user),
+                            new_event_invitation_user_path(user),
+                            method: :get,
+                            data: { turbo_frame: "_top" },
+                            class: "user-card__button user-card__button--secondary" %>
+                        <% end %>
+                        
+                        <div class="user-card__hint user-card__hint--alert">
+                            *OPTION DOES NOTIFY USER
                         </div>
                     </div>
                 </div>
-
                 <!-- SECONDARY ROW -->
                 <div class="user-card__actions-row user-card__actions-row--secondary">
+                    <!--
                     <div class="user-card__action">
-                        <%= button_to "SEND AN INVITE TO AN EVENT",
+                        <%#= button_to "SEND AN INVITE TO AN EVENT",
                             #invite_to_event_path(user),
                             '#',
                             method: :post,
@@ -81,6 +106,7 @@
                             *OPTION DOES NOTIFY USER
                         </div>
                     </div>
+                    -->
                     <div class="user-card__action">
                         <button type="button"
                             class="user-card__button user-card__button--ghost"

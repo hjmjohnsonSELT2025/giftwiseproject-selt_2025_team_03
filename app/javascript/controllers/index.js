@@ -17,5 +17,7 @@ application.register("new-user", new_user_controller)
 import user_card_controller from "controllers/user_card_controller"
 application.register("user-card", user_card_controller)
 
+import users_new_controller from "controllers/users_new_controller"
+application.register("users-new", users_new_controller)
 //import user_update_controller from "controllers/user_update_controller"
 //application.register("current-user-update", user_update_controller)

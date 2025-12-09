@@ -25,7 +25,11 @@ Rails.application.routes.draw do
       post :check_email
       post :check_username
       get :find
-      post :find
+      #post :find
+    end
+    member do
+      get :new_event_invitation
+      post :create_event_invitation
     end
   end
   resource :profile, only: [:edit, :update], controller: "users"

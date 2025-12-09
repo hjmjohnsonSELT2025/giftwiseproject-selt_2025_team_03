@@ -1,0 +1,29 @@
+<%= form_with url: create_event_invitation_user_path(@user), method: :post do |f| %>
+    <div class='header'>
+        <div class='invite-header_left'>
+            <h1 class='heading'>New Event Invitation</h1>
+            <div class='decorative-line'></div>
+        </div>
+        <div class='invite-header_right'>
+            <div class='user-invite-info'>
+                <%= render @user %>
+            </div>
+        </div>
+    </div>
+    <div class='body'>
+        <fieldset>
+            <legend>Events</legend>
+            <% if @events.present? %>
+                <div class='events-grid'>
+                    <%= f.collection_checkboxes :event_ids, @events, :id, :name do |b| %>
+                        <label class='checkbox-row'>
+                            <%= b.check_box %>
+                            <span><%= b.text %></span>
+                        </label>
+                    <% end %>
+                </div>
+            <% end %>
+        </fieldset>
+    </div>
+    <%= f.submit "Sent invite" %>
+<% end %>

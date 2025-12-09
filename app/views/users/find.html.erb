@@ -15,8 +15,9 @@
             data: { turbo_frame: "users_list" }
             %>
         <%= turbo_frame_tag "users_list" do %>
-            <%= if @users.present?; render @users; end %>
+            <% if @users.present? %>
+                <%= render partial: "user", collection: @users, as: :user %>
+            <% end %>
         <% end %>
     </div>
-    
 </div>

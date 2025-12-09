@@ -1,0 +1,11 @@
+<!-- 
+    REQUIRED ARGUMENTS:
+        `text`
+    OPTIONAL ARGUMENTS
+        `class` => default is '.tooltip'
+-->
+<% data_class = local_assigns.fetch(:class, 'tooltip') %>
+<div class="<%= data_class%>" data-tooltip="<%= text %>">
+    <%= yield %>
+</div>
+

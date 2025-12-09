@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   before_action :require_authorization, except: [:new, :create]
-  before_action :set_user, only: [:show]
+  before_action :set_user, only: [:show, :new_event_invitation, :create_event_invitation]
   before_action :ensure_profile_visible!, only: :show
+
   def show
     
     redirect_to dashboard_path
@@ -44,12 +45,30 @@ class UsersController < ApplicationController
   def find
     if params[:query].present?
       q = "%#{params[:query].downcase}%"
-      @users = User.where("LOWER(username) LIKE ?", q)
+      @users = User
+                   .where(public_profile: true)
+                   .where("LOWER(username) LIKE ?", q)
     else
       @users = nil
     end
   end
+
+  def new_event_invitation
+
+    @events = current_user.events.order(:date)
+  end
+
+  def create_event_invitation
+    @event = current_user.events.find(params[:event_id])
+    @user.request_add_event(@event)
+    redirect_to find_users_path, notice: "Invitation sent."
+  end
+  
+
   private
+  def request_add_event
+      Rails.logger = "Implement request push_back"
+  end
   def set_user
     @user = User.find(params[:id])
   end
@@ -61,4 +80,5 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :birthday, public_profile: false, likes: "", dislikes: "")
   end
+
 end

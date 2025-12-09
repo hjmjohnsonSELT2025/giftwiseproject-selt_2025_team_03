@@ -1,6 +1,14 @@
-<%# Required args: `endpoint` %>
+<!-- 
+    REQUIRED ARGUMENTS:
+        `endpoint`
+    OPTIONAL ARGUMENTS:
+        `method`, `data`, `placeholder`
+
+    Ex:
+        <%#= render 'shared/search', endpoint: new_users_path, method: :get %>
+-->
+
 <% form_method = local_assigns.fetch(:method, :post) %>
-<%# Optional args: `data`, `placeholder` %>
 <% form_data = local_assigns.fetch(:data, {}) %>
 <% placeholder_text = local_assigns.fetch(:placeholder, "") %>
 

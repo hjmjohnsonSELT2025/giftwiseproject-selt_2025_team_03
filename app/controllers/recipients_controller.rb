@@ -26,6 +26,25 @@ class RecipientsController < ApplicationController
   def new 
     @recipient = current_user.recipients.new
     @events = current_user.events.order(:name)
+    if params[:user_id].present?
+        source_user = User.find(params[:user_id])
+        @recipient.name = [source_user.first_name, source_user.last_name].compact.join(" ")
+        @recipient.likes = source_user.likes
+        @recipient.dislikes = source_user.dislikes
+        @recipient.relationship = "Other"
+    end
+  end
+  def add
+    @recipient = current_user.recipients.new
+    
+    if params[:user_id].present?
+        source_user = User.find(params[:user_id]).where(public_profile: true)
+        @recipient.name = [source_user.first_name, source_user.last_name].compact.join(" ")
+        @recipient.likes = source_user.likes.to_s
+        @recipient.dislikes = source_user.dislikes.to_s
+        @recipient.relationship = "Other"
+        @recipient.birthday = source_user.birthday
+    end
   end
 
   def create

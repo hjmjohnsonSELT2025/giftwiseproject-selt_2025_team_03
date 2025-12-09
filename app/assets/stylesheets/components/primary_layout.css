@@ -5,7 +5,7 @@ body {
     color: var(--light-text);
 }
 
-/* Main container */
+
 .sign-in-container {
     min-height: 100vh;
     width: 66.666%;
@@ -17,6 +17,7 @@ body {
     align-items: center;
     box-sizing: border-box;
 }
+
 
 /* Brown circle in left corner */
 .decorative-circle,

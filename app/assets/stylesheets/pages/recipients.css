@@ -507,3 +507,12 @@ input[type=submit].primary {
     box-shadow: none;
     padding: 0;
 }
+.empty-content.hint {
+	justify-content: center;
+	text-align: center;
+	font-style: italic;
+}
+.required-label {
+	margin-bottom: 10px;
+	color: red;
+}
