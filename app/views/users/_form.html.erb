@@ -1,8 +1,8 @@
 <% form_url = current_user.present? ? profile_path : users_path %>
-    <% data_controller = current_user.present? ? nil : "users-new" %>
+    <% data_controller = current_user.present? ? "users-update" : "users-new" %>
     <%= render "shared/primary_layout" do %>
         <div class="profile-page" data-controller="<%= data_controller%>">
-            <%= form_with model: @user, url: form_url, class: "profile-form" do |u| %>
+            <%= form_with model: @user, url: form_url, class: "profile-form", local: true do |u| %>
             <!-- TOP: avatar + name + username -->
             <section class="profile-form__hero">
                 <div class="profile-form__avatar">
