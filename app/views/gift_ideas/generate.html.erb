@@ -1,17 +1,22 @@
-<!-- Sidebar -->
-<%# Sidebar %>
-<%= render "shared/sidebar_layout" %>
+<%# LLM form for gift_ideas %>
+<%= form_with model: @gift_idea,
+        url: model_gifts_path,
+        method: :get, local: true do |f| %>
+    <div class = 'form-header'>
+        <h2 class='heading'>Generate Gift Ideas</h2>
+        <div class='decorative-line'></div>
+    </div>
+    <div></div>
 
-<main class="main-content">
-  <div class='top-bar'>
-    <h1 class='page-title'>Gift Ideas</h1>
-    <%= render 'shared/profile_dropdown' %>
-  </div>
-
-  <div>
-    <%= form_with model: @gift_idea, url: obtain_gifts_path, method: :get, class: "gift-list-form" do |u| %>
-      <%= submit_tag "New Gift", class: "login-button" %>
-    <% end %>
-    <%= javascript_import_module_tag "controllers/gift_ideas/obtain" %>
-  </div>
-</main>
+    <%# LLM Input Field %>
+    <div class='input-group required'>
+        <%= f.label :message, "Gift Input" %>
+        <%= f.text_field :message, class: "input-field" %>
+    </div>
+    <%= f.submit "Get Gift Ideas" %>
+    <!-- Change for this to be pass in from recipient profile here -->
+  
+    <!-- Will change to response, first confirm interactivity -->
+    <%= f.label :message, "Gift Input" %>
+    <%= f.text_field :message, class: "form-control-plaintext" %>
+<% end %>

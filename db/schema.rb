@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_08_004335) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_09_165018) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -43,7 +43,11 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_08_004335) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "model_id"
+    t.integer "user_id", null: false
+    t.integer "event_recipient_id", null: false
+    t.index ["event_recipient_id"], name: "index_chats_on_event_recipient_id"
     t.index ["model_id"], name: "index_chats_on_model_id"
+    t.index ["user_id"], name: "index_chats_on_user_id"
   end
 
   create_table "event_recipients", force: :cascade do |t|
@@ -161,7 +165,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_08_004335) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "chats", "event_recipients"
   add_foreign_key "chats", "models"
+  add_foreign_key "chats", "users"
   add_foreign_key "event_recipients", "events"
   add_foreign_key "event_recipients", "recipients"
   add_foreign_key "events", "users"

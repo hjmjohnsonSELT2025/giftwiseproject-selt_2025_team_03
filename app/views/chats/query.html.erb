@@ -1,0 +1,30 @@
+<%# LLM form for chats, later integrate an output to gift_ideas %>
+<% if flash.now[:alert] %>
+  <div class="alert alert-warning"><%= flash.now[:alert] %></div>
+<% end %>
+
+<%= form_with model: @chat,
+        url: query_chat_path,
+        method: :post, local: true do |f| %>
+    <div class = 'form-header'>
+        <h2 class='heading'>Generate Gift Ideas</h2>
+        <div class='decorative-line'></div>
+    </div>
+    <div></div>
+
+    <%# LLM Input Field %>
+    <div class='input-group required'>
+        <%= f.label :input, "Gift Input" %>
+        <%= f.text_field :input, class: "input-field" %>
+    </div>
+    <%= f.submit "Get Gift Ideas" %>
+    <!-- Change for this to be pass in from recipient profile here -->
+    <div class='input-group'>
+        <%= f.label :last_input, "Your Input" %>
+        <%= f.text_field :last_input, class: "form-control-plaintext", readonly: true, value: params.dig(:chat, :input) %>
+    </div>
+  
+    <!-- Will change to response, first confirm interactivity -->
+    <%= f.label :input, "Gift Input" %>
+    <%= f.text_field :input, class: "form-control-plaintext", readonly: true, value:@response %>
+<% end %>

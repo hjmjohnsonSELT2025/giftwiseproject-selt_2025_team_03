@@ -36,8 +36,15 @@ class GiftIdeasController < ApplicationController
   end
 
   def model
-    @gift_idea = GiftIdea.new
     render :generate
+  end
+
+  def query
+    @gift_idea = GiftIdea.new(query_params)
+    render :generate
+    # Change later to be unique/tied to user
+    #@conversation = RubyLLM.chat
+    #@response = @conversation.with_schema(ChatSchema).ask (query_params)
   end
 
   def obtain
@@ -91,6 +98,10 @@ class GiftIdeasController < ApplicationController
 
   def gift_idea_params
     params.require(:gift_idea).permit(:title, :price, :status, :url, :notes, :event_recipient_id, :commit)
+  end
+
+  def query_params
+    params.require(:gift_idea).permit(:message)
   end
 
   #def set_scope

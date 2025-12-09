@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :events, dependent: :destroy
 
   has_many :gift_ideas, dependent: :destroy
+  has_many :chats, dependent: :destroy
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
   validates :first_name, :last_name, presence: true
