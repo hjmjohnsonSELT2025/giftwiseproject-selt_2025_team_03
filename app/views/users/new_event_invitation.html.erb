@@ -1,34 +1,50 @@
-<%= form_with url: create_event_invitation_user_path(@user),
-    method: :post,
-    local: true do |f| %>
-
-    <div class='header'>
-        <div class='invite-header_left'>
-            <h1>New Event Invitation</h1>
-            <div class='decorative-line'></div>
-        </div>
-        <div class='invite-header_right'>
-            <div class='user-invite-info'>
-                <%= render @user, clickable: false %>
+<%= render "shared/sidebar_layout" %>
+<main class="main-content invite-page">
+    <%# Form to create a new invitation to any public user on the site. %>
+    <%= form_with url: create_event_invitation_user_path(@user),
+        method: :post,
+        data: { turbo: false },
+        local: true do |f| %>
+    <div class="invite-container form-container">
+        <div class="invite-header">
+            <div class="invite-header__left">
+                <h1 class="page-title">New Event Invitation</h1>
+                <p class="invite-subtitle">
+                    Choose one or more events to invite
+                    <strong><%= @user.first_name %></strong> to.
+                </p>
+                <div class="decorative-line"></div>
+            </div>
+            <div class="invite-header__right">
+                <div class="user-invite-card">
+                    <%= render partial: "users/user",
+                        locals: { user: @user, clickable: false, show_actions: false } %>
+                </div>
             </div>
         </div>
-    </div>
-    <%# Events %>
-    <div class='field'>
-        <fieldset>
-            <legend>Events</legend>
-            <div class='events-grid'>
-                <%= f.collection_check_boxes :event_ids, @events, :id, :name do |e| %>
-                    <label class='checkbox-row'>
-                        <%= e.check_box %>
-                        <span><%= e.text %></span>
+        <section class="invite-section">
+            <h2 class="section-title">Select events</h2>
+            <fieldset class="invite-fieldset">
+                <legend class="sr-only">Events</legend>
+                <div class="events-grid">
+                    <%= f.collection_check_boxes :event_ids, @events, :id, :name do |e| %>
+                    <label class="checkbox-row">
+                    <%= e.check_box %>
+                    <span class="checkbox-label"><%= e.text %></span>
                     </label>
                     <% end %>
                 </div>
-        </fieldset>
+                <% if @events.empty? %>
+                <p class="empty-hint">
+                    You don’t have any events yet. Create one from the Events page first.
+                </p>
+                <% end %>
+            </fieldset>
+        </section>
+        <div class="actions invite-actions">
+            <%= f.submit "Send invitation(s)", class: "button primary" %>
+            <%= link_to "Cancel", find_users_path, class: "button" %>
+        </div>
     </div>
-    <div class='actions'>
-        <%= f.submit "Send invitation(s)", class: "button primary" %>
-        <%= link_to "Cancel", find_users_path, class: "button" %>
-    </div>
-<% end %>
+    <% end %>
+</main>

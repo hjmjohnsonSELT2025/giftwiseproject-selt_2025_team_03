@@ -1,3 +1,4 @@
+# Controller for managing event invitations
 class EventInvitationsController < ApplicationController
   before_action :require_authorization
 
@@ -15,6 +16,6 @@ class EventInvitationsController < ApplicationController
     when "decline"
       invitation.declined!
     end
-    redirect_to event_invitations_path, notice: "Invitation updated."
+    redirect_to event_invitations_path
   end
 end

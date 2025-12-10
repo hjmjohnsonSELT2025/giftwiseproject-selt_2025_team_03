@@ -21,7 +21,7 @@
 
     <%# Events %>
     <%= link_to events_path class: 'nav-link'  do %>
-        <li class="nav-item<%= ' active' if current_page?(events_path) || current_page?(new_event_path) || (controller_name == 'events')%>">
+        <li class="nav-item<%= ' active' if current_page?(events_path) || current_page?(new_event_path) || (controller_name == 'events') || current_page?(new_event_invitation_user_path(current_user)) %>">
             <span>Events</span>
         </li>
       <% end %>

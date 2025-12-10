@@ -56,56 +56,45 @@ class UsersController < ApplicationController
   end
 
   def new_event_invitation
-
     @events = current_user.events.order(:date)
   end
 
   def create_event_invitation
+    Rails.logger.info "[UsersController#create_event_invitation] params=#{params.to_unsafe_h.inspect}"
     if @user == current_user
-        redirect_to find_users_path, alert: "You're already invited to your own event."
-        return
+            redirect_to find_users_path, alert: "You're already invited to your own event."
+            return
     end
+    
     event_ids = Array(params[:event_ids]).reject(&:blank?)
-
     if event_ids.empty?
-      redirect_to new_event_invitation_user_path(@user), alert: "Please select at least one event."
-      return
+            redirect_to new_event_invitation_user_path(@user),
+            alert: "Please select at least one event."
+            return
     end
     events = current_user.events.where(id: event_ids)
     created_count = 0
-    events.each do |event| 
-            invitation = EventInvitation.find_or_create_by!(event: event, invitee: @user)
-            invitation.inviter = current_user
-            invitation.status ||= "pending"
 
-            created_count += 1 if invitation.new_record? && invitation.save
-
+    events.each do |evt|
+      invitation = EventInvitation.find_or_initialize_by(event: evt, invitee: @user)
+      invitation.inviter = current_user
+      invitation.status  = :pending
+      invitation.save!
+      created_count += 1 if invitation.previously_new_record?
     end
+
     if created_count > 0
-        message = "Sent #{created_count} invitation#{'s' if created_count != 1}."
-        redirect_to find_users_path, notice: message
+            message = "Sent #{created_count} invitation#{'s' if created_count != 1}"
+            redirect_to dashboard_path, notice: message
     else
-      redirect_to new_event_invitation_user_path(@user), alert: "No new invitations were created (they may already exist)"
+      redirect_to new_event_invitation_user_path(@user),
+      alert: "No new invitations created, however, they may already exist."
     end
+
   end
-  
-  
 
   private
-  def request_add_event
-    invitation = EventInvitation.find_or_initialize_by!(
-      event: @event,
-      invitee: @user
-    )
-    invitation.inviter = current_user
-    invitation.status = 'pending'
 
-    if invitation.save 
-      redirect_to find_users_path, notice: "Invite sent."
-    else
-      redirect_to find_users_path, alert: "Unable to send invitation."
-    end
-  end
   def set_user
     @user = User.find(params[:id])
   end

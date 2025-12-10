@@ -41,7 +41,7 @@ class User < ApplicationRecord
 
   has_many :received_event_invitations,
            class_name: "EventInvitation",
-           foreign_key: :inviter_id,
+           foreign_key: :invitee_id,
            dependent: :destroy
 
   has_many :invited_events,
