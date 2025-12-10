@@ -1,4 +1,4 @@
-/* Gift Ideas page styles */
+/* Gift Ideas page styles - Updated with consistent card styling */
 
 .gift_ideas_index,
 .gift_ideas_show,
@@ -27,36 +27,43 @@
     margin: 0;
 }
 
+/* Update to match recipient and event card styling */
 .gift_ideas_index .gift-container {
-    background-color: #2d4293;
-    padding: 28px;
-    border-radius: 16px;
-    margin-bottom: 20px;
+    background-color: var(--card-blue-bg);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 18px;
+    padding: 18px 20px;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+    margin-bottom: 16px;
     transition: all 0.3s ease;
 }
 
 .gift_ideas_index .gift-container:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
 }
 
 .gift_ideas_index .gift-header {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 20px;
+    flex-direction: column;
+    border-bottom: 1px solid var(--brown-accent);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
 }
 
 .gift_ideas_index .gift-title {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 600;
-    margin-bottom: 8px;
+    letter-spacing: 0.2px;
+    color: #fff;
+    margin-bottom: 4px;
 }
 
 .gift_ideas_index .gift-price {
-    font-size: 18px;
-    color: var(--brown-accent);
+    font-size: 14px;
+    color: #fac1a2;
     font-weight: 600;
+    opacity: 0.9;
 }
 
 .gift_ideas_index .gift-details {
@@ -68,12 +75,16 @@
 
 .gift_ideas_index .detail-label {
     font-size: 12px;
-    opacity: 0.7;
-    margin-bottom: 4px;
+    color: #fac1a2;
+    font-weight: 600;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .gift_ideas_index .detail-value {
     font-size: 14px;
+    color: #fff;
 }
 
 .gift_ideas_index .status-badge {
@@ -117,26 +128,30 @@
 }
 
 .gift_ideas_index .gift-action-link {
-    padding: 8px 16px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--brown-accent);
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
     color: var(--light-text);
     font-size: 14px;
-    transition: all 0.2s ease;
+    transition: transform 0.08s ease, filter 0.15s ease, box-shadow 0.2s ease;
 }
 
 .gift_ideas_index .gift-action-link:hover {
-    background-color: rgba(255, 255, 255, 0.15);
     transform: translateY(-1px);
+    filter: brightness(1.05);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
 }
 
-.gift_ideas_index .gift-action-link.delete-link {
-    background-color: rgba(255, 0, 0, 0.2);
-}
-
-.gift_ideas_index .gift-action-link.delete-link:hover {
-    background-color: rgba(255, 0, 0, 0.3);
+.gift_ideas_index .gift-action-link .icon {
+    width: 26px;
+    height: 26px;
+    color: white;
 }
 
 .gift_ideas_index .empty-state {
@@ -371,4 +386,32 @@
     padding: 12px 16px;
     border-radius: 8px;
     margin-bottom: 20px;
+}
+
+/* Add button */
+.add-button {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--brown-accent);
+    border: none;
+    font-size: 32px;
+    line-height: 1;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(157, 111, 87, 0.4);
+    transition: all 0.3s ease;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.add-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 32px rgba(157, 111, 87, 0.6);
 }
