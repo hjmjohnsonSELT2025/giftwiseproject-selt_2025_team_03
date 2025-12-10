@@ -57,8 +57,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_08_153928) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "relationship"
-    t.date "birthday"
     t.string "relationship_other"
+    t.date "birthday"
     t.index ["user_id"], name: "index_recipients_on_user_id"
   end
 

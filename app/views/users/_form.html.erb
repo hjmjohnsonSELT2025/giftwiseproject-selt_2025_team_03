@@ -47,6 +47,11 @@
       <%= u.date_field :birthday, class: "input-field" %>
     </div>
 
+    <div class="field">
+      <%= u.label :email_notifications, "Receive Email Notifications?" %>
+      <%= u.check_box :email_notifications %>
+    </div>
+
     <div class="form-actions">
       <% if current_user.present? %>
         <div class='action-footer'>

@@ -22,10 +22,12 @@ class EventMailer < ApplicationMailer
   end
 
 
-  def weekly_summary(user, events, recipients)
-    @event = events
+  def weekly_summary(user)
     @user = user
-    @recipient = recipients
+
+    @events = @user.events.where("created_at >= ?", 1.week.ago)
+
+    @recipients = @user.recipients.where("created_at >= ?", 1.week.ago)
 
     mail(
       to: @user.email,

@@ -6,6 +6,9 @@ class EventReminderJob < ApplicationJob
     Event.includes(:user).find_each do |event|
       next unless event.date.present?
 
+      user = event.user
+      next unless user.email_notifications?
+
       days_left = (event.date.to_date - Date.current).to_i
 
       case days_left

@@ -9,8 +9,6 @@ class SessionsController < ApplicationController
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
 
-      UserMailer.welcome_email(user).deliver_now
-
       redirect_to dashboard_path, notice: "Logged in successfully."
     else
       flash.now[:invalid_credentials] = "Invalid username/password."
