@@ -1,7 +1,7 @@
 <% submit_label = @recipient.persisted? ? "Update recipient" : "Add recipient" %>
 <%= form_with model: @recipient,
             class: "patch-recipient",
-            data: { controller: "new-recipient" } do |f| %>
+            data: { controller: "new-recipient", turbo: true } do |f| %>
 
     <!-- Header (full width) -->
     <div class="form-header">

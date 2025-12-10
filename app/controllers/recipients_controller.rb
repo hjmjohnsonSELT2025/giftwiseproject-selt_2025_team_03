@@ -74,7 +74,10 @@ class RecipientsController < ApplicationController
 
   def destroy
     @recipient.destroy
-    redirect_to recipients_path, notice: "Recipient deleted."
+    respond_to do |f|
+            f.html { redirect_to recipients_path, notice: "Recipient deleted."}
+            f.json { render json: { success: true}, status: :ok }
+    end
   end
 
   private
