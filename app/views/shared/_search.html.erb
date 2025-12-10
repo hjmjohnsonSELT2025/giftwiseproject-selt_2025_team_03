@@ -10,18 +10,18 @@
 
 <% form_method = local_assigns.fetch(:method, :post) %>
 <% form_data = local_assigns.fetch(:data, {}) %>
-<% placeholder_text = local_assigns.fetch(:placeholder, "") %>
+<% placeholder_text = local_assigns.fetch(:placeholder, "Search...") %>
 
-<%= form_with url: endpoint, method: form_method, data: form_data, class: "search-form", local: true do |f| %>
-    
-    <%= f.text_field :query,
-        value: params[:query],
-        placeholder: placeholder,
-        class: "input-field", 
-        autocomplete: "off"
-    %>
+<%= form_with url: endpoint, method: form_method, data: form_data, class: "search-form", local: false do |f| %>
 
-    <%= button_tag type: "submit", class: "search-button", aria: { label: "Search" } do %>
-        <%= icon :search, class: "icon" %>
-    <% end %>
+  <%= f.text_field :query,
+                   value: params[:query],
+                   placeholder: placeholder_text,
+                   class: "input-field",
+                   autocomplete: "off"
+  %>
+
+  <%= button_tag type: "submit", class: "search-button", aria: { label: "Search" } do %>
+    <%= icon :search, class: "icon" %>
+  <% end %>
 <% end %>

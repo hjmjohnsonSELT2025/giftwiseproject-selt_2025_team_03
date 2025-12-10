@@ -49,11 +49,9 @@ Rails.application.routes.draw do
     end
   end
   #---------------------  GIFT IDEAS
-  resources :gift_ideas, only: [:new, :create, :show]
-  get "/list_gifts", :to => "gift_ideas#list", as: :list_gifts
-  get "/add_gifts", :to => "gift_ideas#add", as: :add_gifts
-  post "/add_gifts", :to => "gift_ideas#list"
-
-  #get "/edit_gift", :to => "gift_idea#edit"
-  #get "/search_gifts", :to => "gift_ideas#search", as: :search_gifts
+  resources :gift_ideas do
+    collection do
+      get :search
+    end
+  end
 end
