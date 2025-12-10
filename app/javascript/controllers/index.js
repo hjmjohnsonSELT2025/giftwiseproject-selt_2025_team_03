@@ -20,5 +20,7 @@ application.register("users-new", users_new_controller)
 import users_update_controller from "controllers/users_update_controller"
 application.register("users-update", users_update_controller)
 
+import sidebar_nav_controller from "controllers/side_bar_controller"
+application.register("sidebar-nav-controller", sidebar_nav_controller)
 //import user_update_controller from "controllers/user_update_controller"
 //application.register("current-user-update", user_update_controller)

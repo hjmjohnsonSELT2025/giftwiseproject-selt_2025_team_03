@@ -82,15 +82,15 @@ class UsersController < ApplicationController
       invitation.save!
       created_count += 1 if invitation.previously_new_record?
     end
-
+    
     if created_count > 0
             message = "Sent #{created_count} invitation#{'s' if created_count != 1}"
-            redirect_to dashboard_path, notice: message
+            
     else
-      redirect_to new_event_invitation_user_path(@user),
-      alert: "No new invitations created, however, they may already exist."
+      message = "No new invitations created, however, they may already exist."
     end
 
+    redirect_to events_path, notice: message
   end
 
   private

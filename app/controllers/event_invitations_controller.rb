@@ -16,6 +16,6 @@ class EventInvitationsController < ApplicationController
     when "decline"
       invitation.declined!
     end
-    redirect_to event_invitations_path
+    redirect_to events_path
   end
 end

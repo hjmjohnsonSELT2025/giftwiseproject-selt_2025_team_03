@@ -1,3 +1,4 @@
+<%  %>
 <div class='page'>
     <%= render "shared/sidebar_layout" %>
     <div class='main-content recipients-new'>
@@ -18,7 +19,9 @@
             <% if @users.present? %>
                     <%= render partial: "user", collection: @users, as: :user %>
             <% else %>
+                <% unless @last_query.nil?%>
                     <div class='hint'>No users found with the username "<%= "#{@last_query}" %>".</div>
+                <% end %>
             <% end %>
         <% end %>
     </div>
