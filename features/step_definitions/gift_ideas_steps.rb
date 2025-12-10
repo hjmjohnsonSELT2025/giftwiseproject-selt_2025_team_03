@@ -44,7 +44,7 @@ Given("no gift ideas exist") do
 end
 
 When("I visit the gift ideas page") do
-  visit list_gifts_path
+  visit gift_ideas_path
 end
 
 Given("I am on the add new gift page") do

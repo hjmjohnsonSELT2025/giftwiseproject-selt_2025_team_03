@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show]
   before_action :ensure_profile_visible!, only: :show
   def show
+    
     redirect_to dashboard_path
   end
   def edit
@@ -40,16 +41,24 @@ class UsersController < ApplicationController
       render json: {available: true}, :status => :ok
     end
   end
+  def find
+    if params[:query].present?
+      q = "%#{params[:query].downcase}%"
+      @users = User.where("LOWER(username) LIKE ?", q)
+    else
+      @users = nil
+    end
+  end
   private
   def set_user
     @user = User.find(params[:id])
   end
   def ensure_profile_visible!
       return if @user == current_user
-      return if @user.public_profile?
+      #return if @user.public_profile?
       render status: :forbidden
   end
   def user_params
-    params.require(:user).permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :birthday, public_profile: false)
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :birthday, public_profile: false, likes: "", dislikes: "")
   end
 end

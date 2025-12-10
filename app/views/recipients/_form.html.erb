@@ -1,81 +1,103 @@
-<%# New/update form for recipient %>
-<%= form_with model: @recipient, 
-              class: "patch-recipient", data: {controller: "new-recipient"} do |f| %>
+<% submit_label = @recipient.persisted? ? "Update recipient" : "Add recipient" %>
+<%= form_with model: @recipient,
+            class: "patch-recipient",
+            data: { controller: "new-recipient" } do |f| %>
 
-    <div class='form-header'>
-        <h2 class='heading'>Recipient details</h2>
-        <div class='decorative-line'></div>
+    <!-- Header (full width) -->
+    <div class="form-header">
+        <h2 class="heading">Recipient details</h2>
+        <div class="decorative-line"></div>
     </div>
-    <div></div>
 
-    <%# Name %>
-    <div class='input-group required'>
+    <!-- Row 1: Name | Visible to friends -->
+    <div class="input-group required">
         <%= f.label :name, "Name" %>
         <%= f.text_field :name, class: "input-field" %>
     </div>
 
-    <%# Relationship %>
-    <div class='input-group'>
-        <%= f.label :relationship, "Relationship (optional)", class: "input-label" %>
-        <%= f.select :relationship,
-              options_for_select(
-                ["Parent", "Sibling", "Partner/Spouse", "Child", "Relative",
-                "Friend", "Coworker", "Other"], @recipient.relationship),
-                {include_blank: "None" },
-                class: "input-field", id: "relationship-selector" %>
-        <div class='input-group hidden' id='other-relationship-wrap'>
-            <%= f.text_field :relationship_other, maxlength: 50, placeholder: "Other", class: "input-field", id: "other-text-field" %>
+    <% if current_user.public_profile? %>
+    <div class="input-group-oneline">
+        <label class="checkbox-row">
+            <%= f.check_box :visible %>
+            <span>Visible to friends</span>
+        </label>
+    </div>
+    <% else %>
+    <div class="input-group-oneline">
+        <div class="checkbox-row" aria-disabled="true">
+        <%= f.check_box :visible, disabled: true %>
+        <span>Visible to friends</span>
         </div>
     </div>
+    <% end %>
 
-    <%# Events %>
-    <div class='input-group'>
-        <fieldset>
-            <legend>Events</legend>
-            <% if @events.present? %>
-                <div class='events-grid'>
-                    <%= f.collection_check_boxes :event_ids, @events, :id, :name do |b| %>
-                        <label class='checkbox-row'>
-                            <%= b.check_box%>
-                            <span><%= b.text %></span>
-                        </label>
-                    <% end %>
-                </div>
-            <% else %>
-                <p class='hint'>No events yet.</p>
-                
-            <% end %>
-        </fieldset>
+    <!-- Row 2: Relationship | Birthday -->
+    <div class="input-group">
+    <%= f.label :relationship, "Relationship (optional)", class: "input-label" %>
+    <%= f.select :relationship,
+            options_for_select(
+            ["Parent", "Sibling", "Partner/Spouse", "Child", "Relative",
+                "Friend", "Coworker", "Other"], @recipient.relationship
+            ),
+            { include_blank: "None" },
+            class: "input-field", id: "relationship-selector" %>
+
+    <div class="input-group hidden" id="other-relationship-wrap">
+        <%= f.text_field :relationship_other,
+            maxlength: 50,
+            placeholder: "Other",
+            class: "input-field",
+            id: "other-text-field" %>
+    </div>
     </div>
 
-    <%# Birthday %>
-    <div class='input-group'>
+    <div class="input-group">
         <%= f.label :birthday, "Birthday", class: "input-label" %>
         <%= f.date_field :birthday, class: "input-field" %>
     </div>
 
-    <%# Likes %>
+    <!-- Row 3: Events (full width) -->
+    <div class="input-group full-width">
+        <fieldset>
+            <legend>Events</legend>
+            <% if @events.present? %>
+                <div class="events-grid">
+                <%= f.collection_check_boxes :event_ids, @events, :id, :name do |b| %>
+                    <label class="checkbox-row">
+                        <%= b.check_box %>
+                        <span><%= b.text %></span>
+                    </label>
+                <% end %>
+                </div>
+            <% else %>
+                <p class="hint">No events yet.</p>
+            <% end %>
+        </fieldset>
+    </div>
+
+  <!-- Row 4: Likes (full width) -->
     <div class="input-group full-width">
         <%= f.label :likes, "Interests & likes", class: "input-label" %>
         <%= f.text_area :likes,
-                rows: 3,
-                placeholder: "Hobbies, favorite stores, colors, categories of gifts...",
-                class: "input-field" %>
+            rows: 3,
+            placeholder: "Hobbies, favorite stores, colors, categories of gifts...",
+            class: "input-field" %>
     </div>
 
-    <%# Dislikes %>
-    <div class='input-group full-width'>
+    <!-- Row 5: Dislikes (full width) -->
+    <div class="input-group full-width">
         <%= f.label :dislikes, "Dislikes", class: "input-label" %>
-        <%= f.text_area :dislikes, 
-                rows: 3, 
-                placeholder: "Least favorite activities, stores, ...", 
-                class: "input-field" %>
+        <%= f.text_area :dislikes,
+            rows: 3,
+            placeholder: "Least favorite activities, stores, ...",
+            class: "input-field" %>
     </div>
-    <div class='form-footer'>
+    
+    <!-- Row 6: Footer (full width) -->
+    <div class="form-footer full-width">
+        
+        <%= f.submit submit_label, class: "button primary" %>
+        
         <%= link_to "Cancel", recipients_path, class: "button" %>
-        <%= f.submit class: "button primary" %>
     </div>
 <% end %>
-
-
-    

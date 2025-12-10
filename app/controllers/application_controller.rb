@@ -15,6 +15,6 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_if_authorized
-    redirect_to user_path(current_user) if logged_in?
+    redirect_to dashboard_path if logged_in?
   end
 end

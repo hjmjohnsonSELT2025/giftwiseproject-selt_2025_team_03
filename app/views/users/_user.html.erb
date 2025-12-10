@@ -1,0 +1,95 @@
+<%= turbo_frame_tag dom_id(user) do %>
+    <article class="user-card <%= 'is-expanded' if local_assigns[:expanded]%>" data-controller='user-card'>
+        <%# header %>
+        <header class='user-card__header'>
+            <div class='user-card__avatar'>
+                <div class='user-card__initials'>
+                    <%= user.first_name[0].upcase %>
+                    <%= user.last_name[0].upcase%>
+                </div>
+            </div>
+            <div class='user-card__identity'>
+                <div class='user-card__username'>@<%= user.username %></div>
+                <div class='user-card__divider'></div>
+                <div class='user-card__names'>
+                    <div class='user-card__name-block'>
+                        <div class='user-card__name'><%= user.first_name %></div>
+                        <div class='user-card__label'>FIRST NAME</div>
+                    </div>
+                    <div class='user-card__name-block'>
+                        <div class='user-card__name'><%= user.last_name %></div>
+                        <div class='user-card__label'>LAST NAME</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <%# body %>
+        <div class='user-card__body'>
+            <section class='user-card__details'>
+                <div class='user-card__field'>
+                    <div class='user-card__field-header'>
+                        <span class='user-card__field-label'>INTERESTS</span>
+                    </div>
+                    <div class='user-card__interests'>
+                        <%= user.likes %>
+                    </div>
+                </div>
+                <div class='user-card__field'>
+                    <div class='user-card__field-header'>
+                        <span class='user-card__field-label'>AVERSIONS</span>
+                    </div>
+                    <div class='user-card__interests'>
+                        <%= user.dislikes %>
+                    </div>
+                </div>
+            </section>
+            <%# Actions %>
+            <section class="user-card__actions">
+                <!-- PRIMARY ROW -->
+                <div class="user-card__actions-row">
+                    <div class="user-card__action">
+                        <%= button_to "ADD TO MY RECIPIENTS LIST",
+                            #add_recipient_path(user),
+                            '#',
+                            method: :post,
+                            class: "user-card__button user-card__button--primary" %>
+                        <div class="user-card__hint">
+                            *OPTION DOESN'T NOTIFY USER
+                        </div>
+                    </div>
+                <div class="user-card__action">
+                    <%= button_to "ADD TO AN EVENT",
+                        #add_to_event_path(user),
+                        '#',
+                        method: :get,
+                        class: "user-card__button user-card__button--primary" %>
+                        <div class="user-card__hint">
+                            *OPTION DOESN'T NOTIFY USER
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECONDARY ROW -->
+                <div class="user-card__actions-row user-card__actions-row--secondary">
+                    <div class="user-card__action">
+                        <%= button_to "SEND AN INVITE TO AN EVENT",
+                            #invite_to_event_path(user),
+                            '#',
+                            method: :post,
+                            class: "user-card__button user-card__button--secondary" %>
+                        <div class="user-card__hint user-card__hint--alert">
+                            *OPTION DOES NOTIFY USER
+                        </div>
+                    </div>
+                    <div class="user-card__action">
+                        <button type="button"
+                            class="user-card__button user-card__button--ghost"
+                            data-action="user-card#collapse">
+                            CANCEL
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </article>
+<% end %>

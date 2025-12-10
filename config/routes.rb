@@ -5,27 +5,24 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  resource :session, only: [:new, :create, :destroy]
-  get "login", to: "sessions#new", as: :login
-  delete "logout", to: "sessions#destroy", as: :logout
-  root 'sessions#new'
-
+  root "sessions#new"
 
   get 'dashboard', to: 'dashboard#index', as: 'dashboard'
+
   resources :events do
     collection do
       get :search
     end
   end
+
   get "/preview_profile", to: "preview#profile"
 
   # logging in/out
-  resources :users, only: [:new, :create, :show] do
-    collection do
-      post :check_email
-      post :check_username
-    end
-  end
+  get "/", :to => "sessions#new"
+  get "/login", :to => "sessions#new", as: :login
+  post '/login', :to => 'sessions#create'
+  delete '/logout', :to => 'users#logout', as: :logout
+  resources :users, only: [:new, :create, :show]
   resource :profile, only: [:edit, :update], controller: "users"
 
   post 'users/check_email', :to => "users#check_email"
@@ -37,10 +34,9 @@ Rails.application.routes.draw do
     end
   end
   # gift_ideas
-  resources :gift_ideas, only: [:new, :create, :show]
-  get "/list_gifts", :to => "gift_ideas#list", as: :list_gifts
-  get "/add_gifts", :to => "gift_ideas#add", as: :add_gifts
-  post "/add_gifts", :to => "gift_ideas#list"
-  #get "/edit_gift", :to => "gift_idea#edit"
-  #get "/search_gifts", :to => "gift_ideas#search", as: :search_gifts
+  resources :gift_ideas do
+    collection do
+      get :search
+    end
+  end
 end

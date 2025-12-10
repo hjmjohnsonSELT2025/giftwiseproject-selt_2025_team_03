@@ -1,43 +1,65 @@
-<%= render layout: 'shared/primary_layout' do %>
-  <%= form_with model: @gift_idea, url: gift_ideas_path, method: :post, class: "register-form" do |u| %>
-    <div class="decorative-line"></div>
+<%= render "shared/sidebar_layout" %>
 
-    <h1 class="register-heading">Add a New Gift</h1>
-    
-    <div class="input-group">       <!--------------- Title --------------->
-      <%= u.label :title, "Title", class: "input-label" %>
-      <%= u.text_field :title, max_length: 30, placeholder: "#{@gift_idea.title}", class: "input-field required" %>
-    </div>
+<main class='main-content'>
+  <div class='top-bar'>
+    <h1 class='page-title'>Edit Gift</h1>
+    <%= render 'shared/profile_dropdown' %>
+  </div>
 
-    <div class="input-group">       <!--------------- Price --------------->
-      <%= u.label :price, "Price", class: "input-label" %>
-      <%= u.text_field :price, max_length: 30, placeholder: "#{@gift_idea.price}", class: "input-field required" %>
-    </div>
+  <div class='form-container'>
+    <% if flash[:alert] %>
+      <div class='alert'>
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
 
-    <div class="input-group">       <!--------------- Status --------------->
-      <%= u.label :status, "Status", class: "input-label" %>
-      <%= u.select :status, options_for_select(%w[idea backlogged purchased delivered wrapped liked]) %>
-    </div>
+    <%= form_with model: @gift_idea, url: gift_idea_path(@gift_idea), method: :patch, class: "register-form" do |u| %>
+      <div class="decorative-line"></div>
 
-    <div class="input-group">       <!--------------- Url --------------->
-      <%= u.label :url, "Url Link", class: "input-label" %>
-      <%= u.text_field :url, placeholder: "#{@gift_idea.url}", class: "input-field required" %>
-    </div>
+      <h1 class="register-heading">Edit Gift</h1>
 
-    <div class='input-group'>       <!--------------- Notes --------------->
-      <%= u.label :notes, "Notes", class: "input-label"%>
-      <%= u.text_field :notes, placeholder: "#{@gift_idea.notes}", class: "input-field required" %>
-    </div>
+      <div class="input-group">
+        <%= u.label :title, "Title", class: "input-label" %>
+        <%= u.text_field :title, max_length: 100, placeholder: "e.g., Blue Scarf", class: "input-field required" %>
+      </div>
 
-    <div class='input-group'>       <!--------------- Recipient ID --------------->
-      <%= u.label :event_recipient_id, "ID of the Recipient", class: "input-label" %>
-      <%= u.text_field :event_recipient_id, placeholder: "#{@gift_idea.event_recipient_id}", class: "input-field required" %>
-    </div>
+      <div class="input-group">
+        <%= u.label :price, "Price", class: "input-label" %>
+        <%= u.number_field :price, step: "0.01", min: "0", placeholder: "0.00", class: "input-field" %>
+      </div>
 
-    <%= u.submit "Create my gift", class: "login-button" %>
-    <div class="login-button">
-      <%= link_to 'Cancel', list_gifts_path%>
-    </div>
-  <% end %>
-<% end %>
-<%= javascript_import_module_tag "controllers/gift_ideas/edit_gift_idea" %>
+      <div class="input-group">
+        <%= u.label :status, "Status", class: "input-label" %>
+        <%= u.select :status, options_for_select(%w[idea backlogged purchased delivered wrapped liked], @gift_idea.status), {}, class: "input-field" %>
+      </div>
+
+      <div class="input-group">
+        <%= u.label :url, "URL Link", class: "input-label" %>
+        <%= u.url_field :url, placeholder: "https://...", class: "input-field" %>
+      </div>
+
+      <div class='input-group'>
+        <%= u.label :notes, "Notes", class: "input-label" %>
+        <%= u.text_area :notes, rows: 3, placeholder: "Additional details...", class: "input-field" %>
+      </div>
+
+      <div class='input-group'>
+        <%= u.label :event_recipient_id, "Event & Recipient", class: "input-label required" %>
+        <%= u.select :event_recipient_id,
+                     grouped_options_for_select(
+                       @event_recipients.group_by { |er| er.event.name }.transform_values { |ers|
+                         ers.map { |er| ["#{er.recipient.name}", er.id] }
+                       },
+                       @gift_idea.event_recipient_id
+                     ),
+                     { include_blank: "Select event and recipient" },
+                     class: "input-field required" %>
+      </div>
+
+      <div class="action-footer">
+        <%= u.submit "Update Gift", class: "login-button" %>
+        <%= link_to 'Cancel', gift_ideas_path, class: "login-button cancel" %>
+      </div>
+    <% end %>
+  </div>
+</main>
