@@ -7,8 +7,16 @@ class ChatsController < ApplicationController
     end
 
     def query
-        @chat = Chat.find_or_initialize_by(user: current_user)
+        @event_id = params[:event_id].to_i
+        @recipient_id = params[:recipient_id].to_i
+        @event_recipient_id = EventRecipient.find_or_create_by(event_id: @event_id, recipient_id: @recipient_id)
+        @event = Event.find(@event_id) # For keeping form parameters
+        @recipient = Recipient.find(@recipient_id) # For keeping form parameters
+
+
+        @chat = Chat.find_or_initialize_by(user: current_user, event_recipient_id: @event_recipient_id.id)
         if params[:chat].present? && params[:chat][:input].present?
+            @chat.save if @chat.new_record?
             response_content = @chat.ask(params[:chat][:input])
             @response = response_content&.content
         else

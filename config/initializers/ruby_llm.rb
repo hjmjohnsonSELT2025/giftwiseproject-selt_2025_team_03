@@ -1,5 +1,5 @@
 RubyLLM.configure do |config|
-  config.openai_api_key = ENV['open_ai_api_key'] || Rails.application.credentials.dig(:open_ai_api_key)
+  config.openai_api_key = ENV['OPENAI_API_KEY'] || Rails.application.credentials.dig(:OPENAI_API_KEY)
   #config.default_model = "gpt-4.1-nano"
   config.default_model = "gpt-oss-120b"
 

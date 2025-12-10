@@ -5,12 +5,15 @@
 
 <%= form_with model: @chat,
         url: query_chat_path,
-        method: :post, local: true do |f| %>
+        method: :post, local: true,
+        data: { turbo: false } do |f| %>
     <div class = 'form-header'>
         <h2 class='heading'>Generate Gift Ideas</h2>
         <div class='decorative-line'></div>
     </div>
     <div></div>
+    <%= hidden_field_tag :event_id, @event.id %>
+    <%= hidden_field_tag :recipient_id, @recipient.id %> <!-- To pass in recipient_id, event_id for LLM? -->
 
     <%# LLM Input Field %>
     <div class='input-group required'>
@@ -25,6 +28,6 @@
     </div>
   
     <!-- Will change to response, first confirm interactivity -->
-    <%= f.label :input, "Gift Input" %>
-    <%= f.text_field :input, class: "form-control-plaintext", readonly: true, value:@response %>
+    <%= f.label :llm_response, "Gift Input" %>
+    <%= f.text_field :llm_response, class: "form-control-plaintext", readonly: true, value:@response %>
 <% end %>

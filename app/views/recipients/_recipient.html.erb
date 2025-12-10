@@ -33,6 +33,7 @@
                 <div class='details'>
                     <% recipient.events.each do |event| %>
                         <div class='value'><%= "#{event.name}"%></div>
+                        <%= link_to "Generate Gifts", query_chat_path(recipient_id: recipient.id, event_id: event.id), data: { turbo: false } %>
                     <% end %>
                 </div>
             </div>
@@ -54,9 +55,6 @@
                 </div>
             </div>
 
-        </div>
-        <div class='col3'>
-            <%= link_to "Generate Gifts", query_chat_path, data: { turbo: false } %>
         </div>
         <div class='options'>
             <%= link_to edit_recipient_path(recipient), class: "option" do %>
