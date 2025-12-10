@@ -44,10 +44,12 @@ class UsersController < ApplicationController
   end
   def find
     if params[:query].present?
+      @last_query = params[:query]
       q = "%#{params[:query].downcase}%"
       @users = User
                    .where(public_profile: true)
                    .where("LOWER(username) LIKE ?", q)
+                   .where.not(id: current_user.id)
     else
       @users = nil
     end
@@ -59,15 +61,50 @@ class UsersController < ApplicationController
   end
 
   def create_event_invitation
-    @event = current_user.events.find(params[:event_id])
-    @user.request_add_event(@event)
-    redirect_to find_users_path, notice: "Invitation sent."
+    if @user == current_user
+        redirect_to find_users_path, alert: "You're already invited to your own event."
+        return
+    end
+    event_ids = Array(params[:event_ids]).reject(&:blank?)
+
+    if event_ids.empty?
+      redirect_to new_event_invitation_user_path(@user), alert: "Please select at least one event."
+      return
+    end
+    events = current_user.events.where(id: event_ids)
+    created_count = 0
+    events.each do |event| 
+            invitation = EventInvitation.find_or_create_by!(event: event, invitee: @user)
+            invitation.inviter = current_user
+            invitation.status ||= "pending"
+
+            created_count += 1 if invitation.new_record? && invitation.save
+
+    end
+    if created_count > 0
+        message = "Sent #{created_count} invitation#{'s' if created_count != 1}."
+        redirect_to find_users_path, notice: message
+    else
+      redirect_to new_event_invitation_user_path(@user), alert: "No new invitations were created (they may already exist)"
+    end
   end
+  
   
 
   private
   def request_add_event
-      Rails.logger = "Implement request push_back"
+    invitation = EventInvitation.find_or_initialize_by!(
+      event: @event,
+      invitee: @user
+    )
+    invitation.inviter = current_user
+    invitation.status = 'pending'
+
+    if invitation.save 
+      redirect_to find_users_path, notice: "Invite sent."
+    else
+      redirect_to find_users_path, alert: "Unable to send invitation."
+    end
   end
   def set_user
     @user = User.find(params[:id])

@@ -16,7 +16,7 @@
             placeholder: "Search for recipient..." %>
     </div>
     <%= turbo_frame_tag "recipients_list" do %>
-        <% if @recipients.none? %>
+        <% if @recipients.none? && current_user.recipients.none? %>
             <div class='empty-content hint'>No recipients yet. Add your first recipient by clicking the '+'!</div>
         <% else %>
             <%= render @recipients %>

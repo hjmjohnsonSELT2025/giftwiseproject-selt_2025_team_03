@@ -1,0 +1,19 @@
+<%= turbo_frame_tag dom_id(invitation) do %>
+    <div class='invitation-card'>
+        <head class='header'>
+            <h1 class='page-title'><%= @invitation.event.name %></h1>
+        </head>
+        <body class='event-details'>
+            <div class='inviter-container'>
+                <%= render @invitation.inviter, clickable: true %>
+            </div>
+            <div class='actions'>
+                <%= button_to "Accept", event_invitation_path(@invitation, decision: "accept"),
+                    method: :patch, class: "button primary" %>
+                <%= button_to "Decline", event_invitation_path(@invitation, decision: "decline"),
+                    method: :patch, class: "button"
+                %>
+            </div>
+        </body>
+    </div>
+<% end %>

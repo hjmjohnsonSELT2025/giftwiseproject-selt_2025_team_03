@@ -16,7 +16,9 @@
             %>
         <%= turbo_frame_tag "users_list" do %>
             <% if @users.present? %>
-                <%= render partial: "user", collection: @users, as: :user %>
+                    <%= render partial: "user", collection: @users, as: :user %>
+            <% else %>
+                    <div class='hint'>No users found with the username "<%= "#{@last_query}" %>".</div>
             <% end %>
         <% end %>
     </div>
