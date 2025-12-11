@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   resource :session, only: [:new, :create, :destroy]
   get "login", to: "sessions#new", as: :login
   delete "logout", to: "sessions#destroy", as: :logout
+  get "/", :to => "sessions#new"
+  get "/login", :to => "sessions#new", as: :login
+  post '/login', :to => 'sessions#create'
+  delete '/logout', :to => 'users#logout', as: :logout
 
   #---------------------  DASHBOARD
   get 'dashboard', to: 'dashboard#index', as: 'dashboard'
