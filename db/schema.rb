@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_10_033607) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_11_040404) do
   create_table "event_invitations", force: :cascade do |t|
     t.integer "event_id", null: false
     t.integer "inviter_id", null: false
@@ -74,6 +74,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_10_033607) do
     t.date "birthday"
     t.string "relationship_other"
     t.boolean "visible"
+    t.index ["user_id", "name"], name: "index_recipients_on_user_id_and_name", unique: true
     t.index ["user_id"], name: "index_recipients_on_user_id"
   end
 

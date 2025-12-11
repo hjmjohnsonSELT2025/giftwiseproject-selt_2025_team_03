@@ -34,6 +34,7 @@ class RecipientsController < ApplicationController
         @recipient.relationship = "Other"
     end
   end
+
   def add
     @recipient = current_user.recipients.new
     
