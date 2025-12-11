@@ -20,5 +20,5 @@ application.register("users-new", users_new_controller)
 import users_update_controller from "controllers/users_update_controller"
 application.register("users-update", users_update_controller)
 
-//import user_update_controller from "controllers/user_update_controller"
-//application.register("current-user-update", user_update_controller)
+import flash_controller from "controllers/flash_controller"
+application.register("flash", flash_controller)

@@ -39,6 +39,7 @@ class RecipientsController < ApplicationController
     @recipient = current_user.recipients.new
     
     if params[:user_id].present?
+
         source_user = User.find(params[:user_id]).where(public_profile: true)
         @recipient.name = [source_user.first_name, source_user.last_name].compact.join(" ")
         @recipient.likes = source_user.likes.to_s
@@ -54,7 +55,13 @@ class RecipientsController < ApplicationController
     if @recipient.save
       redirect_to recipients_path, notice: "Recipient created."
     else
+      
       @events = current_user.events.order(:name)
+      if @recipient.errors[:name].any?
+                flash.now[:alert] = "'#{@recipient.name}' #{@recipient.errors[:name].join(', ')}"
+      else
+        flash.now[:alert] = @recipient.errors.full_messages.to_sentence
+      end
       render :new, status: :unprocessable_entity
     end
   end
