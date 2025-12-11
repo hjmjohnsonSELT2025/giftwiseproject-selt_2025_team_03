@@ -7,8 +7,6 @@ Rails.application.routes.draw do
   
   #---------------------  SESSION MANAGEMENT
   resource :session, only: [:new, :create, :destroy]
-  get "login", to: "sessions#new", as: :login
-  delete "logout", to: "sessions#destroy", as: :logout
   get "/", :to => "sessions#new"
   get "/login", :to => "sessions#new", as: :login
   post '/login', :to => 'sessions#create'
