@@ -45,7 +45,7 @@ export default class extends Controller {
                     }
                 },
                 email: function(input, label) {
-                    var _emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9]{2,}$/;
+                    var _emailRegex = /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,63}$/
                     const val = $(input).val().trim();
                     function validStr() { return (val.length > 0 && _emailRegex.test(val)); }
                     if (!validStr()) {

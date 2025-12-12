@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :require_authorization, except: [:new, :create]
   before_action :set_user, only: [:show, :new_event_invitation, :create_event_invitation]
   before_action :ensure_profile_visible!, only: :show
-
+  before_action :redirect_if_authorized, only: [:new, :create]
   def show
     
     redirect_to dashboard_path
