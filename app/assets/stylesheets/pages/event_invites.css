@@ -1,0 +1,52 @@
+.events_index .events-section--invitations {
+    margin-bottom: 32px;
+    padding: 0;
+    border: none;
+    background: none;
+}
+.events_index .events-section--invitations .events-section__header {
+    margin-bottom: 16px;
+}
+.events_index .events-section--invitations .page-subtitle {
+    font-size: 18px;
+    font-weight: 600;
+}
+.events_index .events-section--invitations .events-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.events_index .invitation-card {
+    background-color: #2d4293;
+    padding: 28px;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+.events_index .invitation-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+.events_index .invitation-card__header {
+    margin-bottom: 12px;
+}
+.events_index .invitation-card__header .page-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+.events_index .invitation-card__meta {
+    font-size: 14px;
+    opacity: 0.7;
+}
+.events_index .invitation-card__body {
+    margin-bottom: 16px;
+}
+.events_index .invitation-card__body p {
+    margin: 0;
+    font-size: 14px;
+}
+.events_index .invitation-card__actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}

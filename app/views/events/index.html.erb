@@ -18,6 +18,19 @@
                        } %>
     <%= link_to "Add Event", new_event_path, class: "login-button" %>
   </div>
+  <% if @event_invitations.any? %>
+    <section class='events-section events-section--invitations'>
+      <div class='events-section__header'>
+        <h2 class='page-subtitle'>Invitations</h2>
+      </div>
+      <div class='events-grid'>
+        <%= render partial: "events/invite", 
+            collection: @event_invitations,
+            as: :invitation
+        %>
+      </div>
+    </section>
+  <% end %>
   <%# Template for an event card %>
   <template id='event-card'>
     <div class='event-container' data-event-id=''>

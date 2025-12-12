@@ -1,39 +1,56 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  root "sessions#new"
+  ##########################################################
+  root 'sessions#new'                                # ROOT
+  #########################################################
+  
+  #---------------------  SESSION MANAGEMENT
+  resource :session, only: [:new, :create, :destroy]
+  get "/", :to => "sessions#new"
+  get "/login", :to => "sessions#new", as: :login
+  post '/login', :to => 'sessions#create'
+  delete '/logout', :to => 'sessions#destroy', as: :logout  
 
+  #---------------------  DASHBOARD
   get 'dashboard', to: 'dashboard#index', as: 'dashboard'
 
+  #---------------------  EVENTS
   resources :events do
     collection do
       get :search
     end
   end
 
+  #---------------------  EVENT INVITATIONS
+  resources :event_invitations, only: [:index, :update]
+
+  #---------------------  PROFILE
   get "/preview_profile", to: "preview#profile"
 
-  # logging in/out
-  get "/", :to => "sessions#new"
-  get "/login", :to => "sessions#new", as: :login
-  post '/login', :to => 'sessions#create'
-  delete '/logout', :to => 'users#logout', as: :logout
-  resources :users, only: [:new, :create, :show]
+  #---------------------  USERS
   resource :profile, only: [:edit, :update], controller: "users"
-
+  resources :users, only: [:new, :create, :show] do
+    collection do
+      post :check_email
+      post :check_username
+      get :find
+    end
+    member do
+      get :new_event_invitation
+      post :create_event_invitation
+    end
+  end
   post 'users/check_email', :to => "users#check_email"
   post 'users/check_username', :to => "users#check_username"
-  # recipients
+
+  #---------------------  RECIPIENTS
   resources :recipients do
     collection do
       get :search
     end
   end
-  # gift_ideas
+  #---------------------  GIFT IDEAS
   resources :gift_ideas do
     collection do
       get :search

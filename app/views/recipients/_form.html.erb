@@ -1,7 +1,7 @@
 <% submit_label = @recipient.persisted? ? "Update recipient" : "Add recipient" %>
 <%= form_with model: @recipient,
             class: "patch-recipient",
-            data: { controller: "new-recipient" } do |f| %>
+            data: { controller: "new-recipient", turbo: true } do |f| %>
 
     <!-- Header (full width) -->
     <div class="form-header">
@@ -19,7 +19,7 @@
     <div class="input-group-oneline">
         <label class="checkbox-row">
             <%= f.check_box :visible %>
-            <span>Visible to friends</span>
+            <span>Visible to others in events</span>
         </label>
     </div>
     <% else %>

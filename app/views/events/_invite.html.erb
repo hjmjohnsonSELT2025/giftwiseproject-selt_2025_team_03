@@ -1,0 +1,29 @@
+<%# Rendering a singular invitation from an existing user %>
+<%= turbo_frame_tag dom_id(invitation) do %>
+<article class="invitation-card">
+    <header class="invitation-card__header">
+        <h3 class="page-title"><%= invitation.event.name %></h3>
+        <p class="invitation-card__meta">
+            From <strong><%= invitation.inviter.username %></strong>
+        </p>
+    </header>
+    <section class="invitation-card__body">
+        <% if invitation.event.date.present? %>
+        <p><strong>Date:</strong> <%= invitation.event.date.strftime("%b %-d, %Y") %></p>
+        <% end %>
+        <% if invitation.event.description.present? %>
+        <p><strong>Details:</strong> <%= invitation.event.description %></p>
+        <% end %>
+    </section>
+    <footer class="invitation-card__actions">
+        <%= button_to "Accept",
+            event_invitation_path(invitation, decision: "accept"),
+            method: :patch,
+            class: "button primary" %>
+        <%= button_to "Decline",
+            event_invitation_path(invitation, decision: "decline"),
+            method: :patch,
+            class: "button" %>
+    </footer>
+</article>
+<% end %>

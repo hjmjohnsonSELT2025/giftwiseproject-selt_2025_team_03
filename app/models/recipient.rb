@@ -19,7 +19,13 @@ class Recipient < ApplicationRecord
     has_many :events, through: :event_recipients
     has_many :gift_ideas, through: :event_recipients
 
-    validates :name, presence: true
+    validates :name, presence: true,
+              uniqueness: {
+                scope: :user_id,
+                case_sensitive: false,
+                message: "is already in your recipient list."
+              }
+    
 
     # Scoping
     scope :publicly_visible, -> { where(visible: true) }

@@ -5,9 +5,11 @@
       <h1 class="page-title">Add New Recipient</h1>
       <%= render "shared/profile_dropdown" %>
     </div>
-    <div class="recipients-new-tabs">
-      <%= render "users/tabs_layout" %>
-    </div>
+    <% unless params[:user_id].present? %>
+      <div class="recipients-new-tabs">
+        <%= render "users/tabs_layout" %>
+      </div>
+    <% end %>
     <div class="recipients-new-form">
       <%= render "form" %>
     </div>
