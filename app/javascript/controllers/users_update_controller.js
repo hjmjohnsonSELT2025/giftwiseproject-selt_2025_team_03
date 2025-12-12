@@ -18,7 +18,7 @@ export default class extends Controller {
             var validator = {
                 helpers: {
                     requiredUnfulfilled: function() {
-                        return $required.filter(".error").length > 0;
+                        return $(req).filter(".error").length > 0;
                     },
                     setInvalid: function(input, label, reason) {
                         $(label).addClass('error');
