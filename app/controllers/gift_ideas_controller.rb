@@ -35,24 +35,6 @@ class GiftIdeasController < ApplicationController
     render :add
   end
 
-  def model
-    render :generate
-  end
-
-  def query
-    @gift_idea = GiftIdea.new(query_params)
-    render :generate
-    # Change later to be unique/tied to user
-    #@conversation = RubyLLM.chat
-    #@response = @conversation.with_schema(ChatSchema).ask (query_params)
-  end
-
-  def obtain
-    @gift_idea = GiftIdea.new
-    # Change to have it pass in LLM values to the create/add method
-    render :add
-  end
-
   #def search
   #  query = params[:query].to_s.strip
   #  gifts = if query.present?

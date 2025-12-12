@@ -17,8 +17,8 @@ class ChatsController < ApplicationController
         @chat = Chat.find_or_initialize_by(user: current_user, event_recipient_id: @event_recipient_id.id)
         if params[:chat].present? && params[:chat][:input].present?
             @chat.save if @chat.new_record?
-            response_content = @chat.ask(params[:chat][:input])
-            @response = response_content&.content
+            #response_content = @chat.ask(params[:chat][:input])
+            #@response = response_content&.content
         else
             if params[:chat].present?
                 flash[:alert] = "Warning: query was empty"
