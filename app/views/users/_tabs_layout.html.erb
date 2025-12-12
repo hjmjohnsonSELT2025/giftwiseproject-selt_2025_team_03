@@ -1,0 +1,9 @@
+<div class="tabs">
+  <%= link_to "Manual",
+      new_recipient_path,
+      class: "tab #{controller_name == 'recipients' && action_name == 'new' ? 'tab--active' : ''}" %>
+
+  <%= link_to "Find by username",
+      find_users_path,
+      class: "tab #{controller_name == 'users' && action_name == 'find' ? 'tab--active' : ''}" %>
+</div>

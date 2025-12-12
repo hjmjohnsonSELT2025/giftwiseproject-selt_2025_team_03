@@ -47,7 +47,7 @@ RSpec.describe GiftIdeasController, type: :controller do
     #        event_recipient_id: 1
     #      }
     #    }
-    #    expect(response).to render_template(list_gifts_path)
+    #    expect(response).to render_template(gift_ideas_path)
     #    expect(flash[:notice]).to eq('excitingGift added!')
     #  end
     #end

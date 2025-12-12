@@ -1,0 +1,63 @@
+<%= render "shared/sidebar_layout" %>
+<main class='main-content'>
+  <div class='top-bar'>
+    <h1 class='page-title'><%= @gift_idea.title %></h1>
+    <%= render 'shared/profile_dropdown' %>
+  </div>
+
+  <div class='gift-details-container'>
+    <div class='detail-section'>
+      <h2>Gift Details</h2>
+
+      <div class='detail-grid'>
+        <div class='detail-row'>
+          <div class='detail-label'>Title:</div>
+          <div class='detail-value'><%= @gift_idea.title %></div>
+        </div>
+
+        <div class='detail-row'>
+          <div class='detail-label'>Price:</div>
+          <div class='detail-value'>$<%= number_with_delimiter(@gift_idea.price&.to_f || 0, delimiter: ',') %></div>
+        </div>
+
+        <div class='detail-row'>
+          <div class='detail-label'>Status:</div>
+          <div class='detail-value'>
+            <span class='status-badge <%= @gift_idea.status %>'><%= @gift_idea.status.titleize %></span>
+          </div>
+        </div>
+
+        <div class='detail-row'>
+          <div class='detail-label'>Event:</div>
+          <div class='detail-value'><%= @event_recipient&.event&.name || "Not assigned" %></div>
+        </div>
+
+        <div class='detail-row'>
+          <div class='detail-label'>Recipient:</div>
+          <div class='detail-value'><%= @event_recipient&.recipient&.name || "Not assigned" %></div>
+        </div>
+
+        <% if @gift_idea.url.present? %>
+          <div class='detail-row'>
+            <div class='detail-label'>URL:</div>
+            <div class='detail-value'>
+              <%= link_to @gift_idea.url, @gift_idea.url, target: '_blank', class: 'gift-url' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <% if @gift_idea.notes.present? %>
+        <div class='detail-row' style='margin-top: 20px;'>
+          <div class='detail-label'>Notes:</div>
+          <div class='detail-value'><%= simple_format(@gift_idea.notes) %></div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class='action-buttons'>
+      <%= link_to "Edit Gift", edit_gift_idea_path(@gift_idea), class: "login-button" %>
+      <%= link_to "Back to Gift Ideas", gift_ideas_path, class: "login-button secondary" %>
+    </div>
+  </div>
+</main>

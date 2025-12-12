@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_06_020104) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_11_040404) do
+  create_table "event_invitations", force: :cascade do |t|
+    t.integer "event_id", null: false
+    t.integer "inviter_id", null: false
+    t.integer "invitee_id", null: false
+    t.string "status", default: "pending", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id", "invitee_id"], name: "index_event_invitations_on_event_id_and_invitee_id", unique: true
+    t.index ["event_id"], name: "index_event_invitations_on_event_id"
+    t.index ["invitee_id"], name: "index_event_invitations_on_invitee_id"
+    t.index ["inviter_id"], name: "index_event_invitations_on_inviter_id"
+  end
+
   create_table "event_recipients", force: :cascade do |t|
     t.integer "event_id", null: false
     t.integer "recipient_id", null: false
@@ -31,6 +44,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_06_020104) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "description"
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
@@ -59,6 +73,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_06_020104) do
     t.string "relationship"
     t.date "birthday"
     t.string "relationship_other"
+    t.boolean "visible"
+    t.index ["user_id", "name"], name: "index_recipients_on_user_id_and_name", unique: true
     t.index ["user_id"], name: "index_recipients_on_user_id"
   end
 
@@ -71,8 +87,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_06_020104) do
     t.date "birthday"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "public_profile"
+    t.string "likes"
+    t.string "dislikes"
   end
 
+  add_foreign_key "event_invitations", "events"
+  add_foreign_key "event_invitations", "users", column: "invitee_id"
+  add_foreign_key "event_invitations", "users", column: "inviter_id"
   add_foreign_key "event_recipients", "events"
   add_foreign_key "event_recipients", "recipients"
   add_foreign_key "events", "users"

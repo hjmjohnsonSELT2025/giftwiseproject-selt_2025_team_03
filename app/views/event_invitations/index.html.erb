@@ -1,0 +1,9 @@
+
+<h1>Event Invitations</h1>
+<% if @invitations.any? %>
+<%= render partial: "events/invite",
+    collection: @invitations,
+    as: :invitation %>
+<% else %>
+<p>No pending invitations.</p>
+<% end %>

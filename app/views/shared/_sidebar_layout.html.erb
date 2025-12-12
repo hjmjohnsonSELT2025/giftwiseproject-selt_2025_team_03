@@ -2,47 +2,48 @@
 <%#   Uncomment paths once routes are created.   %>
 <%# --------------------------------------------- %>
 
-
 <!-- Sidebar -->
 <aside class="sidebar">
-<div class="logo">
+  <div class="logo">
     <div class="logo-icon"></div>
     <span>GiftWise</span>
 </div>
+<% page = get_active_nav_item %>
+<% Rails.logger.debug page.to_s %>
 
-<nav>
+  <nav>
     <ul class="nav-menu">
     <%# Dashboard %>
-    <%= link_to dashboard_path class: 'nav-link' do %>
-        <li class="nav-item<%= ' active' if current_page?(dashboard_path)%>">
+    <%= link_to dashboard_path, class: 'nav-link', id: "dashboard-link" do %>
+        <li class="nav-item <%='active' if page == :dashboard%>">
             <span>Dashboard</span>
         </li>
-    <% end %>
+      <% end %>
 
 
     <%# Events %>
-    <%= link_to events_path class: 'nav-link'  do %>
-        <li class="nav-item<%= ' active' if current_page?(events_path) || current_page?(new_event_path) || (controller_name == 'events')%>">
+    <%= link_to events_path, class: 'nav-link', id: "events-link"  do %>
+        <li class="nav-item <%='active' if page == :events %>">
             <span>Events</span>
         </li>
       <% end %>
 
 
     <%# Recipients %>
-    <%= link_to recipients_path class: "nav-link" do %>
-        <li class="nav-item<%= ' active' if current_page?(recipients_path)%>">
+    <%= link_to recipients_path, class: "nav-link", id: "recipients-link" do %>
+        <li class="nav-item <%='active' if page == :recipients%>">
             <span>Recipients</span>
         </li>
-    <% end %>
+      <% end %>
 
     <%# Gift Ideas %>
-    <%= link_to list_gifts_path class: 'nav-link', data: {turbo: false} do %>
-        <li class="nav-item<%= ' active' if current_page?(list_gifts_path)%>">
+    <%= link_to gift_ideas_path, class: 'nav-link', id: "gift-ideas-link" do %>
+        <li class="nav-item <%='active' if page == :gift_ideas %>">
             <span>Gift Ideas</span>
         </li>
-    <% end %>
+      <% end %>
 
-<!--        TODO: Create layout
+      <!--        TODO: Create layout
     <%# Purchases %>
     <%#= link_to purchases_path class: "nav-link", data: {turbo: false} do %>
         <li class="nav-item<%#= ' active' if current_page?(purchases_path)%>">
@@ -51,7 +52,7 @@
     <%# end %>
 -->
 
-<!--        TODO: Create layout
+      <!--        TODO: Create layout
 
     <%# Settings %>
     <%#= link_to settings_path class: 'nav-link', data: {turbo: false} do %>
@@ -62,5 +63,5 @@
 -->
 
     </ul>
-</nav>
+  </nav>
 </aside>
