@@ -26,6 +26,27 @@ class RecipientsController < ApplicationController
   def new 
     @recipient = current_user.recipients.new
     @events = current_user.events.order(:name)
+    if params[:user_id].present?
+        source_user = User.find(params[:user_id])
+        @recipient.name = [source_user.first_name, source_user.last_name].compact.join(" ")
+        @recipient.likes = source_user.likes
+        @recipient.dislikes = source_user.dislikes
+        @recipient.relationship = "Other"
+    end
+  end
+
+  def add
+    @recipient = current_user.recipients.new
+    
+    if params[:user_id].present?
+
+        source_user = User.find(params[:user_id]).where(public_profile: true)
+        @recipient.name = [source_user.first_name, source_user.last_name].compact.join(" ")
+        @recipient.likes = source_user.likes.to_s
+        @recipient.dislikes = source_user.dislikes.to_s
+        @recipient.relationship = "Other"
+        @recipient.birthday = source_user.birthday
+    end
   end
 
   def create
@@ -34,7 +55,13 @@ class RecipientsController < ApplicationController
     if @recipient.save
       redirect_to recipients_path, notice: "Recipient created."
     else
+      
       @events = current_user.events.order(:name)
+      if @recipient.errors[:name].any?
+                flash.now[:alert] = "'#{@recipient.name}' #{@recipient.errors[:name].join(', ')}"
+      else
+        flash.now[:alert] = @recipient.errors.full_messages.to_sentence
+      end
       render :new, status: :unprocessable_entity
     end
   end
@@ -55,7 +82,10 @@ class RecipientsController < ApplicationController
 
   def destroy
     @recipient.destroy
-    redirect_to recipients_path, notice: "Recipient deleted."
+    respond_to do |f|
+            f.html { redirect_to recipients_path, notice: "Recipient deleted."}
+            f.json { render json: { success: true}, status: :ok }
+    end
   end
 
   private

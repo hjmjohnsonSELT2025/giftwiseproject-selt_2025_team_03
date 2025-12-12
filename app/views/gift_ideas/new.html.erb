@@ -1,0 +1,83 @@
+<%= render "shared/sidebar_layout" %>
+
+<main class='main-content'>
+  <div class='top-bar'>
+    <h1 class='page-title'>Add New Gift</h1>
+    <%= render 'shared/profile_dropdown' %>
+  </div>
+
+  <div class='form-container'>
+    <% if flash[:alert] %>
+      <div class='alert alert-error'>
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+
+    <% if @gift_idea.errors.any? %>
+      <div class='alert alert-error'>
+        <h3><%= pluralize(@gift_idea.errors.count, "error") %> prevented this gift from being saved:</h3>
+        <ul>
+          <% @gift_idea.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form_with model: @gift_idea, url: gift_ideas_path, method: :post, class: "register-form" do |u| %>
+      <div class="decorative-line"></div>
+
+      <h1 class="register-heading">Gift Information</h1>
+
+      <div class="input-group">
+        <%= u.label :title, "Title", class: "input-label" %>
+        <%= u.text_field :title, maxlength: 100, placeholder: "e.g., Blue Scarf", class: "input-field required" %>
+      </div>
+
+      <div class="input-group">
+        <%= u.label :price, "Price", class: "input-label" %>
+        <%= u.number_field :price, step: "0.01", min: "0", placeholder: "0.00", class: "input-field" %>
+      </div>
+
+      <div class="input-group">
+        <%= u.label :status, "Status", class: "input-label" %>
+        <%= u.select :status, options_for_select(%w[idea backlogged purchased delivered wrapped liked], @gift_idea.status || 'idea'), {}, class: "input-field" %>
+      </div>
+
+      <div class="input-group">
+        <%= u.label :url, "URL Link", class: "input-label" %>
+        <%= u.url_field :url, placeholder: "https://...", class: "input-field" %>
+      </div>
+
+      <div class='input-group'>
+        <%= u.label :notes, "Notes", class: "input-label" %>
+        <%= u.text_area :notes, rows: 3, placeholder: "Additional details...", class: "input-field" %>
+      </div>
+
+      <div class='input-group'>
+        <%= u.label :event_recipient_id, "Event & Recipient", class: "input-label required" %>
+        <% if @event_recipients.any? %>
+          <%= u.select :event_recipient_id,
+                       grouped_options_for_select(
+                         @event_recipients.group_by { |er| er.event.name }.transform_values { |ers|
+                           ers.map { |er| ["#{er.recipient.name}", er.id] }
+                         },
+                         @gift_idea.event_recipient_id
+                       ),
+                       { include_blank: "Select event and recipient" },
+                       class: "input-field required" %>
+        <% else %>
+          <p class="help-text" style="color: #ff6b6b;">
+            You need to create an event and add recipients first.
+            <%= link_to "Create an event", new_event_path, style: "color: var(--brown-accent);" %>
+          </p>
+        <% end %>
+      </div>
+
+      <div class="action-footer">
+        <%= u.submit "Create Gift", class: "login-button", disabled: @event_recipients.empty? %>
+        <%= link_to 'Cancel', gift_ideas_path, class: "login-button cancel" %>
+      </div>
+    <% end %>
+  </div>
+</main>

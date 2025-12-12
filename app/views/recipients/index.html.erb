@@ -1,4 +1,4 @@
-<%= render "shared/sidebar_layout" %>
+<%= render "shared/sidebar_layout", data: {turbo: true} %>
 
 <main class="main-content">
     <div class="top-bar">
@@ -8,25 +8,19 @@
 
     <div class="view-options container">
         <!-- id='search-recipients', class='input-field' -->
-        <%= form_with url: recipients_path, 
-                    method: :get, 
-                    data: { 
-                        turbo_frame: "recipients_list"
-                    },
-                    class: "search-form" do %>
-
-            <%= text_field_tag :query,
-                            params[:query].to_s,
-                            type: "search",
-                            class: "input-field",
-                            placeholder: "Search for recipient..." %>
-            <%= button_tag type: "submit", class: "search-button", title: "Search" do %>
-                <%= icon :search, class: "icon" %>
-            <% end %>
-        <% end %>
+        <%= render "shared/search", 
+            endpoint: recipients_path, 
+            method: :get, 
+            data: { turbo_frame: "recipients-list" }, 
+            class: "search-form", 
+            placeholder: "Search for recipient..." %>
     </div>
     <%= turbo_frame_tag "recipients_list" do %>
-        <%= render @recipients %>
+        <% if @recipients.none? && current_user.recipients.none? %>
+            <div class='empty-content hint'>No recipients yet. Add your first recipient by clicking the '+'!</div>
+        <% else %>
+            <%= render @recipients %>
+        <% end %>
     <% end %>
 </main>
 

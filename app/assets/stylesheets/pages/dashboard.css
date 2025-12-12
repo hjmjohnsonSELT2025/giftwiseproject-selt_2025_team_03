@@ -480,7 +480,7 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--brown-accent), #b88968);
+    background: var(--brown-accent);
     border: none;
     font-size: 28px;
     color: white;
