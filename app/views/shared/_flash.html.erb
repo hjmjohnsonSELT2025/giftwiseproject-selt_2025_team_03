@@ -1,25 +1,22 @@
-<% flash.each do |type, message| %>
-    <% next if message.blank? %>
-    <div
-        class="flash flash--<%= type %>"
-        data-controller="flash"
-        data-flash-timeout-value="10000"
-        >
-        <div class="flash__body">
-            <div class="flash__title">
-                <%= type.to_s == "notice" ? "Notice" : "" %>
-            </div>
-            <div class="flash__message">
-                <%= message %>
-            </div>
+<% flash.each do |type, payload| %>
+    <% next if payload.blank? %>
+    <% data = payload.is_a?(Hash) ? payload.symbolize_keys : { text: payload } %>
+    <% text = data[:text].to_s %>
+    <% next if text.blank? %>
+    <% timeout = (data[:timeout] || 2000).to_i %>
+    <% ok_action = data[:ok_action].presence %>
+    <div class='flash flash--<%= type %>'
+         data-controller='flash'
+         data-flash-timeout-value="<%= timeout %>">
+
+        <div class='flash__body'>
+            <div class='flash__title'><%= type.to_s.upcase %></div>
+            <div class='flash__message'><%= text %></div>
         </div>
-        <button
-            type="button"
-            class="flash__close"
-            aria-label="Dismiss notification"
-            data-action="click->flash#close"
-            >
-        OK
-        </button>
+        <button type='button' 
+                class='flash__close' 
+                aria-label='Dismiss' 
+                data-action="click->flash#close">
+                OK</button>
     </div>
 <% end %>
