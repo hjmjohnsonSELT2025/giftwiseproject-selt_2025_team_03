@@ -26,7 +26,7 @@ class RecipientsController < ApplicationController
 
   def new 
     @recipient = current_user.recipients.new
-    @events = current_user.events.order(:name)
+    @events = current_user.visible_events.order(:name)
     if params[:user_id].present?
         source = User.where(public_profile: true).find(params[:user_id])
         if source.nil?
@@ -61,13 +61,13 @@ class RecipientsController < ApplicationController
     if @recipient.save
       redirect_to recipients_path, notice: "Recipient created."
     else
-      @events = current_user.events.order(:name)
+      @events = current_user.owned_events.order(:name)
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    @events = current_user.events.order(:name)
+    @events = current_user.owned_events.order(:name)
   end
   
   def update
@@ -75,7 +75,7 @@ class RecipientsController < ApplicationController
     if @recipient.update(attrs)
       redirect_to recipients_path
     else
-      @events = current_user.events.order(:name)
+      @events = current_user.owned_events.order(:name)
       render :edit, status: :unprocessable_entity
     end
   end

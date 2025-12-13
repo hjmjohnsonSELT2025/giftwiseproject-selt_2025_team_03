@@ -6,7 +6,6 @@ class EventsController < ApplicationController
     # we'll render invitations right above existing events
     @event_invitations = current_user
                 .received_event_invitations
-                .pending
                 .includes(:event, :inviter)
     @events = current_user.visible_events
     

@@ -56,7 +56,7 @@ class UsersController < ApplicationController
   end
 
   def new_event_invitation
-    @events = current_user.events.order(:date)
+    @events = current_user.owned_events.order(:date)
   end
 
   def create_event_invitation
@@ -72,29 +72,20 @@ class UsersController < ApplicationController
             alert: "Please select at least one event."
             return
     end
-    events = current_user.events.where(id: event_ids)
+    events = current_user.owned_events.where(id: event_ids)
     created_count = 0
 
     events.each do |evt|
-      invitation = EventInvitation.find_or_initialize_by(event: evt, invitee: @user)
-      invitation.inviter = current_user
-      invitation.status  = :pending
-      invitation.save!
-      created_count += 1 if invitation.previously_new_record?
-    end
-    
-    if created_count > 0
-            message = "Sent #{created_count} invitation#{'s' if created_count != 1}"
-            
-    else
-      message = "No new invitations created, however, they may already exist."
-    end
-
-    redirect_to events_path, notice: message
+      next if evt.attendees.exists?(user_id: @user.id)
+      # delete old invites
+      EventInvitation.where(event: evt, invitee: @user).delete_all
+      EventInvitation.create!(event: evt, inviter: current_user, invitee: @user)
+      created_count += 1
+      end
+    redirect_to events_path, notice: "Sent #{created_count} invitations to #{@user.first_name}"
   end
 
   private
-
   def set_user
     @user = User.find(params[:id])
   end

@@ -60,7 +60,7 @@
 
       <%= link_to recipient_path(recipient),
                   class: "option",
-                  data: { turbo_method: :delete, turbo_confirm: "Delete #{recipient.name}?" } do %>
+                  data: { turbo_method: :delete, turbo_confirm: "Delete #{recipient.name}?", turbo_frame: "_top" } do %>
         <%= icon :trash, class: "icon" %>
       <% end %>
     </div>

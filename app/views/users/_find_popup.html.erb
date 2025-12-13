@@ -1,0 +1,22 @@
+<div class='content'>
+    <div class='header'>Find Users</div>
+    <div class='main-content'>
+        <div class='top'>
+            <%= render 'shared/search',
+                endpoint: find_users_path,
+                method: :get,
+                placeholder: "Find a user...",
+                data: { turbo_frame: "users_list" }
+            %>
+            <%= turbo_frame_tag "users_list" do %>
+                <% if @users.present? %>
+                    <%= render partial: "user", collection: @users, as :user, clickable: true, show_actions: false %>
+                <% else %>
+                    <% unless @last_query.nil? %>
+                        <div class='hint'>No users found with the username "<%= "{@last_query}"%>."</div>
+                    <% end %>
+                <% end %>
+            <% end %>
+        </div>
+    </div>
+</div>

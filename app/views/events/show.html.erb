@@ -61,7 +61,21 @@
           <% end %>
         </ul>
       <% else %>
-        <p style='opacity: 0.7;'>No recipients added yet.</p>
+        <p style='opacity: 0.7; font-style: italic; '>No recipients added yet.</p>
+      <% end %>
+    </div>
+
+    <div class='detail-section'>
+      <h2>Attendees (<%= @event.attendees.count %>)</h2>
+      <% if @event.attendees.any? %>
+        <ul class='attendees-list-simple'>
+          <% @event.attendees.each do |a| %>
+          <li><%= recipient.name %></li>
+          <% end %>
+        </ul>
+      <% else %>
+      
+        <p style='opacity: 0.7; font-style: italic; '>No attendees yet. Inivte others to collaborate!</p>
       <% end %>
     </div>
 

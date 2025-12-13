@@ -1,9 +1,10 @@
 <% clickable    = local_assigns.fetch(:clickable, true) %>
 <% show_actions = local_assigns.fetch(:show_actions, true) %>
 <%= turbo_frame_tag dom_id(user) do %>
-<% no_events = current_user.events.none? %>
+<% no_events = current_user.visible_events.none? %>
 <article class="user-card <%= 'is-expanded' if local_assigns[:expanded] %>"
-    data-controller="<%= 'user-card' if clickable %>">
+  <%= clickable ? 'data-controller="user-card"'.html_safe : '' %>>
+    <% Rails.logger.debug "clickable: #{clickable}"%>
     <%# header %>
     <header class='user-card__header'>
         <div class='user-card__left'>
@@ -67,23 +68,23 @@
                     </div>
                 </div>
                 <div class="user-card__action">
-                    <% no_events = current_user.events.none? %>
+                    <% no_events = current_user.visible_events.none? %>
                     <% if no_events %>
-                    <%= render "shared/tooltip",
-                        text: "Must create an event before inviting users." do %>
-                    <%= button_to "SEND AN INVITE TO AN EVENT",
-                        new_event_invitation_user_path(user),
-                        disabled: true,
-                        method: :get,
-                        data: { turbo_frame: "_top" },
-                        class: "user-card__button user-card__button--secondary" %>
-                    <% end %>
+                        <%= render "shared/tooltip",
+                            text: "Must create an event before inviting users." do %>
+                        <%= button_to "SEND AN INVITE TO AN EVENT",
+                            new_event_invitation_user_path(user),
+                            disabled: true,
+                            method: :get,
+                            data: { turbo_frame: "_top" },
+                            class: "user-card__button user-card__button--secondary" %>
+                        <% end %>
                     <% else %>
-                    <%= button_to "SEND AN INVITE TO AN EVENT",
-                        new_event_invitation_user_path(user),
-                        method: :get,
-                        data: { turbo_frame: "_top" },
-                        class: "user-card__button user-card__button--secondary" %>
+                        <%= button_to "SEND AN INVITE TO AN EVENT",
+                            new_event_invitation_user_path(user),
+                            method: :get,
+                            data: { turbo_frame: "_top" },
+                            class: "user-card__button user-card__button--secondary" %>
                     <% end %>
                     <div class="user-card__hint user-card__hint--alert">
                         *OPTION DOES NOTIFY USER
@@ -95,7 +96,7 @@
                 <div class="user-card__action">
                     <button type="button"
                         class="user-card__button user-card__button--ghost"
-                        data-action="user-card#collapse">
+                        data-action="click->user-card#collapse">
                     CANCEL
                     </button>
                 </div>
