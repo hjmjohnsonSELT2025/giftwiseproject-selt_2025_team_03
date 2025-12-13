@@ -9,7 +9,7 @@
 #   end
 #
 # test user
-user = User.find_or_create_by!(email: "johndoe@gmail.com") do |u|
+johndoe = User.find_or_create_by!(email: "johndoe@gmail.com") do |u|
   u.username = "JohnDoe"
   u.password = "password"
   u.password_confirmation = "password"
@@ -17,11 +17,22 @@ user = User.find_or_create_by!(email: "johndoe@gmail.com") do |u|
   u.last_name = "Doe"
   u.birthday = Date.new(2003, 1, 1)
   u.public_profile = true
-  puts "Created test user"
+  puts "Created test user 'JohnDoe'"
+end
+
+debbiesmith = User.find_or_create_by!(email: "debbie@mail.com") do |u|
+    u.username = "debbiesmith"
+    u.password = "password"
+    u.password_confirmation = "password"
+    u.first_name = "Debbie"
+    u.last_name = "Smith"
+    u.birthday = Date.new(1969, 1, 1)
+    u.public_profile = true
+    puts "Created test user 'debbiesmith'"
 end
 
 # Find or create events
-christmas = Event.find_or_create_by!(creator: user, name: "Christmas") do |e|
+christmas = Event.find_or_create_by!(creator: johndoe, name: "Christmas") do |e|
   e.date = Date.new(2025, 12, 25)
   e.budget = 1000
   e.location = "Home"
@@ -29,7 +40,7 @@ christmas = Event.find_or_create_by!(creator: user, name: "Christmas") do |e|
   puts "Created Christmas event"
 end
 
-mom_birthday = Event.find_or_create_by!(creator: user, name: "Mom's birthday") do |e|
+mom_birthday = Event.find_or_create_by!(creator: johndoe, name: "Mom's birthday") do |e|
   e.date = Date.new(2026, 2, 1)
   e.budget = 150
   e.location = "Restaurant"
@@ -37,15 +48,22 @@ mom_birthday = Event.find_or_create_by!(creator: user, name: "Mom's birthday") d
   puts "Created Mom's birthday event"
 end
 
-baby_shower = Event.find_or_create_by!(creator: user, name: "Jane's Baby shower") do |e|
+baby_shower = Event.find_or_create_by!(creator: johndoe, name: "Jane's Baby shower") do |e|
   e.date = Date.new(2026, 3, 1)
   e.budget = 100
   e.theme = "Baby Boy"
   puts "Created Baby shower event"
 end
 
+chris_bday = Event.find_or_create_by!(creator: debbiesmith, name: "Chris's Birthday") do |e|
+    e.date = Date.new(2026, 11, 19)
+    e.budget = 10
+    e.theme = "Mario"
+    puts "Created Chris's BDay event for debbiesmith"
+end
+
 # Find or create recipients
-dad = Recipient.find_or_create_by!(creator: user, name: "Dad") do |r|
+dad = Recipient.find_or_create_by!(creator: johndoe, name: "Dad") do |r|
   r.age = 51
   r.likes = "Golf, football, lawn care, movies"
   r.dislikes = "Technology, books"
@@ -53,7 +71,7 @@ dad = Recipient.find_or_create_by!(creator: user, name: "Dad") do |r|
   puts "Created Dad recipient"
 end
 
-mom = Recipient.find_or_create_by!(creator: user, name: "Mom") do |r|
+mom = Recipient.find_or_create_by!(creator: johndoe, name: "Mom") do |r|
   r.age = 50
   r.likes = "Jewelry, family time, gardening, plants"
   r.dislikes = "Sports, disorganization"
@@ -61,13 +79,22 @@ mom = Recipient.find_or_create_by!(creator: user, name: "Mom") do |r|
   puts "Created Mom recipient"
 end
 
-jane = Recipient.find_or_create_by!(creator: user, name: "Jane") do |r|
+jane = Recipient.find_or_create_by!(creator: johndoe, name: "Jane") do |r|
   r.age = 22
   r.likes = "Vintage items, books, traveling"
   r.dislikes = "Sports, movies, boardgames"
   r.visible = true
-  puts "Created Jane recipient"
+  puts "Created Jane recipient for JohnDoe"
 end
+
+chris = Recipient.find_or_create_by!(creator: debbiesmith, name: "Chris") do |r|
+    r.age = 44
+    r.likes = "Chocolate, candy, video games"
+    r.dislikes = "Showers"
+    r.visible = true
+    puts "Created Chris recipient for debbiesmith"
+end
+
 
 # Find or create event-recipient connections
 er_christmas_dad = EventRecipient.find_or_create_by!(event: christmas, recipient: dad) do |er|
@@ -86,33 +113,45 @@ er_mom_birthday = EventRecipient.find_or_create_by!(event: mom_birthday, recipie
   er.budget = 150
 end
 
+er_chris_bday = EventRecipient.find_or_create_by!(event: chris_bday, recipient: chris) do |er|
+    er.budget = 10
+end
+
+
 # Find or create gift ideas
 GiftIdea.find_or_create_by!(event_recipient: er_christmas_dad, title: "Golf Club") do |g|
-  g.user = user
+  g.user = johndoe
   g.price = 120
   g.status = "purchased"
   g.url = "https://golf"
 end
 
 GiftIdea.find_or_create_by!(event_recipient: er_christmas_mom, title: "Crockpot") do |g|
-  g.user = user
+  g.user = johndoe
   g.price = 120
   g.status = "idea"
   g.url = "https://crockpot"
 end
 
 GiftIdea.find_or_create_by!(event_recipient: er_baby_shower_jane, title: "Baby Boy Clothes") do |g|
-  g.user = user
+  g.user = johndoe
   g.price = 40
   g.status = "backlogged"
   g.url = "https://babies"
 end
 
 GiftIdea.find_or_create_by!(event_recipient: er_mom_birthday, title: "Gold Necklace") do |g|
-  g.user = user
+  g.user = johndoe
   g.price = 120
   g.status = "purchased"
 end
+
+GiftIdea.find_or_create_by!(event_recipient: er_chris_bday, title: "Job Application") do |g|
+    g.user = debbiesmith
+    g.price = 0
+    g.status = "purchased"
+end
+
 
 puts "Seed completed"
 puts "Test user login: johndoe@gmail.com / password"

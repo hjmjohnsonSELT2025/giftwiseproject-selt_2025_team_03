@@ -4,8 +4,9 @@ class RecipientsController < ApplicationController
   before_action :set_scope, only: [:index, :search]
   def index
     @recipients = current_user.recipients
-      .includes(:events)
+      .includes(:events, :source_user)
       .order(:name)
+    # update recipient attributes if source_user's profile was updated.
     if params[:query].present?
       q = "%#{params[:query].downcase}%"
       @recipients = @recipients.where("LOWER(recipients.name) LIKE ?", q)
@@ -27,20 +28,20 @@ class RecipientsController < ApplicationController
     @recipient = current_user.recipients.new
     @events = current_user.events.order(:name)
     if params[:user_id].present?
-        source_user = User.find(params[:user_id])
-        @recipient.name = [source_user.first_name, source_user.last_name].compact.join(" ")
-        @recipient.likes = source_user.likes
-        @recipient.dislikes = source_user.dislikes
+        source = User.where(public_profile: true).find(params[:user_id])
+        if source.nil?
+          redirect_to recipients_path, alert: "This user doesn't exist or their profile is private."
+          return
+        end
+        @recipient.source_user = source
         @recipient.relationship = "Other"
     end
   end
 
   def add
     @recipient = current_user.recipients.new
-    
     if params[:user_id].present?
-
-        source_user = User.find(params[:user_id]).where(public_profile: true)
+        source_user = User.where(public_profile: true).find(params[:user_id])
         @recipient.name = [source_user.first_name, source_user.last_name].compact.join(" ")
         @recipient.likes = source_user.likes.to_s
         @recipient.dislikes = source_user.dislikes.to_s
@@ -52,16 +53,15 @@ class RecipientsController < ApplicationController
   def create
     attrs = normalized_params
     @recipient = current_user.recipients.new(attrs)
+    if params[:user_id].present?
+            source = User.find_by(id: params[:user_id], public_profile: true)
+            @recipient.source_user = source if source
+            @recipient.relationship ||= "Other" if source
+    end
     if @recipient.save
       redirect_to recipients_path, notice: "Recipient created."
     else
-      
       @events = current_user.events.order(:name)
-      if @recipient.errors[:name].any?
-                flash.now[:alert] = "'#{@recipient.name}' #{@recipient.errors[:name].join(', ')}"
-      else
-        flash.now[:alert] = @recipient.errors.full_messages.to_sentence
-      end
       render :new, status: :unprocessable_entity
     end
   end

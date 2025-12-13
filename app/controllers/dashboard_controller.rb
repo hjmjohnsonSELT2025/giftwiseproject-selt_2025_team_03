@@ -2,11 +2,11 @@ class DashboardController < ApplicationController
   before_action :require_authorization
   def index
     @user = current_user
-    @upcoming_events = @user.events.upcoming.limit(5)
-    @total_events = @user.events.count
+    @upcoming_events = @user.visible_events.upcoming.limit(5)
+    @total_events = @user.visible_events.count
     @total_recipients = @user.recipients.count
-    @total_budget = @user.events.sum(:budget)
-    @total_spent = @user.events.sum { |e| e.total_spent }
+    @total_budget = @user.visible_events.sum(:budget)
+    @total_spent = @user.visible_events.sum { |e| e.total_spent }
 
     # Calculates percentage of the gifts purchased
     total_gifts = GiftIdea.joins(event_recipient: :event).where(events: { user_id: @user.id }).count

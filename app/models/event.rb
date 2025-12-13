@@ -4,12 +4,15 @@ class Event < ApplicationRecord
   has_many :recipients, through: :event_recipients
 
   has_many :attendees, dependent: :destroy
-  has_many :users, through: :attendees
+  has_many :participants, through: :attendees, source: :user
 
   has_many :gift_ideas, through: :event_recipients
 
   has_many :event_invitations, dependent: :destroy
   has_many :invited_users, through: :event_invitations, source: :invitee
+  
+  
+
   validates :name, presence: true
   validates :date, presence: true
   validates :budget, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
@@ -33,5 +36,17 @@ class Event < ApplicationRecord
   def budget_percentage
     return 0 if budget.nil? || budget.zero?
     ((total_spent / budget) * 100).round
+  end
+
+  def viewable_by?(user)
+        user_id == user.id || attendees.exists?(user_id: user.id)
+  end
+
+  def editable_by?(user)
+        user_id == user.id || attendees.exists?(user_id: user.id, role: Attendee.roles[:editor])
+  end
+
+  def recipients_for(viewer)
+        viewer.id == user_id ? recipients : recipients.publicly_visible
   end
 end

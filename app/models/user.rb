@@ -32,7 +32,7 @@ class User < ApplicationRecord
   validates :password_digest, presence: true, on: :create
   
 
-  has_many :events, dependent: :destroy
+  has_many :owned_events, class_name: "Event", foreign_key: :user_id, dependent: :destroy
 
   has_many :sent_event_invitations,
            class_name: "EventInvitation",
@@ -48,9 +48,19 @@ class User < ApplicationRecord
            through: :received_event_invitations,
            source: :event
 
+  has_many :attendees, dependent: :destroy
+  has_many :attended_events, through: :attendees, source: :event
+  
   before_save :downcase_email!
+  def visible_events
+    Event
+      .left_outer_joins(:attendees)
+      .where("events.user_id = :id OR attendees.user_id = :id", id: id)
+      .distinct
+  end
   private
   def downcase_email!
     self.email = email.downcase if email.present?
   end
+
 end

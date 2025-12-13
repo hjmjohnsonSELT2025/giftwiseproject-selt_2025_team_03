@@ -8,7 +8,7 @@ class EventsController < ApplicationController
                 .received_event_invitations
                 .pending
                 .includes(:event, :inviter)
-    @events = current_user.events.order(:date)
+    @events = current_user.visible_events
     
   end
 
@@ -16,12 +16,12 @@ class EventsController < ApplicationController
     query = params[:query].to_s.strip.downcase
 
     events = if query.present?
-               current_user.events.where(
+               current_user.owned_events.where(
                  "LOWER(name) LIKE ? OR LOWER(location) LIKE ? OR LOWER(theme) LIKE ?",
                  "%#{query}%", "%#{query}%", "%#{query}%"
                ).order(:date)
              else
-               current_user.events.order(:date)
+               current_user.owned_events.order(:date)
              end
 
     render json: {
@@ -45,12 +45,12 @@ class EventsController < ApplicationController
   end
 
   def new
-    @event = current_user.events.new
+    @event = current_user.owned_events.new
     @recipients = current_user.recipients.order(:name)
   end
 
   def create
-    @event = current_user.events.new(event_params)
+    @event = current_user.owned_events.new(event_params)
 
     if @event.save
       if params[:recipient_ids].present?
@@ -97,11 +97,13 @@ class EventsController < ApplicationController
   end
 
   private
-
   def set_event
-    @event = current_user.events.find(params[:id])
+    @event = current_user.owned_events.find(params[:id])
+    redirect_to(events_path, alert: "Not authorized to view event.") unless @event.viewable_by?(current_user)
   end
-
+  def require_event_edit_accesss
+    recirect_to(events_path, alert: "Not authorized to edit this event.") unless @event.editable_by?(current_user)
+  end
   def event_params
     params.require(:event).permit(:name, :date, :location, :theme, :budget)
   end

@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_11_040404) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_13_155937) do
+  create_table "attendees", force: :cascade do |t|
+    t.integer "event_id", null: false
+    t.integer "user_id", null: false
+    t.integer "role", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id", "user_id"], name: "index_attendees_on_event_id_and_user_id", unique: true
+    t.index ["event_id"], name: "index_attendees_on_event_id"
+    t.index ["user_id"], name: "index_attendees_on_user_id"
+  end
+
   create_table "event_invitations", force: :cascade do |t|
     t.integer "event_id", null: false
     t.integer "inviter_id", null: false
@@ -74,6 +85,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_11_040404) do
     t.date "birthday"
     t.string "relationship_other"
     t.boolean "visible"
+    t.integer "source_user_id"
+    t.index ["source_user_id"], name: "index_recipients_on_source_user_id"
     t.index ["user_id", "name"], name: "index_recipients_on_user_id_and_name", unique: true
     t.index ["user_id"], name: "index_recipients_on_user_id"
   end
@@ -92,6 +105,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_11_040404) do
     t.string "dislikes"
   end
 
+  add_foreign_key "attendees", "events"
+  add_foreign_key "attendees", "users"
   add_foreign_key "event_invitations", "events"
   add_foreign_key "event_invitations", "users", column: "invitee_id"
   add_foreign_key "event_invitations", "users", column: "inviter_id"
@@ -101,4 +116,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_11_040404) do
   add_foreign_key "gift_ideas", "event_recipients"
   add_foreign_key "gift_ideas", "users"
   add_foreign_key "recipients", "users"
+  add_foreign_key "recipients", "users", column: "source_user_id"
 end

@@ -13,6 +13,9 @@ class EventInvitationsController < ApplicationController
     case params[:decision]
     when "accept"
       invitation.accepted!
+      Attendee.find_or_create_by!(event: invitation.event, user: current_user) do |a|
+                a.role = :viewer
+      end
     when "decline"
       invitation.declined!
     end
