@@ -319,7 +319,10 @@ GEM
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
     rspec-support (3.13.6)
+    ruby_http_client (3.5.5)
     securerandom (0.4.1)
+    sendgrid-ruby (6.7.0)
+      ruby_http_client (~> 3.4)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -414,6 +417,7 @@ DEPENDENCIES
   rails (~> 7.1.6)
   rails-controller-testing
   rspec-rails (~> 7.1)
+  sendgrid-ruby
   simplecov
   sprockets-rails
   sqlite3 (>= 1.4)
