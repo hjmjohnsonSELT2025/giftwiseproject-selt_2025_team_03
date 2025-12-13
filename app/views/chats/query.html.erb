@@ -18,7 +18,7 @@
     <%# LLM Input Field %>
     <div class='input-group required'>
         <%= f.label :input, "Gift Input" %>
-        <%= f.text_field :input, class: "input-field" %>
+        <%= f.text_field :input, value: "Hello! I'd like to generate a gift idea for #{@recipient.name} \'s event of #{@event.name} on #{@event.date}. Some specifics about the event are that the theme is #{@event.theme} and my budget for it is $#{@event.budget}. He is #{@recipient.age} years old. He likes #{@recipient.likes}. He dislikes #{@recipient.dislikes}. He is my #{@recipient.relationship}. Please give responses in the format of gift title, price, idea status, a valid url to such a gift, and some notes on why this gift was chosen.", class: "input-field" %>
     </div>
     <%= f.submit "Get Gift Ideas" %>
     <!-- Change for this to be pass in from recipient profile here -->
@@ -56,12 +56,6 @@
         <% end %>
     </div>
 
-
-
-    <div class='input-group'>
-        <%= f.label :llm_response, "Gift Input" %>
-        <%= f.text_field :llm_response, class: "form-control-plaintext", readonly: true, value:@response %>
-    </div>
-
-    <%= hidden_field_tag :chat_id, @chat.id if @chat.persisted? %>
+    <!-- Keep for chat persistence -->
+    <%= hidden_field_tag :chat_id, @chat.id if @chat.persisted? %> 
 <% end %>
