@@ -22,12 +22,14 @@
     </div>
     <%= f.submit "Get Gift Ideas" %>
     <!-- Change for this to be pass in from recipient profile here -->
-    <div class='input-group'>
-        <%= f.label :last_input, "Your Input" %>
-        <%= f.text_field :last_input, class: "form-control-plaintext", readonly: true, value: params.dig(:chat, :input) %>
-    </div>
+    <!--<div class='input-group'>-->
+        <!--<%= f.label :last_input, "Your Input" %>-->
+        <!--<%= f.text_field :last_input, class: "form-control-plaintext", readonly: true, value: params.dig(:chat, :input) %>-->
+    <!--</div>-->
   
     <!-- Will change to response, first confirm interactivity -->
-    <!--<%= f.label :llm_response, "Gift Input" %>-->
-    <!--<%= f.text_field :llm_response, class: "form-control-plaintext", readonly: true, value:@response %>-->
+    <div class='input-group'>
+        <%= f.label :llm_response, "Gift Input" %>
+        <%= f.text_field :llm_response, class: "form-control-plaintext", readonly: true, value:@response %>
+    </div>
 <% end %>

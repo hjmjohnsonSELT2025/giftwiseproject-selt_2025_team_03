@@ -7,7 +7,7 @@ class Chat < ApplicationRecord
   validates :user, presence: true
 
   def ask(user_input)
-    llm_chat = RubyLLM.chat(provider: :openrouter, model: "deepseek/deepseek-chat-v3-0324:free")
+    llm_chat = RubyLLM.chat(provider: :openrouter)
     llm_chat.ask(user_input)
   end
 end
