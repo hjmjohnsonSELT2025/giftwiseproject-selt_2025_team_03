@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   delete '/logout', :to => 'sessions#destroy', as: :logout  
 
   #---------------------  DASHBOARD
-  get 'dashboard', to: 'dashboard#index', as: 'dashboard'
+  get 'dashboard', to: 'dashboard#index', as: 'dashboard', defaults: { format: :html }
 
   #---------------------  EVENTS
   resources :events do
