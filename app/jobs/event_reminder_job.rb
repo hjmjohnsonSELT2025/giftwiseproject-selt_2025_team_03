@@ -3,10 +3,10 @@ class EventReminderJob < ApplicationJob
 
   def perform
     # Do something later
-    Event.includes(:user).find_each do |event|
+    Event.includes(:creator).find_each do |event|
       next unless event.date.present?
 
-      user = event.user
+      user = event.creator
       next unless user.email_notifications?
 
       days_left = (event.date.to_date - Date.current).to_i

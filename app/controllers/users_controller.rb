@@ -104,7 +104,7 @@ class UsersController < ApplicationController
       render status: :forbidden
   end
   def user_params
-    attrs = params.require(:user).permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :birthday, :public_profile, :likes, :dislikes)
+    attrs = params.require(:user).permit(:username, :email, :password, :password_confirmation, :first_name, :last_name, :birthday, :public_profile, :likes, :dislikes, :email_notifications)
     if attrs[:password].blank?
       attrs.delete(:password)
       attrs.delete(:password_confirmation)

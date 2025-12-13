@@ -3,7 +3,7 @@ class EventMailer < ApplicationMailer
 
   def upcoming_event_week(event)
     @event = event
-    @user = event.user
+    @user = event.creator
 
     mail(
       to: @user.email,
@@ -13,7 +13,7 @@ class EventMailer < ApplicationMailer
 
   def upcoming_event_day(event)
     @event = event
-    @user = event.user
+    @user = event.creator
 
     mail(
       to: @user.email,
