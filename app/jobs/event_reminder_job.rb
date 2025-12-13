@@ -2,7 +2,6 @@ class EventReminderJob < ApplicationJob
   queue_as :default
 
   def perform
-    # Do something later
     Event.includes(:creator).find_each do |event|
       next unless event.date.present?
 
