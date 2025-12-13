@@ -3,7 +3,13 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
   def index
+    # we'll render invitations right above existing events
+    @event_invitations = current_user
+                .received_event_invitations
+                .pending
+                .includes(:event, :inviter)
     @events = current_user.events.order(:date)
+    
   end
 
   def search

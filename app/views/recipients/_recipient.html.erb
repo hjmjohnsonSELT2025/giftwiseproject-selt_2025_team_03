@@ -1,11 +1,7 @@
 <%# Removed data: { controller: 'recipient' } %>
-<%= turbo_frame_tag dom_id(recipient) do %> 
+<%= turbo_frame_tag dom_id(recipient) do %>
 
-    <div class='recipient-container view'
-         <%# data-controller='recipient' %>
-         <%# data-action='click->recipient#click' %>
-         <%# data-recipient-selected-class='selected' %>
-    >
+  <div class='recipient-container view'>
 
         <div class='col1'>
             <div class='recipient-header'>
@@ -65,7 +61,66 @@
                 class: "option",
                 data: { turbo_method: :delete, turbo_confirm: "Delete #{recipient.name}?", turbo_frame: "_top" } do %>
                 <%= icon :trash, class: "icon" %>
+    <div class='col1'>
+      <div class='recipient-header'>
+        <div class='left'>
+          <div class='name'><%= recipient.name %></div>
+          <div class='ri'>
+            <% if recipient.relationship.present? %>
+              <% if recipient.relationship == "Other" && recipient.relationship_other.present? %>
+                <%= recipient.relationship_other %>
+              <% else %>
+                <%= recipient.relationship %>
+              <% end %>
+            <% else %>
+              <%= "" %>
             <% end %>
+          </div>
         </div>
+        <div class='ri right'>
+          <%#= icon (recipient.visible?) ? :eye : :eye_shut %>
+        </div>
+      </div>
+
+      <div class='events'>
+        <div class='detail-label'>Events</div>
+        <div class='details'>
+          <% recipient.events.each do |event| %>
+            <div class='detail-item'>
+              <div class='detail-value'><%= event.name %></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
+
+    <div class='col2'>
+      <div class='likes'>
+        <div class='detail-label'>Likes</div>
+        <div class='details'>
+          <%= recipient.likes %>
+        </div>
+      </div>
+
+
+      <div class='dislikes'>
+        <div class='detail-label'>Dislikes</div>
+        <div class='details'>
+          <%= recipient.dislikes %>
+        </div>
+      </div>
+
+    </div>
+    <div class='options'>
+      <%= link_to edit_recipient_path(recipient), class: "option" do %>
+        <%= icon :edit, class: "icon" %>
+      <% end %>
+
+      <%= link_to recipient_path(recipient),
+                  class: "option",
+                  data: { turbo_method: :delete, turbo_confirm: "Delete #{recipient.name}?", turbo_frame: "_top" } do %>
+        <%= icon :trash, class: "icon" %>
+      <% end %>
+    </div>
+  </div>
 <% end %>

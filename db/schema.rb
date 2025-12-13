@@ -48,6 +48,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_09_165018) do
     t.index ["event_recipient_id"], name: "index_chats_on_event_recipient_id"
     t.index ["model_id"], name: "index_chats_on_model_id"
     t.index ["user_id"], name: "index_chats_on_user_id"
+ActiveRecord::Schema[7.1].define(version: 2025_12_11_040404) do
+  create_table "event_invitations", force: :cascade do |t|
+    t.integer "event_id", null: false
+    t.integer "inviter_id", null: false
+    t.integer "invitee_id", null: false
+    t.string "status", default: "pending", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id", "invitee_id"], name: "index_event_invitations_on_event_id_and_invitee_id", unique: true
+    t.index ["event_id"], name: "index_event_invitations_on_event_id"
+    t.index ["invitee_id"], name: "index_event_invitations_on_invitee_id"
+    t.index ["inviter_id"], name: "index_event_invitations_on_inviter_id"
   end
 
   create_table "event_recipients", force: :cascade do |t|
@@ -70,6 +82,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_09_165018) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "description"
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
@@ -137,6 +150,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_09_165018) do
     t.string "relationship"
     t.date "birthday"
     t.string "relationship_other"
+    t.boolean "visible"
+    t.index ["user_id", "name"], name: "index_recipients_on_user_id_and_name", unique: true
     t.index ["user_id"], name: "index_recipients_on_user_id"
   end
 
@@ -161,6 +176,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_09_165018) do
     t.date "birthday"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "public_profile"
+    t.string "likes"
+    t.string "dislikes"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -168,6 +186,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_09_165018) do
   add_foreign_key "chats", "event_recipients"
   add_foreign_key "chats", "models"
   add_foreign_key "chats", "users"
+  add_foreign_key "event_invitations", "events"
+  add_foreign_key "event_invitations", "users", column: "invitee_id"
+  add_foreign_key "event_invitations", "users", column: "inviter_id"
   add_foreign_key "event_recipients", "events"
   add_foreign_key "event_recipients", "recipients"
   add_foreign_key "events", "users"
