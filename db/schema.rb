@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_09_165018) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_11_040404) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -48,7 +48,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_09_165018) do
     t.index ["event_recipient_id"], name: "index_chats_on_event_recipient_id"
     t.index ["model_id"], name: "index_chats_on_model_id"
     t.index ["user_id"], name: "index_chats_on_user_id"
-ActiveRecord::Schema[7.1].define(version: 2025_12_11_040404) do
+  end
+
   create_table "event_invitations", force: :cascade do |t|
     t.integer "event_id", null: false
     t.integer "inviter_id", null: false

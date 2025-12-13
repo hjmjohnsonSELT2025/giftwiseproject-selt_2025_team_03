@@ -54,7 +54,7 @@ Rails.application.routes.draw do
   resources :chats, only: [:new, :create, :show]
   get "/query_chat", :to => "chats#query", as: :query_chat
   post "/query_chat", :to => "chats#query"
-end
+
   #---------------------  GIFT IDEAS
   resources :gift_ideas do
     collection do
