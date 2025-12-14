@@ -62,6 +62,20 @@
           null
         ]
       },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/tool_call.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
       "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/channels/application_cable/channel.rb": {
         "lines": [
           0,
@@ -803,14 +817,6 @@
         ],
         "branches": {}
       },
-      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/application_record.rb": {
-        "lines": [
-          0,
-          0,
-          0
-        ],
-        "branches": {}
-      },
       "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/chat.rb": {
         "lines": [
           0,
@@ -1008,14 +1014,6 @@
         ],
         "branches": {}
       },
-      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/tool_call.rb": {
-        "lines": [
-          0,
-          0,
-          0
-        ],
-        "branches": {}
-      },
       "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/user.rb": {
         "lines": [
           null,
@@ -1131,6 +1129,6 @@
         "branches": {}
       }
     },
-    "timestamp": 1765682289
+    "timestamp": 1765688270
   }
 }
