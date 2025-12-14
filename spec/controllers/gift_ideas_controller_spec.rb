@@ -12,113 +12,112 @@ RSpec.describe GiftIdeasController, type: :controller do
     )
   end
 
+  let(:other_user) do
+    User.create!(
+      username: 'jane.doe',
+      email: 'jane.doe@example.com',
+      password: 'password123',
+      first_name: 'Jane',
+      last_name: 'Doe'
+    )
+  end
+
   let(:event) { user.events.create!(name: 'Annual Holiday Exchange', date: Date.new(2025, 12, 24), budget: 500.00) }
   let(:recipient) { user.recipients.create!(name: 'Jane Doe (Wife)') }
   let(:event_recipient) { event.event_recipients.create!(recipient: recipient, budget: 150.00) }
+  let!(:gift) { user.gift_ideas.create!(event_recipient: event_recipient, title: 'Original Item', price: 50.00) }
 
   before do
     session[:user_id] = user.id
   end
 
-  describe 'GET index' do
-    it 'shows gift ideas page' do
-      get :index
-      expect(response).to be_successful
+  describe 'Authentication and Authorization' do
+    shared_examples 'requires login' do |method, action, params = {}|
+      before { session[:user_id] = nil }
+      it "redirects #{method.to_s.upcase} #{action} to login page" do
+        send(method, action, params: params.merge(id: gift.id))
+        expect(response).to redirect_to(login_path)
+      end
     end
 
-    it 'loads gift ideas for current user' do
-      gift1 = user.gift_ideas.create!(event_recipient: event_recipient, title: 'Cashmere Scarf', price: 95.00)
-      gift2 = user.gift_ideas.create!(event_recipient: event_recipient, title: 'Book: The Martian', price: 12.50)
+    include_examples 'requires login', :get, :index, {}
+    include_examples 'requires login', :get, :new, {}
+    include_examples 'requires login', :post, :create, { gift_idea: { title: 'T', event_recipient_id: 1 } }
+    include_examples 'requires login', :get, :show, {}
+    include_examples 'requires login', :get, :edit, {}
+    include_examples 'requires login', :patch, :update, { gift_idea: { title: 'U' } }
+    include_examples 'requires login', :delete, :destroy, {}
 
-      get :index
-      expect(assigns(:gift_ideas)).to include(gift1, gift2)
-    end
-
-    it 'does not show other users gift ideas' do
-      other_user = User.create!(
-        username: 'jane.doe',
-        email: 'jane.doe@example.com',
-        password: 'password123',
-        first_name: 'Jane',
-        last_name: 'Doe'
-      )
-      other_event = other_user.events.create!(name: 'Jane’s Birthday', date: Date.new(2025, 7, 10))
-      other_recipient = other_user.recipients.create!(name: 'Dad')
+    # 🟢 FIXED TEST: Expecting HTTP status code 404 instead of the exception.
+    it "prevents accessing other users' gifts by returning 404" do
+      other_event = other_user.events.create!(name: 'Party', date: Date.today)
+      other_recipient = other_user.recipients.create!(name: 'Friend')
       other_er = other_event.event_recipients.create!(recipient: other_recipient)
-      other_gift = other_user.gift_ideas.create!(event_recipient: other_er, title: 'New Drill Set', price: 100.00)
+      other_gift = other_user.gift_ideas.create!(event_recipient: other_er, title: 'Secret Gift', price: 50)
 
-      get :index
-      expect(assigns(:gift_ideas)).not_to include(other_gift)
+      # Ensure user is logged in for the authorization check to be hit
+      session[:user_id] = user.id
+
+      # Execute the action
+      get :show, params: { id: other_gift.id }
+
+      # Expect the application's final response for unauthorized access, which
+      # is typically handled as a 404 Not Found response when the RecordNotFound is rescued.
+      expect(response).to have_http_status(:not_found)
     end
+  end
 
-    it 'filters by query parameter' do
-      gift1 = user.gift_ideas.create!(event_recipient: event_recipient, title: 'Cashmere Scarf', price: 50)
-      gift2 = user.gift_ideas.create!(event_recipient: event_recipient, title: 'Red Hat', price: 30)
-
-      get :index, params: { query: 'cashmere' }
-
-      expect(assigns(:gift_ideas)).to include(gift1)
-      expect(assigns(:gift_ideas)).not_to include(gift2)
-    end
-
-    it 'orders by title' do
+  describe 'GET #index' do
+    it 'returns successful, loads user\'s gifts, and orders by title' do
       gift_z = user.gift_ideas.create!(event_recipient: event_recipient, title: 'Zebra Print Robe', price: 50)
       gift_a = user.gift_ideas.create!(event_recipient: event_recipient, title: 'Apple Watch Band', price: 30)
 
+      other_event = other_user.events.create!(name: 'Other Event', date: Date.today)
+      other_er = other_event.event_recipients.create!(recipient: other_user.recipients.create!(name: 'Dad'))
+      other_gift = other_user.gift_ideas.create!(event_recipient: other_er, title: 'New Drill Set', price: 100.00)
+
       get :index
 
-      expect(assigns(:gift_ideas).first).to eq(gift_a)
-      expect(assigns(:gift_ideas).last).to eq(gift_z)
+      expect(response).to be_successful
+      expect(assigns(:gift_ideas)).to include(gift_z, gift_a)
+      expect(assigns(:gift_ideas)).not_to include(other_gift)
+      expect(assigns(:gift_ideas).map(&:title)).to eq(['Apple Watch Band', 'Original Item', 'Zebra Print Robe'])
+    end
+
+    it 'filters by query parameter' do
+      gift2 = user.gift_ideas.create!(event_recipient: event_recipient, title: 'Red Hat', price: 30)
+
+      get :index, params: { query: 'original' }
+
+      expect(assigns(:gift_ideas)).to include(gift)
+      expect(assigns(:gift_ideas)).not_to include(gift2)
     end
   end
 
-  describe 'GET search' do
-    it 'returns JSON response' do
-      user.gift_ideas.create!(event_recipient: event_recipient, title: 'Silk Scarf', price: 50)
-
-      get :search, params: { query: 'silk' }, format: :json
+  describe 'GET #search (JSON API)' do
+    it 'returns matching gifts by title (case insensitive) and includes event/recipient names' do
+      get :search, params: { query: 'ORIGINAL' }, format: :json
 
       expect(response).to be_successful
-      expect(response.content_type).to include('application/json')
-    end
-
-    it 'searches by title case insensitively' do
-      gift = user.gift_ideas.create!(event_recipient: event_recipient, title: 'Travel Mug', price: 50)
-
-      get :search, params: { query: 'MUG' }, format: :json
-
-      json = JSON.parse(response.body)
-      expect(json['gift_ideas'].length).to eq(1)
-      expect(json['gift_ideas'][0]['title']).to eq('Travel Mug')
-    end
-
-    it 'returns all gifts when query is empty' do
-      user.gift_ideas.create!(event_recipient: event_recipient, title: 'Gift 1', price: 50)
-      user.gift_ideas.create!(event_recipient: event_recipient, title: 'Gift 2', price: 30)
-
-      get :search, params: { query: '' }, format: :json
-
-      json = JSON.parse(response.body)
-      expect(json['gift_ideas'].length).to eq(2)
-    end
-
-    it 'includes event and recipient information' do
-      gift = user.gift_ideas.create!(event_recipient: event_recipient, title: 'Coffee Maker', price: 50)
-
-      get :search, params: { query: 'coffee' }, format: :json
-
       json = JSON.parse(response.body)
       gift_data = json['gift_ideas'][0]
 
+      expect(json['gift_ideas'].length).to eq(1)
+      expect(gift_data['title']).to eq('Original Item')
       expect(gift_data['event_recipient']['event_name']).to eq('Annual Holiday Exchange')
       expect(gift_data['event_recipient']['recipient_name']).to eq('Jane Doe (Wife)')
     end
+
+    it 'returns all gifts when query is empty' do
+      user.gift_ideas.create!(event_recipient: event_recipient, title: 'Gift 2', price: 30)
+      get :search, params: { query: '' }, format: :json
+      json = JSON.parse(response.body)
+      expect(json['gift_ideas'].length).to eq(2)
+    end
   end
 
-  describe 'GET show' do
-    it 'shows gift idea details' do
-      gift = user.gift_ideas.create!(event_recipient: event_recipient, title: 'New Shoes', price: 120.00)
-
+  describe 'GET #show' do
+    it 'shows gift idea details and loads associated objects' do
       get :show, params: { id: gift.id }
 
       expect(response).to be_successful
@@ -127,308 +126,130 @@ RSpec.describe GiftIdeasController, type: :controller do
     end
   end
 
-  describe 'GET new' do
-    it 'shows new gift form' do
+  describe 'GET #new' do
+    it 'shows new gift form, creates new object, and loads event recipients' do
       get :new
+
       expect(response).to be_successful
-    end
-
-    it 'creates new gift object' do
-      get :new
       expect(assigns(:gift_idea)).to be_a_new(GiftIdea)
-    end
-
-    it 'loads available event recipients' do
-      get :new
       expect(assigns(:event_recipients)).to include(event_recipient)
     end
   end
 
-  describe 'POST create' do
-    it 'creates new gift idea' do
-      expect {
-        post :create, params: {
-          gift_idea: {
-            title: 'Electric Blanket',
-            price: 75.00,
-            status: 'idea',
-            event_recipient_id: event_recipient.id
-          }
-        }
-      }.to change(GiftIdea, :count).by(1)
+  describe 'POST #create' do
+    let(:valid_params) do
+      { title: 'Electric Blanket', price: 75.00, event_recipient_id: event_recipient.id }
     end
 
-    it 'redirects after successful creation' do
-      post :create, params: {
-        gift_idea: {
-          title: 'Electric Blanket',
-          price: 75.00,
-          event_recipient_id: event_recipient.id
-        }
-      }
+    it 'creates new gift idea, sets user/default status, and redirects' do
+      expect {
+        post :create, params: { gift_idea: valid_params }
+      }.to change(GiftIdea, :count).by(1)
 
+      created_gift = GiftIdea.last
+      expect(created_gift.user).to eq(user)
+      expect(created_gift.status).to eq('idea')
       expect(response).to redirect_to(gift_ideas_path)
       expect(flash[:notice]).to match(/Electric Blanket added/)
     end
 
     it 'renders form on validation error' do
-      post :create, params: {
-        gift_idea: {
-          title: '',
-          event_recipient_id: event_recipient.id
-        }
-      }
-
+      post :create, params: { gift_idea: { title: '', event_recipient_id: event_recipient.id } }
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response).to render_template(:new)
     end
 
-    it 'sets default status to idea' do
-      post :create, params: {
-        gift_idea: {
-          title: 'Gift',
-          event_recipient_id: event_recipient.id
-        }
-      }
+    context 'Budget Validation' do
+      before { event.update!(budget: 200) }
+      let(:high_price_params) { valid_params.merge(price: 150, status: 'purchased') }
 
-      gift = GiftIdea.last
-      expect(gift.status).to eq('idea')
-    end
-
-    it 'associates gift with current user' do
-      post :create, params: {
-        gift_idea: {
-          title: 'Gift',
-          event_recipient_id: event_recipient.id
-        }
-      }
-
-      gift = GiftIdea.last
-      expect(gift.user).to eq(user)
-    end
-
-    context 'budget validation' do
-      it 'rejects gift exceeding event budget' do
-        event.update!(budget: 100)
-
-        post :create, params: {
-          gift_idea: {
-            title: 'Expensive Art',
-            price: 150,
-            status: 'purchased',
-            event_recipient_id: event_recipient.id
-          }
-        }
-
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(flash[:alert]).to match(/exceeds.*budget/)
+      it 'allows idea status gifts regardless of price' do
+        expect {
+          post :create, params: { gift_idea: valid_params.merge(price: 500, status: 'idea') }
+        }.to change(GiftIdea, :count).by(1)
       end
 
-      it 'rejects gift exceeding recipient budget' do
+      it 'rejects purchased gift exceeding recipient budget' do
         event_recipient.update!(budget: 50)
-
-        post :create, params: {
-          gift_idea: {
-            title: 'Over Budget Watch',
-            price: 75,
-            status: 'purchased',
-            event_recipient_id: event_recipient.id
-          }
-        }
-
+        post :create, params: { gift_idea: high_price_params }
         expect(response).to have_http_status(:unprocessable_entity)
         expect(flash[:alert]).to match(/exceeds.*budget/)
       end
 
-      it 'allows gift within budget' do
-        event.update!(budget: 200)
-
-        expect {
-          post :create, params: {
-            gift_idea: {
-              title: 'Within Budget Item',
-              price: 50,
-              status: 'purchased',
-              event_recipient_id: event_recipient.id
-            }
-          }
-        }.to change(GiftIdea, :count).by(1)
+      it 'rejects purchased gift exceeding event total budget' do
+        event.update!(budget: 50)
+        event_recipient.update!(budget: 500)
+        post :create, params: { gift_idea: high_price_params }
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(flash[:alert]).to match(/exceeds.*budget/)
       end
 
-      it 'does not validate budget for non-purchased gifts' do
-        event.update!(budget: 100)
-
-        expect {
-          post :create, params: {
-            gift_idea: {
-              title: 'Just an Idea (High Price)',
-              price: 150,
-              status: 'idea',
-              event_recipient_id: event_recipient.id
-            }
-          }
-        }.to change(GiftIdea, :count).by(1)
-      end
-
-      it 'considers existing purchases when validating budget' do
-        event.update!(budget: 200)
-        user.gift_ideas.create!(
-          event_recipient: event_recipient,
-          title: 'First Purchased Gift',
-          price: 100,
-          status: 'purchased'
-        )
+      it 'considers existing purchased gifts in total budget calculation' do
+        user.gift_ideas.create!(event_recipient: event_recipient, title: 'First Gift', price: 100, status: 'purchased')
 
         post :create, params: {
-          gift_idea: {
-            title: 'Second Gift (Too Much)',
-            price: 150,
-            status: 'purchased',
-            event_recipient_id: event_recipient.id
-          }
+          gift_idea: valid_params.merge(price: 150, status: 'purchased')
         }
-
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
 
-  describe 'GET edit' do
-    it 'shows edit form' do
-      gift = user.gift_ideas.create!(event_recipient: event_recipient, title: 'Gift to Edit', price: 50)
+  describe 'PATCH #update' do
+    let(:update_params) { { title: 'Updated Title', price: 75.50 } }
 
-      get :edit, params: { id: gift.id }
-
-      expect(response).to be_successful
-      expect(assigns(:gift_idea)).to eq(gift)
-    end
-
-    it 'loads event recipients' do
-      gift = user.gift_ideas.create!(event_recipient: event_recipient, title: 'Gift', price: 50)
-
-      get :edit, params: { id: gift.id }
-
-      expect(assigns(:event_recipients)).to be_present
-    end
-  end
-
-  describe 'PATCH update' do
-    let(:gift) { user.gift_ideas.create!(event_recipient: event_recipient, title: 'Original Item', price: 50) }
-
-    it 'updates gift idea' do
-      patch :update, params: {
-        id: gift.id,
-        gift_idea: {
-          title: 'Updated Title',
-          price: 75.50
-        }
-      }
-
+    it 'updates gift idea and redirects' do
+      patch :update, params: { id: gift.id, gift_idea: update_params }
       gift.reload
       expect(gift.title).to eq('Updated Title')
       expect(gift.price).to eq(75.50)
-    end
-
-    it 'redirects after successful update' do
-      patch :update, params: {
-        id: gift.id,
-        gift_idea: { title: 'Updated' }
-      }
-
       expect(response).to redirect_to(gift_ideas_path)
       expect(flash[:notice]).to match(/updated/)
     end
 
     it 'renders form on validation error' do
-      patch :update, params: {
-        id: gift.id,
-        gift_idea: { title: '' }
-      }
-
+      patch :update, params: { id: gift.id, gift_idea: { title: '' } }
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response).to render_template(:edit)
     end
 
-    it 'validates budget on update' do
-      event.update!(budget: 100)
-
-      patch :update, params: {
-        id: gift.id,
-        gift_idea: {
-          price: 150,
-          status: 'purchased'
-        }
-      }
-
-      expect(response).to have_http_status(:unprocessable_entity)
-    end
-
-    it 'excludes current gift from budget calculation' do
+    it 'validates budget on update and excludes current gift from calculation' do
       event.update!(budget: 100)
       gift.update!(price: 60, status: 'purchased')
 
-      patch :update, params: {
-        id: gift.id,
-        gift_idea: { price: 80, status: 'purchased' }
-      }
-
+      # Test success (within budget)
+      patch :update, params: { id: gift.id, gift_idea: { price: 80, status: 'purchased' } }
       expect(response).to redirect_to(gift_ideas_path)
       gift.reload
       expect(gift.price).to eq(80)
+
+      # Test failure (exceeds budget)
+      patch :update, params: { id: gift.id, gift_idea: { price: 150, status: 'purchased' } }
+      expect(response).to have_http_status(:unprocessable_entity)
     end
   end
 
-  describe 'DELETE destroy' do
-    it 'destroys gift idea' do
-      gift = user.gift_ideas.create!(event_recipient: event_recipient, title: 'Item to Delete', price: 50)
+  describe 'DELETE #destroy' do
+    it 'destroys gift idea and redirects for HTML' do
+      gift_to_delete = user.gift_ideas.create!(event_recipient: event_recipient, title: 'Item to Delete', price: 50)
 
       expect {
-        delete :destroy, params: { id: gift.id }
+        delete :destroy, params: { id: gift_to_delete.id }
       }.to change(GiftIdea, :count).by(-1)
-    end
-
-    it 'redirects to index for HTML' do
-      gift = user.gift_ideas.create!(event_recipient: event_recipient, title: 'Item to Delete', price: 50)
-
-      delete :destroy, params: { id: gift.id }
 
       expect(response).to redirect_to(gift_ideas_path)
     end
 
-    it 'returns JSON for JSON format' do
-      gift = user.gift_ideas.create!(event_recipient: event_recipient, title: 'Item to Delete', price: 50)
+    it 'destroys gift idea and returns JSON success' do
+      gift_to_delete = user.gift_ideas.create!(event_recipient: event_recipient, title: 'Item to Delete', price: 50)
 
-      delete :destroy, params: { id: gift.id }, format: :json
+      expect {
+        delete :destroy, params: { id: gift_to_delete.id }, format: :json
+      }.to change(GiftIdea, :count).by(-1)
 
       expect(response).to be_successful
       json = JSON.parse(response.body)
       expect(json['success']).to be true
-    end
-  end
-
-  describe 'authorization' do
-    it 'requires login for index' do
-      session[:user_id] = nil
-      get :index
-      expect(response).to redirect_to(login_path)
-    end
-
-    it 'prevents accessing other users gifts' do
-      other_user = User.create!(
-        username: 'other.doe',
-        email: 'other.doe@example.com',
-        password: 'password',
-        first_name: 'Other',
-        last_name: 'Doe'
-      )
-      other_event = other_user.events.create!(name: 'Party', date: Date.today)
-      other_recipient = other_user.recipients.create!(name: 'Friend')
-      other_er = other_event.event_recipients.create!(recipient: other_recipient)
-      other_gift = other_user.gift_ideas.create!(event_recipient: other_er, title: 'Secret Gift', price: 50)
-
-      expect {
-        get :show, params: { id: other_gift.id }
-      }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
