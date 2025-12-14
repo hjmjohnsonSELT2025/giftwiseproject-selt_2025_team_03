@@ -4,13 +4,13 @@ Rails.application.routes.draw do
   ##########################################################
   root 'sessions#new'                                # ROOT
   #########################################################
-  
+
   #---------------------  SESSION MANAGEMENT
   resource :session, only: [:new, :create, :destroy]
   get "/", :to => "sessions#new"
   get "/login", :to => "sessions#new", as: :login
   post '/login', :to => 'sessions#create'
-  delete '/logout', :to => 'sessions#destroy', as: :logout  
+  delete '/logout', :to => 'sessions#destroy', as: :logout
 
   #---------------------  DASHBOARD
   get 'dashboard', to: 'dashboard#index', as: 'dashboard', defaults: { format: :html }

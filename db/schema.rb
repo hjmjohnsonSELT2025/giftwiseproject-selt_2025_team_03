@@ -87,6 +87,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_11_040404) do
     t.date "birthday"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "email_notifications", default: true
     t.boolean "public_profile"
     t.string "likes"
     t.string "dislikes"

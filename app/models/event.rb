@@ -34,4 +34,12 @@ class Event < ApplicationRecord
     return 0 if budget.nil? || budget.zero?
     ((total_spent / budget) * 100).round
   end
+
+  def week_from_now?
+    date.to_date == 1.week.from_now.to_date
+  end
+
+  def day_from_now?
+    date.to_date == 1.day.from_now.to_date
+  end
 end
