@@ -47,7 +47,7 @@ class GiftIdeasController < ApplicationController
 
   def new
     @gift_idea = GiftIdea.new
-    @event_recipients = current_user.events
+    @event_recipients = current_user.visible_events
                                     .includes(event_recipients: :recipient)
                                     .flat_map(&:event_recipients)
   end
@@ -57,7 +57,7 @@ class GiftIdeasController < ApplicationController
 
     # Budget validation
     if @gift_idea.event_recipient && !within_budget?(@gift_idea)
-      @event_recipients = current_user.events.includes(event_recipients: :recipient).flat_map(&:event_recipients)
+      @event_recipients = current_user.visible_events.includes(event_recipients: :recipient).flat_map(&:event_recipients)
       flash.now[:alert] = "This gift exceeds the remaining budget for this event/recipient."
       render :new, status: :unprocessable_entity
       return
@@ -66,13 +66,13 @@ class GiftIdeasController < ApplicationController
     if @gift_idea.save
       redirect_to gift_ideas_path, notice: "#{@gift_idea.title} added!"
     else
-      @event_recipients = current_user.events.includes(event_recipients: :recipient).flat_map(&:event_recipients)
+      @event_recipients = current_user.visible_events.includes(event_recipients: :recipient).flat_map(&:event_recipients)
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    @event_recipients = current_user.events
+    @event_recipients = current_user.visible_events
                                     .includes(event_recipients: :recipient)
                                     .flat_map(&:event_recipients)
   end
@@ -80,7 +80,7 @@ class GiftIdeasController < ApplicationController
   def update
     # Budget validation
     if @gift_idea.event_recipient && !within_budget?(@gift_idea, exclude_current: true)
-      @event_recipients = current_user.events.includes(event_recipients: :recipient).flat_map(&:event_recipients)
+      @event_recipients = current_user.visible_events.includes(event_recipients: :recipient).flat_map(&:event_recipients)
       flash.now[:alert] = "This gift exceeds the remaining budget for this event/recipient."
       render :edit, status: :unprocessable_entity
       return
@@ -89,7 +89,7 @@ class GiftIdeasController < ApplicationController
     if @gift_idea.update(gift_idea_params)
       redirect_to gift_ideas_path, notice: "Gift updated."
     else
-      @event_recipients = current_user.events.includes(event_recipients: :recipient).flat_map(&:event_recipients)
+      @event_recipients = current_user.visible_events.includes(event_recipients: :recipient).flat_map(&:event_recipients)
       render :edit, status: :unprocessable_entity
     end
   end

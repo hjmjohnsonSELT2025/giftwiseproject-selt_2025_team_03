@@ -62,5 +62,6 @@ Rails.application.routes.draw do
   resources :gift_ideas do
     collection { get :search }
   end
+  
   match "*path", to: "application#render_not_found", via: :all
 end
