@@ -78,7 +78,7 @@
         <a href="#" class="event-action-link" data-action="invite" data-turbo-frame="modal">Invite</a>
         <%= link_to "Delete", "#",
                     method: :delete,
-                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_frame: "_top" },
                     class: "event-action-link delete-link" %>
       </div>
     </div>
