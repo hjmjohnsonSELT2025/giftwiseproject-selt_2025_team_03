@@ -3,8 +3,8 @@ class Event < ApplicationRecord
   has_many :event_recipients, dependent: :destroy
   has_many :recipients, through: :event_recipients
 
-  has_many :attendees, dependent: :destroy
-  has_many :users, through: :attendees
+  # has_many :attendees, dependent: :destroy
+  # has_many :users, through: :attendees
 
   has_many :gift_ideas, through: :event_recipients
 
@@ -23,7 +23,7 @@ class Event < ApplicationRecord
   end
 
   def total_spent
-    gift_ideas.where(status: ['purchased', 'delivered']).sum(:price)
+    gift_ideas.where(status: ['purchased', 'delivered', 'wrapped']).sum(:price)
   end
 
   def budget_remaining
@@ -32,6 +32,6 @@ class Event < ApplicationRecord
 
   def budget_percentage
     return 0 if budget.nil? || budget.zero?
-    ((total_spent / budget) * 100).round
+    ((total_spent / budget.to_f) * 100).round
   end
 end

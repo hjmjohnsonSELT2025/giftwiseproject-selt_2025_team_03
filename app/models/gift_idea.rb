@@ -1,6 +1,6 @@
 class GiftIdea < ApplicationRecord
   belongs_to :user
-  belongs_to :event_recipient, optional:true
+  belongs_to :event_recipient
 
   validates :title, presence: true
   validates :status, inclusion: { in: %w[idea backlogged purchased delivered wrapped liked] }
