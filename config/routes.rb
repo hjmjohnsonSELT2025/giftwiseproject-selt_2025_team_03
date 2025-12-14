@@ -4,26 +4,29 @@ Rails.application.routes.draw do
   ##########################################################
   root 'sessions#new'                                # ROOT
   #########################################################
-  
+
   #---------------------  SESSION MANAGEMENT
   resource :session, only: [:new, :create, :destroy]
   get "/", :to => "sessions#new"
   get "/login", :to => "sessions#new", as: :login
   post '/login', :to => 'sessions#create'
-  delete '/logout', :to => 'sessions#destroy', as: :logout  
+  delete '/logout', :to => 'sessions#destroy', as: :logout
 
   #---------------------  DASHBOARD
   get 'dashboard', to: 'dashboard#index', as: 'dashboard', defaults: { format: :html }
 
   #---------------------  EVENTS
   resources :events do
-    collection do
-      get :search
-    end
+    collection { get :search }
+    resources :event_invitations, only: [:new, :create]
+  end
+  #---------------------  EVENT DISCUSSIONS
+  resources :event_discussions, only: %i[index show] do
+    resources :event_messages, only: [:create]
   end
 
   #---------------------  EVENT INVITATIONS
-  resources :event_invitations, only: [:index, :update]
+  resources :event_invitations, only: [:index, :update, :create]
 
   #---------------------  PROFILE
   get "/preview_profile", to: "preview#profile"
@@ -57,8 +60,7 @@ Rails.application.routes.draw do
 
   #---------------------  GIFT IDEAS
   resources :gift_ideas do
-    collection do
-      get :search
-    end
+    collection { get :search }
   end
+  match "*path", to: "application#render_not_found", via: :all
 end

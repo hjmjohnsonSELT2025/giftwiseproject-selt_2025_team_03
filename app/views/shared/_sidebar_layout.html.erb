@@ -43,6 +43,13 @@
         </li>
       <% end %>
 
+    <%# Event Discussions %>
+    <%= link_to event_discussions_path, class: "nav-link", id: "event-discussions-link" do %>
+      <li class="nav-item <%= 'active' if page == :event_discussions %>">
+        <span>Event Discussions</span>
+      </li>
+    <% end %>
+
       <!--        TODO: Create layout
     <%# Purchases %>
     <%#= link_to purchases_path class: "nav-link", data: {turbo: false} do %>

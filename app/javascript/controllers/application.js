@@ -1,4 +1,6 @@
 import { Application } from "@hotwired/stimulus"
+import "@hotwired/turbo-rails"
+import TC from "@rolemodel/turbo-confirm"
 
 const application = Application.start()
 
@@ -10,3 +12,4 @@ import $ from "jquery";
 window.$ = $;
 window.jQuery = $;
 export { application }
+TC.start()

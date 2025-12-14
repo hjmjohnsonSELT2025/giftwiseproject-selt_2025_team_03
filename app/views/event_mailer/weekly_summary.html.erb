@@ -1,0 +1,35 @@
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+
+  <h1 style="color: #4CAF50; text-align: center;">
+    Your Weekly GiftWise Summary 📊
+  </h1>
+
+  <p style="font-size: 16px; line-height: 1.6;">
+    Here's a quick look at what you added this week!
+  </p>
+
+  <!-- Events -->
+  <h2 style="color: #4CAF50; margin-top: 20px;">New Events</h2>
+  <% if @events.any? %>
+    <ul style="font-size: 16px; line-height: 1.6; padding-left: 20px;">
+      <% @events.each do |event| %>
+        <li><strong><%= event.name %></strong> — <%= event.date.strftime("%B %d, %Y") %></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p style="font-size: 16px; line-height: 1.6;">No new events this week.</p>
+  <% end %>
+
+  <!-- Recipients -->
+  <h2 style="color: #4CAF50; margin-top: 20px;">New Recipients</h2>
+  <% if @recipients.any? %>
+    <ul style="font-size: 16px; line-height: 1.6; padding-left: 20px;">
+      <% @recipients.each do |recipient| %>
+        <li><%= recipient.name %></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p style="font-size: 16px; line-height: 1.6;">No new recipients this week.</p>
+  <% end %>
+
+</div>

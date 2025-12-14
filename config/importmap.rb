@@ -14,3 +14,4 @@ pin "chart.js", to: "https://esm.sh/chart.js@4.4.1"
 
 
 
+pin "@rolemodel/turbo-confirm", to: "@rolemodel--turbo-confirm.js" # @2.2.0

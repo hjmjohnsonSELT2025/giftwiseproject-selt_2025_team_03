@@ -1,0 +1,29 @@
+<%= render "shared/sidebar_layout" %>
+<main class="main-content event-discussions">
+    <div class="top-bar">
+        <h1 class="page-title">Discussions</h1>
+        <%= render "shared/profile_dropdown" %>
+    </div>
+    <% @events.each do |evt| %>
+    <%= link_to event_discussion_path(evt), class: "card" do %>
+    <div class="card-header">
+        <div>
+            <div class="card-title"><%= evt.name %></div>
+            <div class="card-subtitle"><%= evt.date&.strftime("%B %d, %Y") %> · <%= evt.location %></div>
+        </div>
+        <div class="card-icon">
+            <%= icon :messages, class: "icon" %>
+        </div>
+    </div>
+    <% lm = evt.last_event_message %>
+    <div class="card-body" style="opacity:.85;">
+        <% if lm %>
+        <strong><%= lm.user_id == current_user.id ? "You" : (lm.user&.first_name || "Someone") %>:</strong>
+        <%= truncate(lm.body.to_s, length: 90) %>
+        <% else %>
+        <em>No messages yet.</em>
+        <% end %>
+    </div>
+    <% end %>
+    <% end %>
+</main>
