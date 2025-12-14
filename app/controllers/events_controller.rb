@@ -78,9 +78,14 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @event.destroy
+    @event.destroy!
     redirect_to events_path, notice: "Event deleted successfully!", status: :see_other
+  rescue ActiveRecord::RecordNotDestroyed => e
+    redirect_to event_path(@event), alert: e.record.errors.full_messages.to_sentence, status: :see_other
+  rescue ActiveRecord::InvalidForeignKey
+    redirect_to event_path(@event), alert: "Can't delete: event still has related records.", status: :see_other
   end
+
 
   def leave
     if @event.creator == current_user
