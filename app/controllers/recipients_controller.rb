@@ -63,7 +63,7 @@ class RecipientsController < ApplicationController
     if @recipient.save
             redirect_to recipients_path, notice: "Recipient #{@recipient.name} created successfully."
     else
-      redirect_to recipients_path, alert: "You already have #{@recipient.name} as a recipient."
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -83,7 +83,10 @@ class RecipientsController < ApplicationController
 
   def destroy
     @recipient.destroy
-    redirect_to recipients_path, notice: "Recipient deleted.", status: :see_other
+    respond_to do |f|
+            f.html { redirect_to recipients_path, notice: "Recipient deleted."}
+            f.json { render json: { success: true}, status: :ok }
+    end
   end
 
   private
