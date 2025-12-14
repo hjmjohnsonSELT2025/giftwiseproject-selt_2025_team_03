@@ -18,16 +18,13 @@
     <%# LLM Input Field %>
     <div class='input-group required'>
         <%= f.label :input, "Gift Input" %>
-        <%= f.text_area :input, value: "Hello! I'd like to generate a gift idea for #{@recipient.name} \'s event of #{@event.name} on #{@event.date}. Some specifics about the event are that the theme is #{@event.theme} and my budget for it is $#{@event.budget}. He is #{@recipient.age} years old. He likes #{@recipient.likes}. He dislikes #{@recipient.dislikes}. He is my #{@recipient.relationship}. Please give responses in the format of gift title, price, idea status, a valid url to such a gift, and some notes on why this gift was chosen.", class: "input-field" %>
+        <%= f.text_area :input, value: "Hello! I'd like to generate a gift idea for #{@recipient.name} \'s event of #{@event.name} on #{@event.date}. Some specifics about the event are that the theme is #{@event.theme} and my budget for it is $#{@event.budget}. He is #{@recipient.age} years old. He likes #{@recipient.likes}. He dislikes #{@recipient.dislikes}. He is my #{@recipient.relationship}. Please give responses in the format of gift title, price, a valid url to such a gift, and some notes on why this gift was chosen.", class: "input-field" %>
     </div>
-    <%= f.submit "Get Gift Ideas" %>
-    <!-- Change for this to be pass in from recipient profile here -->
-    <!--<div class='input-group'>-->
-        <!--<%= f.label :last_input, "Your Input" %>-->
-        <!--<%= f.text_field :last_input, class: "form-control-plaintext", readonly: true, value: params.dig(:chat, :input) %>-->
-    <!--</div>-->
+    
+    <div class="form-footer full-width">
+        <%= f.submit "Get Gift Ideas", class: "button primary" %>
+    </div>
   
-    <!-- Will change to response, first confirm interactivity -->
     <div class="chat-history">
         <% @chat.messages.order(:created_at).each do |message| %>
             <div class="chat-message <%= message.role %>">

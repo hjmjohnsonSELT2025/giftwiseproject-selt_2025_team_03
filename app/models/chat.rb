@@ -12,14 +12,13 @@ class Chat < ApplicationRecord
       properties: {
         title: {type: 'string'},
         price: {type: 'number'},
-        status: {type: 'string'},
         url: {type: 'string'},
         notes: {
           type: 'array',
           items: {type: 'string'}
         }
       },
-      required: ['title', 'price', 'status','url','notes'],
+      required: ['title', 'price', 'url','notes'],
       additionalProperties: false
     }
     llm_chat = RubyLLM.chat(provider: :openrouter)

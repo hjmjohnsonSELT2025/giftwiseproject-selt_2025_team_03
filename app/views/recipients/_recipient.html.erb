@@ -30,7 +30,10 @@
             <div class='detail-item'>
               <div class='detail-value'>
                   <%= event.name %>
-                  <%= link_to "Generate Gifts", query_chat_path(recipient_id: recipient.id, event_id: event.id), data: { turbo: false } %>
+                  <%= link_to query_chat_path(recipient_id: recipient.id, event_id: event.id), 
+                            data: { turbo: false }, class: "option" do %>
+                    <%= icon :gift, class: "icon" %>
+                  <% end %>
               </div>
             </div>
           <% end %>
