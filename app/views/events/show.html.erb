@@ -6,7 +6,29 @@
     </div>
     <div class='event-details-container'>
         <div class='detail-section'>
-            <h2>Event Details</h2>
+        <h2 class="section-title-with-actions">
+            <span>Event Details</span>
+
+            <span class="section-actions">
+                <%= link_to event_discussion_path(@event),
+                    class: "option option--sm",
+                    title: "Discussion",
+                    aria: { label: "Discussion" } do %>
+                <%= icon :messages, class: "icon" %>
+                <% end %>
+
+                <% unless @event.user_id == current_user.id %>
+                <%= link_to leave_event_path(@event),
+                    data: { turbo_method: :delete, turbo_confirm: "Leave this event?" },
+                    class: "option option--sm",
+                    title: "Leave event",
+                    aria: { label: "Leave event" } do %>
+                    <%= icon :leave, class: "icon" %>
+                <% end %>
+                <% end %>
+            </span>
+        </h2>
+
             <div>
                 <div class='detail-row'>
                     <div class='detail-label'>Event Name:</div>
