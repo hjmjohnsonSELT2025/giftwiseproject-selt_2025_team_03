@@ -1,45 +1,47 @@
 <%= render "shared/sidebar_layout" %>
-<main class="main-content event-discussion">
-    <div class="top-bar">
-        <h1 class="page-title"><%= @event.name %></h1>
-        <%= render "shared/profile_dropdown" %>
-    </div>
-    <div class="action-buttons">
-        <% if @event.user_id != current_user.id %>
-        <%= link_to leave_event_path(@event),
-            data: { turbo_method: :delete, turbo_confirm: "Leave this event?" },
-            class: "login-button secondary" do %>
-            <%= icon :leave, class: "icon" %>
-            Leave event
-        <% end %>
-        <% end %>
 
-        Leave
-        <% end %>
-        <% end %>
-        <%= link_to "Back", event_discussions_path, class: "login-button secondary" %>
-    </div>
-    <div class="detail-section">
-        <% @messages.each do |msg| %>
-        <div style="margin-bottom: 12px;">
-            <div style="opacity:.8; font-size: 13px;">
-                <strong><%= [msg.user&.first_name, msg.user&.last_name].compact.join(" ") %></strong>
-                · <%= msg.created_at.strftime("%b %d, %Y %l:%M %p") %>
-            </div>
-            <div><%= simple_format(h(msg.body)) %></div>
+<main class="main-content event-discussion">
+  <div class="top-bar">
+    <h1 class="page-title"><%= @event.name %></h1>
+    <%= render "shared/profile_dropdown" %>
+  </div>
+
+  <div class="action-buttons">
+    <% if @event.user_id != current_user.id %>
+      <%= link_to leave_event_path(@event),
+          data: { turbo_method: :delete, turbo_confirm: "Leave this event?" },
+          class: "login-button secondary" do %>
+        <%= icon :leave, class: "icon" %>
+        Leave event
+      <% end %>
+    <% end %>
+
+    <%= link_to "Back", event_discussions_path, class: "login-button secondary" %>
+  </div>
+
+  <div class="detail-section">
+    <% @messages.each do |msg| %>
+      <div style="margin-bottom: 12px;">
+        <div style="opacity: .8; font-size: 13px;">
+          <strong><%= [msg.user&.first_name, msg.user&.last_name].compact.join(" ") %></strong>
+          · <%= msg.created_at.strftime("%b %d, %Y %l:%M %p") %>
         </div>
-        <% end %>
-        <%= form_with model: [@event, @message],
+
+        <div><%= simple_format(h(msg.body)) %></div>
+      </div>
+    <% end %>
+
+    <%= form_with model: [@event, @message],
         url: event_discussion_event_messages_path(@event),
         data: { controller: "submit-on-mod-enter" } do |f| %>
 
-        <%= f.text_area :body,
-            rows: 3,
-            class: "input-field",
-            placeholder: "Write a message…",
-            data: { action: "keydown->submit-on-mod-enter#keydown" } %>
+      <%= f.text_area :body,
+          rows: 3,
+          class: "input-field",
+          placeholder: "Write a message…",
+          data: { action: "keydown->submit-on-mod-enter#keydown" } %>
 
-        <%= f.submit "Send", class: "login-button" %>
-        <% end %>
-    </div>
+      <%= f.submit "Send", class: "login-button" %>
+    <% end %>
+  </div>
 </main>
