@@ -27,15 +27,16 @@ class RecipientsController < ApplicationController
   def new 
     @recipient = current_user.recipients.new
     @events = current_user.visible_events.order(:name)
-    if params[:user_id].present?
-        source = User.where(public_profile: true).find(params[:user_id])
-        if source.nil?
-          redirect_to recipients_path, alert: "This user doesn't exist or their profile is private."
-          return
-        end
-        @recipient.source_user = source
-        @recipient.relationship = "Other"
+    return unless params[:user_id].present?
+    source = User.find_by(id: params[:user_id], public_profile: true)
+    unless source 
+            redirect_to recipients_path, alert: "This user doesn't exist or their profile is private."
+            return
     end
+    @recipient.source_user = source
+    @recipient.relationship ||= "Other"; @recipient.name ||= [source.first_name, source.last_name].compact.join(" ")
+    @recipient.likes ||= source.likes.to_s; @recipient.dislikes ||= source.dislikes.to_s
+    @recipient.birthday ||= source.birthday
   end
 
   def add
@@ -52,16 +53,16 @@ class RecipientsController < ApplicationController
 
   def create
     attrs = normalized_params
+    source_id = attrs.delete("source_user_id")
     @recipient = current_user.recipients.new(attrs)
-    if params[:user_id].present?
-            source = User.find_by(id: params[:user_id], public_profile: true)
+    if source_id.present?
+            source = User.find_by(id: source_id, public_profile: true)
             @recipient.source_user = source if source
             @recipient.relationship ||= "Other" if source
     end
     if @recipient.save
-      redirect_to recipients_path, notice: "Recipient created."
+            redirect_to recipients_path, notice: "Recipient #{@recipient.name} created successfully."
     else
-      @events = current_user.owned_events.order(:name)
       render :new, status: :unprocessable_entity
     end
   end
@@ -92,7 +93,10 @@ class RecipientsController < ApplicationController
   RELATIONSHIP_DEFAULTS = ["Parent", "Sibling", "Partner/Spouse", "Child", "Relative", "Friend", "Coworker", "Other"]
   
   def recipient_params
-    params.require(:recipient).permit(:name, :birthday, :relationship, :relationship_other, :likes, :dislikes, event_ids: [])
+    params.require(:recipient)
+    .permit(:name, :birthday, :relationship, 
+            :relationship_other, :likes, :dislikes, 
+            :visible, :source_user_id, event_ids: [])
   end
   def set_recipient
     @recipient = current_user.recipients.find(params[:id])

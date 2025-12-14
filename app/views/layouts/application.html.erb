@@ -11,8 +11,10 @@
     </head>
 
     <body class="<%= controller_name %>_<%= action_name %>">
+      <%= debug(flash.to_hash) %>
       <%= render 'shared/flash' %>
       <%= yield %>
+      <%= turbo_frame_tag "modal", data: { controller: "modal" } %>
       <div id="confirm" class="modal">
         <div class="modal__backdrop confirm-cancel"></div>
         <div class="modal__content">
@@ -27,5 +29,4 @@
         </div>
       </div>
     </body>
-    
 </html>

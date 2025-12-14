@@ -30,7 +30,16 @@
             </div>
         </div>
         <div class='user-card__right'>
+        <% if local_assigns[:invite_event].present? %>
+            <%= button_to event_invitations_path(event_id: invite_event.id, invitee_id: user.id),
+                method: :post,
+                class: "option option--sm",
+                form: { data: { turbo: false } } do %>
+            <%= icon :invite, class: "icon" %>
+            <% end %>
+        <% else %>
             <div class='user-card__add-friend'></div>
+        <% end %>
         </div>
     </header>
     <%# body %>
@@ -59,37 +68,39 @@
             <!-- PRIMARY ROW -->
             <div class="user-card__actions-row">
                 <div class="user-card__action">
-                    <%= link_to "ADD TO MY RECIPIENT LIST",
-                        new_recipient_path(user_id: user.id),
-                        class: "user-card__button user-card__button--primary",
-                        data: { turbo_frame: "_top" } %>
-                    <div class="user-card__hint">
-                        *OPTION DOESN'T NOTIFY USER
-                    </div>
-                </div>
-                <div class="user-card__action">
+                <% if local_assigns[:invite_event].present? %>
+                    <%= button_to event_invitations_path(event_id: invite_event.id, invitee_id: user.id),
+                        method: :post,
+                        class: "user-card__button user-card__button--secondary user-card__button--full",
+                        form: { data: { turbo: true } } do %>
+                    <%= icon :invite, class: "icon" %>
+                    INVITE
+                    <% end %>
+                <% else %>
                     <% no_events = current_user.visible_events.none? %>
                     <% if no_events %>
-                        <%= render "shared/tooltip",
-                            text: "Must create an event before inviting users." do %>
+                    <%= render "shared/tooltip", text: "Must create an event before inviting users." do %>
                         <%= button_to "SEND AN INVITE TO AN EVENT",
                             new_event_invitation_user_path(user),
                             disabled: true,
                             method: :get,
                             data: { turbo_frame: "_top" },
                             class: "user-card__button user-card__button--secondary" %>
-                        <% end %>
-                    <% else %>
-                        <%= button_to "SEND AN INVITE TO AN EVENT",
-                            new_event_invitation_user_path(user),
-                            method: :get,
-                            data: { turbo_frame: "_top" },
-                            class: "user-card__button user-card__button--secondary" %>
                     <% end %>
+                    <% else %>
+                    <%= button_to "SEND AN INVITE TO AN EVENT",
+                        new_event_invitation_user_path(user),
+                        method: :get,
+                        data: { turbo_frame: "_top" },
+                        class: "user-card__button user-card__button--secondary" %>
+                    <% end %>
+
                     <div class="user-card__hint user-card__hint--alert">
-                        *OPTION DOES NOTIFY USER
+                    *OPTION DOES NOTIFY USER
                     </div>
+                <% end %>
                 </div>
+
             </div>
             <!-- SECONDARY ROW -->
             <div class="user-card__actions-row user-card__actions-row--secondary">

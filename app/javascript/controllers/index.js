@@ -28,3 +28,6 @@ application.register("spending-chart", spending_chart_controller)
 
 import EventDiscussionsController from "controllers/EventDiscussionsController"
 application.register("submit-on-mod-enter", EventDiscussionsController)
+
+import ModalController from "controllers/ModalController"
+application.register("modal", ModalController)

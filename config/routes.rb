@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   #---------------------  EVENTS
   resources :events do
     collection { get :search }
+    resources :event_invitations, only: [:new, :create]
   end
   #---------------------  EVENT DISCUSSIONS
   resources :event_discussions, only: %i[index show] do
@@ -25,7 +26,7 @@ Rails.application.routes.draw do
   end
 
   #---------------------  EVENT INVITATIONS
-  resources :event_invitations, only: [:index, :update]
+  resources :event_invitations, only: [:index, :update, :create]
 
   #---------------------  PROFILE
   get "/preview_profile", to: "preview#profile"

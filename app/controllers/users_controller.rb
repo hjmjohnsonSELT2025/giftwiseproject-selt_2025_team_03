@@ -46,17 +46,35 @@ class UsersController < ApplicationController
     end
   end
   def find
-    if params[:query].present?
-      @last_query = params[:query]
-      q = "%#{params[:query].downcase}%"
-      @users = User
-                   .where(public_profile: true)
-                   .where("LOWER(username) LIKE ?", q)
-                   .where.not(id: current_user.id)
+    @last_query = params[:query].to_s.strip
+
+    @event = nil
+    if params[:event_id].present?
+      @event = current_user.owned_events.find_by(id: params[:event_id])
+      redirect_to(events_path, alert: "Not authorized to invite for this event.") and return unless @event
+    end
+
+    @users =
+      if @last_query.present?
+        User.where(public_profile: true)
+            .where("LOWER(username) LIKE ?", "%#{@last_query.downcase}%")
+            .where.not(id: current_user.id)
+            .order(:username)
+      else
+        []
+      end
+
+    case request.headers["Turbo-Frame"]
+    when "modal"
+      render :find_modal
+    when "users_list"
+      render partial: "users/user", collection: @users, as: :user,
+            locals: { clickable: true, invite_event: @event, last_query: @last_query }
     else
-      @users = nil
+      render :find
     end
   end
+
 
   def new_event_invitation
     @events = current_user.owned_events.order(:date)

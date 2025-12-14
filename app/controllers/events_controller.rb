@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_action :require_authorization
   before_action :set_event, only: %i[show edit update destroy]
-  before_action :require_event_edit_acces, only: %i[edit update destroy]
+  before_action :require_event_edit_access, only: %i[edit update destroy]
   def index
     # we'll render invitations right above existing events
     @event_invitations = current_user
@@ -102,13 +102,29 @@ class EventsController < ApplicationController
       format.json { render json: { success: true }, status: :ok }
     end
   end
+  def create
+    event = current_user.owned_events.find_by(id: params[:event_id])
+    redirect_to(events_path, alert: "Not authorized.") and return unless event
+
+    invitee = User.find_by(id: params[:invitee_id], public_profile: true)
+    redirect_back fallback_location: find_users_path(event_id: event.id), alert: "User not found." and return unless invitee
+
+    invitation = EventInvitation.new(event: event, inviter: current_user, invitee: invitee)
+
+    if invitation.save
+      redirect_back fallback_location: find_users_path(event_id: event.id), notice: "Invitation sent."
+    else
+      redirect_back fallback_location: find_users_path(event_id: event.id), alert: invitation.errors.full_messages.to_sentence
+    end
+  end
 
   private
   def set_event
+    event_id = params[:event_id] || params.dig(:event_invitation, :event_id)
     @event = current_user.owned_events.find(params[:id])
     redirect_to(events_path, alert: "Not authorized to view event.") and return unless @event
   end
-  def require_event_edit_accesss
+  def require_event_edit_access
     redirect_to(events_path, alert: "Not authorized to edit this event.") and return unless @event.editable_by?(current_user)
   end
   def event_params

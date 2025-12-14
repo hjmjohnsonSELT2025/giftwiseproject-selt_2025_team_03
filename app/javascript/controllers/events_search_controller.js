@@ -55,6 +55,7 @@ export default class extends Controller {
             frag.querySelector("[data-action='view']").setAttribute('href', `/events/${event.id}`)
             frag.querySelector("[data-action='edit']").setAttribute('href', `/events/${event.id}/edit`)
             frag.querySelector(".delete-link").setAttribute('href', `/events/${event.id}`)
+            frag.querySelector("[data-action='invite']").setAttribute("href", `/users/find?event_id=${event.id}`)
 
             this.resultsTarget.appendChild(frag)
         })
