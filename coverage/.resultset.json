@@ -8,8 +8,7 @@
           0,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/Users/sullivanbryant/SELT_REPOS/final/app/channels/application_cable/connection.rb": {
         "lines": [
@@ -18,8 +17,7 @@
           0,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/Users/sullivanbryant/SELT_REPOS/final/app/controllers/application_controller.rb": {
         "lines": [
@@ -569,8 +567,7 @@
           0,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/Users/sullivanbryant/SELT_REPOS/final/app/controllers/users_controller.rb": {
         "lines": [
@@ -765,8 +762,7 @@
           null,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/Users/sullivanbryant/SELT_REPOS/final/app/jobs/event_reminder_job.rb": {
         "lines": [
@@ -981,11 +977,108 @@
           0,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
       },
-      "/Users/sullivanbryant/SELT_REPOS/final/app/models/event_recipient.rb": {
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/chat.rb": {
         "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/event.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/event_invitation.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/event_recipient.rb": {
+        "lines": [
+          0,
           0,
           0,
           0,
@@ -1039,10 +1132,26 @@
           null,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
       },
-      "/Users/sullivanbryant/SELT_REPOS/final/app/models/recipient.rb": {
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/message.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/model.rb": {
+        "lines": [
+          0,
+          0,
+          0
+        ],
+        "branches": {}
+      },
+      "/mnt/c/users/mollymclaughlin/selt_g3/selt-3/app/models/recipient.rb": {
         "lines": [
           null,
           null,

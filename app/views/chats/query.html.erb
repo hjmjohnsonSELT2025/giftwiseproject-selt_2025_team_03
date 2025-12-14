@@ -1,0 +1,58 @@
+<%# LLM form for chats, later integrate an output to gift_ideas %>
+<% if flash.now[:alert] %>
+  <div class="alert alert-warning"><%= flash.now[:alert] %></div>
+<% end %>
+
+<%= form_with model: @chat,
+        url: query_chat_path,
+        method: :post, local: true,
+        data: { turbo: false } do |f| %>
+    <div class = 'form-header'>
+        <h2 class='heading'>Generate Gift Ideas</h2>
+        <div class='decorative-line'></div>
+    </div>
+    <div></div>
+    <%= hidden_field_tag :event_id, @event.id %>
+    <%= hidden_field_tag :recipient_id, @recipient.id %> <!-- To pass in recipient_id, event_id for LLM? -->
+
+    <%# LLM Input Field %>
+    <div class='input-group required'>
+        <%= f.label :input, "Gift Input" %>
+        <%= f.text_area :input, value: "Hello! I'd like to generate a gift idea for #{@recipient.name} \'s event of #{@event.name} on #{@event.date}. Some specifics about the event are that the theme is #{@event.theme} and my budget for it is $#{@event.budget}. He is #{@recipient.age} years old. He likes #{@recipient.likes}. He dislikes #{@recipient.dislikes}. He is my #{@recipient.relationship}. Please give responses in the format of gift title, price, a valid url to such a gift, and some notes on why this gift was chosen.", class: "input-field" %>
+    </div>
+    
+    <div class="form-footer full-width">
+        <%= f.submit "Get Gift Ideas", class: "button primary" %>
+    </div>
+  
+    <div class="chat-history">
+        <% @chat.messages.order(:created_at).each do |message| %>
+            <div class="chat-message <%= message.role %>">
+                <strong><%= message.role.capitalize %>:</strong>
+                <%= message.content %>
+
+                <% if message.role == "assistant" && message.content_raw.present? %>
+                    <table class="structured-response-table">
+                        <thead>
+                            <tr>
+                                <% message.content_raw.keys.each do |key| %>
+                                    <th><%= key.humanize %></th>
+                                <% end %>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <% message.content_raw.values.each do |value| %>
+                                    <td><%= value %></td>
+                                <% end %>
+                            </tr>
+                        </tbody>
+                    </table>
+                <% end %>
+            </div>
+        <% end %>
+    </div>
+
+    <!-- Keep for chat persistence -->
+    <%= hidden_field_tag :chat_id, @chat.id if @chat.persisted? %> 
+<% end %>

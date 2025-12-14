@@ -2,7 +2,6 @@
 <%= turbo_frame_tag dom_id(recipient) do %>
 
   <div class='recipient-container view'>
-
     <div class='col1'>
       <div class='recipient-header'>
         <div class='left'>
@@ -29,7 +28,13 @@
         <div class='details'>
           <% recipient.events.each do |event| %>
             <div class='detail-item'>
-              <div class='detail-value'><%= event.name %></div>
+              <div class='detail-value'>
+                  <%= event.name %>
+                  <%= link_to query_chat_path(recipient_id: recipient.id, event_id: event.id), 
+                            data: { turbo: false }, class: "option" do %>
+                    <%= icon :gift, class: "icon" %>
+                  <% end %>
+              </div>
             </div>
           <% end %>
         </div>
