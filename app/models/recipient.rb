@@ -1,6 +1,9 @@
+
 class Recipient < ApplicationRecord 
     validate :source_user_must_be_public, if: -> { source_user_id.present? }
     belongs_to :creator, class_name: "User", foreign_key: :user_id
+    belongs_to :source_user, class_name: "User", optional: true
+    
     has_many :event_recipients, dependent: :destroy
     has_many :events, through: :event_recipients
     has_many :gift_ideas, through: :event_recipients

@@ -3,7 +3,6 @@ class EventRecipient < ApplicationRecord
   belongs_to :recipient
 
   has_many :gift_ideas, dependent: :destroy
-  has_many :chats, dependent: :destroy
 
   validates :event, presence: true
   validates :recipient, presence: true
