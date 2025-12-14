@@ -1,119 +1,120 @@
 <% clickable    = local_assigns.fetch(:clickable, true) %>
 <% show_actions = local_assigns.fetch(:show_actions, true) %>
+<% invite_event = local_assigns[:invite_event] %>
+
 <%= turbo_frame_tag dom_id(user) do %>
-<% no_events = current_user.visible_events.none? %>
-<article class="user-card <%= 'is-expanded' if local_assigns[:expanded] %>"
-  <%= clickable ? 'data-controller="user-card"'.html_safe : '' %>>
-    <% Rails.logger.debug "clickable: #{clickable}"%>
-    <%# header %>
-    <header class='user-card__header'>
-        <div class='user-card__left'>
-            <div class='user-card__avatar'>
-                <div class='user-card__initials'>
-                    <%= user.first_name[0].upcase %>
-                    <%= user.last_name[0].upcase %>
-                </div>
-            </div>
-            <div class='user-card__identity'>
-                <div class='user-card__username'>@<%= user.username %></div>
-                <div class='user-card__divider'></div>
-                <div class='user-card__names'>
-                    <div class='user-card__name-block'>
-                        <div class='user-card__name'><%= user.first_name %></div>
-                        <div class='user-card__label'>FIRST NAME</div>
-                    </div>
-                    <div class='user-card__name-block'>
-                        <div class='user-card__name'><%= user.last_name %></div>
-                        <div class='user-card__label'>LAST NAME</div>
-                    </div>
-                </div>
-            </div>
+  <article class="user-card <%= 'is-expanded' if local_assigns[:expanded] %>"
+           <%= clickable ? 'data-controller="user-card"'.html_safe : '' %>>
+
+    <header class="user-card__header">
+      <div class="user-card__left">
+        <div class="user-card__avatar">
+          <div class="user-card__initials">
+            <%= user.first_name.to_s.first&.upcase %><%= user.last_name.to_s.first&.upcase %>
+          </div>
         </div>
-        <div class='user-card__right'>
-        <% if local_assigns[:invite_event].present? %>
-            <%= button_to event_invitations_path(event_id: invite_event.id, invitee_id: user.id),
-                method: :post,
-                class: "option option--sm",
-                form: { data: { turbo: false } } do %>
+
+        <div class="user-card__identity">
+          <div class="user-card__username">@<%= user.username %></div>
+          <div class="user-card__divider"></div>
+
+          <div class="user-card__names">
+            <div class="user-card__name-block">
+              <div class="user-card__name"><%= user.first_name %></div>
+              <div class="user-card__label">FIRST NAME</div>
+            </div>
+            <div class="user-card__name-block">
+              <div class="user-card__name"><%= user.last_name %></div>
+              <div class="user-card__label">LAST NAME</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="user-card__right">
+        <%# Invite-mode: show ONLY the invite icon (typically rendered in modal) %>
+        <% if invite_event.present? %>
+          <%= button_to event_invitations_path(event_id: invite_event.id, invitee_id: user.id),
+              method: :post,
+              class: "option option--sm",
+              title: "Invite to event",
+              form: { data: { turbo: false } } do %>
             <%= icon :invite, class: "icon" %>
-            <% end %>
+          <% end %>
         <% else %>
-            <div class='user-card__add-friend'></div>
+          <div class="user-card__add-friend"></div>
         <% end %>
-        </div>
+      </div>
     </header>
-    <%# body %>
-    <div class='user-card__body'>
-        <section class='user-card__details'>
-            <div class='user-card__field'>
-                <div class='user-card__field-header'>
-                    <span class='user-card__field-label'>INTERESTS</span>
-                </div>
-                <div class='user-card__interests'>
-                    <%= user.likes %>
-                </div>
-            </div>
-            <div class='user-card__field'>
-                <div class='user-card__field-header'>
-                    <span class='user-card__field-label'>AVERSIONS</span>
-                </div>
-                <div class='user-card__interests'>
-                    <%= user.dislikes %>
-                </div>
-            </div>
-        </section>
-        <%# NO NESTED FORMS – this has options to 'invite to an event', but this partial render can be coming from a call to 'invite to event' %>
-        <% if show_actions %>
+
+    <div class="user-card__body">
+      <section class="user-card__details">
+        <div class="user-card__field">
+          <div class="user-card__field-header">
+            <span class="user-card__field-label">INTERESTS</span>
+          </div>
+          <div class="user-card__interests"><%= user.likes %></div>
+        </div>
+
+        <div class="user-card__field">
+          <div class="user-card__field-header">
+            <span class="user-card__field-label">AVERSIONS</span>
+          </div>
+          <div class="user-card__interests"><%= user.dislikes %></div>
+        </div>
+      </section>
+
+      <%# Full-page find mode: show actions (no invite_event) %>
+      <% if show_actions && invite_event.blank? %>
         <section class="user-card__actions">
-            <!-- PRIMARY ROW -->
-            <div class="user-card__actions-row">
-                <div class="user-card__action">
-                <% if local_assigns[:invite_event].present? %>
-                    <%= button_to event_invitations_path(event_id: invite_event.id, invitee_id: user.id),
-                        method: :post,
-                        class: "user-card__button user-card__button--secondary user-card__button--full",
-                        form: { data: { turbo: true } } do %>
-                    <%= icon :invite, class: "icon" %>
-                    INVITE
-                    <% end %>
-                <% else %>
-                    <% no_events = current_user.visible_events.none? %>
-                    <% if no_events %>
-                    <%= render "shared/tooltip", text: "Must create an event before inviting users." do %>
-                        <%= button_to "SEND AN INVITE TO AN EVENT",
-                            new_event_invitation_user_path(user),
-                            disabled: true,
-                            method: :get,
-                            data: { turbo_frame: "_top" },
-                            class: "user-card__button user-card__button--secondary" %>
-                    <% end %>
-                    <% else %>
-                    <%= button_to "SEND AN INVITE TO AN EVENT",
-                        new_event_invitation_user_path(user),
-                        method: :get,
-                        data: { turbo_frame: "_top" },
-                        class: "user-card__button user-card__button--secondary" %>
-                    <% end %>
+          <div class="user-card__actions-row">
+            <div class="user-card__action">
+              <%= link_to "ADD TO MY RECIPIENT LIST",
+                  new_recipient_path(user_id: user.id),
+                  class: "user-card__button user-card__button--primary",
+                  data: { turbo_frame: "_top" } %>
+              <div class="user-card__hint">
+                *OPTION DOESN'T NOTIFY USER
+              </div>
+            </div>
 
-                    <div class="user-card__hint user-card__hint--alert">
-                    *OPTION DOES NOTIFY USER
-                    </div>
+            <div class="user-card__action">
+              <% no_events = current_user.visible_events.none? %>
+
+              <% if no_events %>
+                <%= render "shared/tooltip", text: "Must create an event before inviting users." do %>
+                  <%= button_to "SEND AN INVITE TO AN EVENT",
+                      new_event_invitation_user_path(user),
+                      disabled: true,
+                      method: :get,
+                      data: { turbo_frame: "_top" },
+                      class: "user-card__button user-card__button--secondary" %>
                 <% end %>
-                </div>
+              <% else %>
+                <%= button_to "SEND AN INVITE TO AN EVENT",
+                    new_event_invitation_user_path(user),
+                    method: :get,
+                    data: { turbo_frame: "_top" },
+                    class: "user-card__button user-card__button--secondary" %>
+              <% end %>
 
+              <div class="user-card__hint user-card__hint--alert">
+                *OPTION DOES NOTIFY USER
+              </div>
             </div>
-            <!-- SECONDARY ROW -->
-            <div class="user-card__actions-row user-card__actions-row--secondary">
-                <div class="user-card__action">
-                    <button type="button"
-                        class="user-card__button user-card__button--ghost"
-                        data-action="click->user-card#collapse">
-                    CANCEL
-                    </button>
-                </div>
+          </div>
+
+          <div class="user-card__actions-row user-card__actions-row--secondary">
+            <div class="user-card__action">
+              <button type="button"
+                      class="user-card__button user-card__button--ghost"
+                      data-action="click->user-card#collapse">
+                CANCEL
+              </button>
             </div>
+          </div>
         </section>
-        <% end %> <!-- if show_actions -->
+      <% end %>
     </div>
-</article>
+  </article>
 <% end %>
