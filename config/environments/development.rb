@@ -74,6 +74,10 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
 
+  # Access OpenAI API key
+  OpenAI.configure do |config|
+    config.access_token = ENV['open_ai_api_key']
+  end
 
 
   config.action_mailer.delivery_method = :letter_opener

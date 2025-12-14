@@ -75,9 +75,10 @@
       <div class='event-actions'>
         <a href='#' class='event-action-link' data-action='view'>View</a>
         <a href='#' class='event-action-link' data-action='edit'>Edit</a>
+        <a href="#" class="event-action-link" data-action="invite" data-turbo-frame="modal">Invite</a>
         <%= link_to "Delete", "#",
                     method: :delete,
-                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_frame: "_top" },
                     class: "event-action-link delete-link" %>
       </div>
     </div>
@@ -133,11 +134,19 @@
           <div class='event-actions'>
             <%= link_to "View", event_path(event), class: "event-action-link" %>
             <%= link_to "Edit", edit_event_path(event), class: "event-action-link" %>
+
+            <% if event.user_id == current_user.id %>
+              <%= link_to "Invite",
+                  find_users_path(event_id: event.id),
+                  class: "event-action-link",
+                  data: { turbo_frame: "modal" } %>
+            <% end %>
+
             <%= link_to "Delete", event_path(event),
-                        method: :delete,
-                        data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
-                        class: "event-action-link delete-link" %>
+                data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                class: "event-action-link delete-link" %>
           </div>
+
         </div>
       <% end %>
     <% end %>

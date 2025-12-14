@@ -13,17 +13,20 @@ Rails.application.routes.draw do
   delete '/logout', :to => 'sessions#destroy', as: :logout
 
   #---------------------  DASHBOARD
-  get 'dashboard', to: 'dashboard#index', as: 'dashboard'
+  get 'dashboard', to: 'dashboard#index', as: 'dashboard', defaults: { format: :html }
 
   #---------------------  EVENTS
   resources :events do
-    collection do
-      get :search
-    end
+    collection { get :search }
+    resources :event_invitations, only: [:new, :create]
+  end
+  #---------------------  EVENT DISCUSSIONS
+  resources :event_discussions, only: %i[index show] do
+    resources :event_messages, only: [:create]
   end
 
   #---------------------  EVENT INVITATIONS
-  resources :event_invitations, only: [:index, :update]
+  resources :event_invitations, only: [:index, :update, :create]
 
   #---------------------  PROFILE
   get "/preview_profile", to: "preview#profile"
@@ -50,10 +53,14 @@ Rails.application.routes.draw do
       get :search
     end
   end
+  # --------------------------------- chats
+  resources :chats, only: [:new, :create, :show]
+  get "/query_chat", :to => "chats#query", as: :query_chat
+  post "/query_chat", :to => "chats#query"
+
   #---------------------  GIFT IDEAS
   resources :gift_ideas do
-    collection do
-      get :search
-    end
+    collection { get :search }
   end
+  match "*path", to: "application#render_not_found", via: :all
 end

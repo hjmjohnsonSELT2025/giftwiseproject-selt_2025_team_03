@@ -7,3 +7,11 @@ pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
 enable_integrity!
 pin_all_from "app/javascript/controllers", under: "controllers", integrity: true
 pin "jquery" # @3.7.1
+pin "chart.js", to: "https://esm.sh/chart.js@4.4.1"
+
+
+
+
+
+
+pin "@rolemodel/turbo-confirm", to: "@rolemodel--turbo-confirm.js" # @2.2.0

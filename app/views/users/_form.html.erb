@@ -1,69 +1,121 @@
 <% form_url = current_user.present? ? profile_path : users_path %>
+    <% data_controller = current_user.present? ? "users-update" : "users-new" %>
+    <%= render "shared/primary_layout" do %>
+        <div class="profile-page" data-controller="<%= data_controller%>">
+            <%= form_with model: @user, url: form_url, class: "profile-form", local: true do |u| %>
+            <!-- TOP: avatar + name + username -->
+            <section class="profile-form__hero">
+                <div class="profile-form__avatar">
+                    <span>
+                    <%= (@user.first_name&.first.to_s + @user.last_name&.first.to_s).presence || "" %>
+                    </span>
+                </div>
+                <div class="profile-form__name-row">
+                    <div class="profile-form__name-block input-group-required">
+                        <div class='required-label'></div>
+                        <%= u.text_field :first_name,
+                            class: "required profile-form__text-input profile-form__text-input--center",
+                            maxlength: 30 %>
+                        <div class="profile-form__field-label">FIRST NAME</div>
+                    </div>
+                    <div class="profile-form__name-block input-group-required">
+                        <div class='required-label'></div>
+                        <%= u.text_field :last_name,
+                            class: "required profile-form__text-input profile-form__text-input--center",
+                            maxlength: 30 %>
+                        <div class="profile-form__field-label">LAST NAME</div>
+                    </div>
+                </div>
+                <div class="profile-form__username-block input-group-required">
+                    <span class='required-label'></span>
+                    <%= u.text_field :username,
+                        class: "required profile-form__text-input profile-form__text-input--center",
+                        maxlength: 30 %>
+                    <div class="profile-form__field-label">USERNAME</div>
+                </div>
+            </section>
+            <!-- MIDDLE: 2 columns: Account info / About me -->
+            <section class="profile-form__columns">
+                <!-- LEFT: Account info -->
+                <div class="profile-form__col profile-form__col--account">
+                    <h2 class="profile-form__section-title">ACCOUNT INFO.</h2>
 
-<%= render "shared/primary_layout" do %>
-  <%= form_with model: @user, class: "register-form", url: form_url do |u| %>
+                    <div class="profile-form__field input-group-required">
+                        <div class='required-label'></div>
+                        <%= u.email_field :email,
+                            class: "required profile-form__text-input",
+                            autocomplete: "email", id: "user_email" %>
+                        <div class="profile-form__field-label">EMAIL
+                        <label class="profile-form__pill-toggle">
+                            <%= u.check_box :email_notifications, checked: true %>
+                        <span>Receive email notifications</span>
+                    </label>
+                        </div>
+                    </div>
+                    <div class="profile-form__field input-group-required">
+                        <div class='required-label'></div>
+                        <%= u.password_field :password,
+                            class: "required profile-form__text-input",
+                            autocomplete: "new-password" %>
+                        <div class="profile-form__field-label">PASSWORD</div>
+                    </div>
+                    <div class="input-group-required profile-form__field">
+                        <div class='required-label'></div>
+                        <%= u.password_field :password_confirmation, id: "user_password_confirm",
+                            class: "required profile-form__text-input",
+                            autocomplete: "new-password" %>
+                        <div class="profile-form__field-label">PASSWORD CONFIRM</div>
+                    </div>
+                </div>
 
-    <div class="form-header">
-      <div class="decorative-line"></div>
-      <% if current_user.present? %>
-        <h1 class="register-heading">Update Profile</h1>
-      <% else %>
-        <h1 class="register-heading">Register</h1>
-      <% end %>
-    </div>
+                <!-- RIGHT: About me -->
+                <div class="profile-form__col profile-form__col--about">
+                    <h2 class="profile-form__section-title">ABOUT ME</h2>
+                    <label class="profile-form__pill-toggle">
+                        <%= u.check_box :public_profile %>
+                        <span>Allow others to find/collaborate with me</span>
+                    </label>
+                    <div class="profile-form__field profile-form__field--textarea">
+                        <%= u.text_area :likes,
+                            rows: 2,
+                            maxlength: 200, id: "interests-field",
+                            class: "profile-form__textarea" %>
+                        <div class="profile-form__field-header">
+                            <span class="profile-form__field-label">INTERESTS</span>
+                            <span class="profile-form__counter"><span id='interests-counter'>0</span>/<span id='interests-max'>200</span></span>
+                        </div>
+                    </div>
+                    <div class="profile-form__field profile-form__field--textarea">
+                        <%= u.text_area :dislikes,
+                            rows: 2,
+                            maxlength: 200,
+                            class: "profile-form__textarea", id: "aversions-field" %>
+                        <div class="profile-form__field-header">
+                            <span class="profile-form__field-label">AVERSIONS</span>
+                            <span class="profile-form__counter"><span id='aversions-counter'>0</span>/<span id='aversions-max'>200</span></span>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-    <div class="input-group">
-      <%= u.label :first_name, "First Name", class: "input-label" %>
-      <%= u.text_field :first_name, max_length: 30, class: "input-field required" %>
-    </div>
+            <% if current_user.present? %>
+                <div class='profile-form__actions-oneline'>
+                    <%= u.submit "Save",
+                        class: "profile-form__button profile-form__button--primary" %>
 
-    <div class="input-group">
-      <%= u.label :last_name, "Last Name", class: "input-label" %>
-      <%= u.text_field :last_name, max_length: 30, class: "input-field required" %>
-    </div>
-
-    <div class="input-group">
-      <%= u.label :email, "Email", class: "input-label" %>
-      <%= u.text_field :email, class: "input-field email-field required" %>
-    </div>
-
-    <div class="input-group">
-      <%= u.label :username, "Username", class: "input-label" %>
-      <%= u.text_field :username, class: "input-field required" %>
-    </div>
-
-    <div class="input-group">
-      <%= u.label :password, "Password", class: "input-label" %>
-      <%= u.password_field :password, class: "input-field" %>
-    </div>
-
-    <div class="input-group">
-      <%= u.label :password_confirmation, "Confirm password", class: "input-label" %>
-      <%= u.password_field :password_confirmation, class: "input-field" %>
-    </div>
-
-    <div class="input-group">
-      <%= u.label :birthday, "Birthday", class: "input-label" %>
-      <%= u.date_field :birthday, class: "input-field" %>
-    </div>
-
-    <div class="field">
-      <%= u.label :email_notifications, "Receive Email Notifications?" %>
-      <%= u.check_box :email_notifications %>
-    </div>
-
-    <div class="form-actions">
-      <% if current_user.present? %>
-        <div class='action-footer'>
-          <%= link_to "Cancel", dashboard_path, class: "login-button cancel" %>
-          <%= u.submit "Save", class: "login-button" %>
+                    <%= link_to "Cancel",
+                        dashboard_path,
+                        class: "profile-form__button profile-form__button--secondary" %>
+                </div>
+            <% else %>
+                <div class='profile-form__actions'>
+                    <%= u.submit "Create my account",
+                        class: "profile-form__button profile-form__button--primary profile-form__button--wide" %>
+                    <div class='bottom-link'>
+                        <p>Already have an account? <%= link_to "Login", login_path %></p>
+                    </div>
+                </div>
+            <% end %>
         </div>
-      <% else %>
-        <%= u.submit "Create my account", class: "login-button" %>
-        <div class="bottom-link">
-          <p>Already have an account? <%= link_to "Login", login_path %></p>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
+    <% end %>
 <% end %>

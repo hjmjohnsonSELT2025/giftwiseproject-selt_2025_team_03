@@ -2,7 +2,7 @@
 <%= form_with model: @recipient,
             class: "patch-recipient",
             data: { controller: "new-recipient", turbo: true } do |f| %>
-
+    <%= f.hidden_field :source_user_id if @recipient.source_user_id.present? %>
     <!-- Header (full width) -->
     <div class="form-header">
         <h2 class="heading">Recipient details</h2>

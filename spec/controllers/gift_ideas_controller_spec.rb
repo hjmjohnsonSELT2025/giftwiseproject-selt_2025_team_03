@@ -6,16 +6,16 @@ RSpec.describe GiftIdeasController, type: :controller do
       allow(controller).to receive(:current_user).and_return(user)
     end
 
-    describe 'GET list' do
-      it 'shows list page' do
-        get :list
+    describe 'GET index' do
+      it 'shows index page' do
+        get :index
         expect(response).to be_successful
       end
     end
 
-    describe 'GET add' do
-      it 'shows add page' do
-        get :add
+    describe 'GET new' do
+      it 'shows new page' do
+        get :new
         expect(response).to be_successful
       end
     end
