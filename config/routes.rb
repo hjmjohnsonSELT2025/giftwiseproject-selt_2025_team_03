@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   root "sessions#new"
 
   get "up" => "rails/health#show", as: :rails_health_check
+  get "/dashboard", to: "dashboard#index", as: :dashboard
+  delete "/logout", to: "sessions#destroy", as: :logout
+
 
   resources :sessions, only: [:new, :create] do
     delete :destroy, on: :collection
@@ -37,7 +40,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :dashboard, only: [:index]
 
   resources :event_discussions, only: [:index, :show] do
     resources :event_messages, only: [:create]
