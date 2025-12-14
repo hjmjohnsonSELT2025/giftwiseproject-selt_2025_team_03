@@ -10,22 +10,24 @@ class EventInvitationsController < ApplicationController
   end
   def update
     invitation = current_user.received_event_invitations.find(params[:id])
-    EventInvitation.transaction do 
+
+    EventInvitation.transaction do
       case params[:decision]
       when "accept"
-        Attendee.find_or_create_by!(event: invitation.event, user: current_user) do |a|
-                    a.role = :viewer
-        end
+        Attendee.find_or_create_by!(event: invitation.event, user: current_user) { |a| a.role = :viewer }
+        flash[:notice] = "Invitation accepted!"
       when "decline"
-      
-      else 
-        redirect_to events_path, alert: "Invalid decision."
-        return
+        flash[:notice] = "Invitation declined."
+      else
+        flash[:alert] = "Invalid decision."
+        raise ActiveRecord::Rollback
       end
       invitation.destroy!
     end
+
     redirect_to events_path, status: :see_other
   end
+
   def new
     invited_ids  = @event.event_invitations.select(:invitee_id)
     attendee_ids = @event.attendees.select(:user_id)
