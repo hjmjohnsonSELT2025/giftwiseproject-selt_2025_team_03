@@ -26,7 +26,7 @@ class Event < ApplicationRecord
   end
 
   def total_spent
-    gift_ideas.where(status: ['purchased', 'delivered']).sum(:price)
+    gift_ideas.where(status: ['purchased', 'delivered', 'wrapped']).sum(:price)
   end
 
   def budget_remaining
@@ -35,7 +35,7 @@ class Event < ApplicationRecord
 
   def budget_percentage
     return 0 if budget.nil? || budget.zero?
-    ((total_spent / budget) * 100).round
+    ((total_spent / budget.to_f) * 100).round
   end
 
   def viewable_by?(user)

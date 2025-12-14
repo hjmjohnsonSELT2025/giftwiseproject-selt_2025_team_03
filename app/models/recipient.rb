@@ -1,22 +1,6 @@
-# Initial definition 
-# ------------------------------
-# class Recipient < ApplicationRecord
-#   belongs_to :user
-#   has_many :event_recipients, dependent: :destroy
-#   has_many :events, through: :event_recipients
-#   has_many :gift_ideas, through: :event_recipients
-
-#   validates :name, presence: true
-
-# end
-# Shared/Collaborative definition
-# ------------------------------
-
 class Recipient < ApplicationRecord 
     validate :source_user_must_be_public, if: -> { source_user_id.present? }
-    belongs_to :creator, class_name: "User", foreign_key: :user_id
-    belongs_to :source_user, class_name: "User", optional: true
-    
+    alias_method :user, :creator
     has_many :event_recipients, dependent: :destroy
     has_many :events, through: :event_recipients
     has_many :gift_ideas, through: :event_recipients
