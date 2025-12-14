@@ -25,3 +25,6 @@ application.register("flash", flash_controller)
 
 import spending_chart_controller from "controllers/spending_chart_controller"
 application.register("spending-chart", spending_chart_controller)
+
+import EventDiscussionsController from "controllers/EventDiscussionsController"
+application.register("submit-on-mod-enter", EventDiscussionsController)

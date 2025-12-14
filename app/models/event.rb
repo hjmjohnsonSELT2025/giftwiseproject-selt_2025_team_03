@@ -10,8 +10,8 @@ class Event < ApplicationRecord
 
   has_many :event_invitations, dependent: :destroy
   has_many :invited_users, through: :event_invitations, source: :invitee
-  
-  
+  has_many :event_messages, dependent: :destroy
+  has_one :last_event_message, -> { order(created_at: :desc)}, class_name: "EventMessage"
 
   validates :name, presence: true
   validates :date, presence: true

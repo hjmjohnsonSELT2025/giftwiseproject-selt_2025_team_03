@@ -50,6 +50,7 @@ class User < ApplicationRecord
 
   has_many :attendees, dependent: :destroy
   has_many :attended_events, through: :attendees, source: :event
+  has_many :event_messages, dependent: :destroy
   
   before_save :downcase_email!
   def visible_events

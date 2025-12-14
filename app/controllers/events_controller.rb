@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_action :require_authorization
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_event, only: %i[show edit update destroy]
+  before_action :require_event_edit_acces, only: %i[edit update destroy]
   def index
     # we'll render invitations right above existing events
     @event_invitations = current_user
@@ -40,9 +40,17 @@ class EventsController < ApplicationController
   end
 
   def show
-
+    @messages = @event.event_messages.includes(:user).order(:created_at)
+    @message = @event.event_messages.new
   end
-
+  def leave
+      if @event.creator == current_user
+        redirect_to event_path(@event), alert: "Event owners cannot leave their own event." and return
+      end
+      event_left_name = @event.name
+      @event.attendees.where(user_id: current_user.id).destroy_all
+      redirect_to events_path, notice: "Successfully left #{event_left_name}."
+  end
   def new
     @event = current_user.owned_events.new
     @recipients = current_user.recipients.order(:name)
@@ -98,10 +106,10 @@ class EventsController < ApplicationController
   private
   def set_event
     @event = current_user.owned_events.find(params[:id])
-    redirect_to(events_path, alert: "Not authorized to view event.") unless @event.viewable_by?(current_user)
+    redirect_to(events_path, alert: "Not authorized to view event.") and return unless @event
   end
   def require_event_edit_accesss
-    recirect_to(events_path, alert: "Not authorized to edit this event.") unless @event.editable_by?(current_user)
+    redirect_to(events_path, alert: "Not authorized to edit this event.") and return unless @event.editable_by?(current_user)
   end
   def event_params
     params.require(:event).permit(:name, :date, :location, :theme, :budget)

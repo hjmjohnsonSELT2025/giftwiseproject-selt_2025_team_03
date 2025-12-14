@@ -8,6 +8,8 @@ module SidebarHelper
       :recipients
     elsif current_page?(gift_ideas_path)
       :gift_ideas
+    elsif current_page?(event_discussions_path)
+      :event_discussions
     else
       :none
     end

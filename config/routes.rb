@@ -17,9 +17,11 @@ Rails.application.routes.draw do
 
   #---------------------  EVENTS
   resources :events do
-    collection do
-      get :search
-    end
+    collection { get :search }
+  end
+  #---------------------  EVENT DISCUSSIONS
+  resources :event_discussions, only: %i[index show] do
+    resources :event_messages, only: [:create]
   end
 
   #---------------------  EVENT INVITATIONS
@@ -52,8 +54,7 @@ Rails.application.routes.draw do
   end
   #---------------------  GIFT IDEAS
   resources :gift_ideas do
-    collection do
-      get :search
-    end
+    collection { get :search }
   end
+  match "*path", to: "application#render_not_found", via: :all
 end

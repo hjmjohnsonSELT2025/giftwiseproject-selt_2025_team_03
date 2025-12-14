@@ -1,0 +1,184 @@
+/* =========================================================
+   Event Discussions (index + show)
+   Scoped to avoid touching other .card usage site-wide
+   ========================================================= */
+
+.event-discussions,
+.event-discussion {
+  --panel: rgba(255, 255, 255, 0.06);
+  --panel-border: rgba(255, 255, 255, 0.14);
+  --muted: var(--text-light, #fac1a2);
+  --accent: var(--prim-1-c, #9d6f57);
+  --accent-strong: var(--prim-0-c, #6c4c3a);
+  --radius: 18px;
+  --radius-sm: 12px;
+}
+
+/* ---------- Index cards ---------- */
+
+.event-discussions .card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+
+  background: var(--card-blue-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .35);
+  transition: transform .12s ease, box-shadow .2s ease, filter .2s ease;
+}
+
+.event-discussions .card:hover {
+  cursor: pointer;
+  transform: scale(1.01);
+  box-shadow: 0 12px 29px rgba(0,0,0,.35);
+}
+
+.event-discussions .card + .card {
+  margin-top: 16px;
+}
+
+.event-discussions .card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--accent);
+}
+
+.event-discussions .card-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: .2px;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.event-discussions .card-subtitle {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--muted);
+  opacity: .9;
+}
+
+.event-discussions .card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--accent);
+  border: 1px solid rgba(0, 0, 0, .25);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: transform .08s ease, filter .15s ease, box-shadow .2s ease;
+}
+
+.event-discussions .card:hover .card-icon {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .35);
+}
+
+.event-discussions .card-body {
+  font-size: 14px;
+  color: #fff;
+  line-height: 1.45;
+  opacity: .92;
+}
+
+.event-discussions .card-body strong {
+  color: #fff;
+}
+
+.event-discussions .card-body em {
+  color: rgba(255,255,255,.75);
+}
+
+/* ---------- Show page (thread) ---------- */
+
+.event-discussion .action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.event-discussion .action-buttons .login-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.event-discussion .detail-section {
+  background: var(--card-blue-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .35);
+}
+
+.event-discussion .detail-section > div {
+  padding: 12px 12px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.event-discussion .detail-section > div + div {
+  margin-top: 12px;
+}
+
+.event-discussion .detail-section > div > div:first-child {
+  color: var(--muted);
+  opacity: .95;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.event-discussion .detail-section p {
+  margin: 0;
+  color: #fff;
+  line-height: 1.45;
+}
+
+.event-discussion form {
+  margin-top: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.event-discussion textarea.input-field {
+  resize: vertical;
+  min-height: 92px;
+}
+
+
+@media (max-width: 900px) {
+  .event-discussions .card {
+    padding: 16px;
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 560px) {
+  .event-discussions .card-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .event-discussions .card-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .event-discussion .detail-section {
+    padding: 16px;
+    border-radius: 14px;
+  }
+}
