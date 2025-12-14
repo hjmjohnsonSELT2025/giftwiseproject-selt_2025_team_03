@@ -1,58 +1,68 @@
-<%# LLM form for chats, later integrate an output to gift_ideas %>
-<% if flash.now[:alert] %>
-  <div class="alert alert-warning"><%= flash.now[:alert] %></div>
-<% end %>
+<%= render "shared/sidebar_layout" %>
 
-<%= form_with model: @chat,
-        url: query_chat_path,
-        method: :post, local: true,
-        data: { turbo: false } do |f| %>
-    <div class = 'form-header'>
-        <h2 class='heading'>Generate Gift Ideas</h2>
-        <div class='decorative-line'></div>
-    </div>
-    <div></div>
-    <%= hidden_field_tag :event_id, @event.id %>
-    <%= hidden_field_tag :recipient_id, @recipient.id %> <!-- To pass in recipient_id, event_id for LLM? -->
+<main class="main-content">
+  <div class="top-bar">
+    <h1 class="page-title">AI Gift Suggestions</h1>
+    <%= render "shared/profile_dropdown" %>
+  </div>
 
-    <%# LLM Input Field %>
-    <div class='input-group required'>
-        <%= f.label :input, "Gift Input" %>
-        <%= f.text_area :input, value: "Hello! I'd like to generate a gift idea for #{@recipient.name} \'s event of #{@event.name} on #{@event.date}. Some specifics about the event are that the theme is #{@event.theme} and my budget for it is $#{@event.budget}. He is #{@recipient.age} years old. He likes #{@recipient.likes}. He dislikes #{@recipient.dislikes}. He is my #{@recipient.relationship}. Please give responses in the format of gift title, price, a valid url to such a gift, and some notes on why this gift was chosen.", class: "input-field" %>
+  <div class="container">
+    <div class="hint">
+      Event: <strong><%= @event.name %></strong>
+      <span class="muted">•</span>
+      Recipient: <strong><%= @recipient.name %></strong>
+      <span class="muted">•</span>
+      Budget: <strong><%= @event_recipient.budget || @event.budget || "—" %></strong>
     </div>
-    
-    <div class="form-footer full-width">
-        <%= f.submit "Get Gift Ideas", class: "button primary" %>
-    </div>
-  
-    <div class="chat-history">
-        <% @chat.messages.order(:created_at).each do |message| %>
-            <div class="chat-message <%= message.role %>">
-                <strong><%= message.role.capitalize %>:</strong>
-                <%= message.content %>
 
-                <% if message.role == "assistant" && message.content_raw.present? %>
-                    <table class="structured-response-table">
-                        <thead>
-                            <tr>
-                                <% message.content_raw.keys.each do |key| %>
-                                    <th><%= key.humanize %></th>
-                                <% end %>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <% message.content_raw.values.each do |value| %>
-                                    <td><%= value %></td>
-                                <% end %>
-                            </tr>
-                        </tbody>
-                    </table>
-                <% end %>
+    <%= form_with url: query_chat_path, method: :get, data: { turbo: false }, class: "form" do %>
+      <%= hidden_field_tag :event_recipient_id, @event_recipient.id %>
+
+      <div class="input-group full-width">
+        <%= label_tag :query, "Request", class: "input-label" %>
+        <%= text_area_tag :query, @last_query, rows: 4, class: "input-field",
+            placeholder: "e.g., under $25, practical, ships fast" %>
+      </div>
+
+      <div class="actions-row">
+        <%= submit_tag "Generate suggestion", class: "button primary" %>
+        <%= link_to "Change selection", new_chat_path, class: "button" %>
+      </div>
+    <% end %>
+
+    <% if @gift.present? %>
+      <% notes_text = (@gift[:notes].is_a?(Array) ? @gift[:notes].join("\n") : @gift[:notes].to_s) %>
+
+      <div class="detail-section" style="margin-top: 18px;">
+        <h2 style="margin: 0 0 10px 0;">Suggestion</h2>
+
+        <div class="details" style="gap: 6px;">
+          <div><strong><%= @gift[:title] %></strong></div>
+          <% if @gift[:price].present? %><div>Price: <%= @gift[:price] %></div><% end %>
+          <% if @gift[:url].present? %><div>URL: <%= @gift[:url] %></div><% end %>
+          <% if notes_text.present? %>
+            <div style="white-space: pre-wrap;">Notes:
+<%= notes_text %>
             </div>
-        <% end %>
-    </div>
+          <% end %>
+        </div>
 
-    <!-- Keep for chat persistence -->
-    <%= hidden_field_tag :chat_id, @chat.id if @chat.persisted? %> 
-<% end %>
+        <div style="margin-top: 12px;">
+          <%= form_with url: gift_ideas_path(event_recipient_id: @event_recipient.id), method: :post,
+                data: { turbo: false }, class: "form" do %>
+            <%= hidden_field_tag "gift_idea[title]", @gift[:title] %>
+            <%= hidden_field_tag "gift_idea[price]", @gift[:price] %>
+            <%= hidden_field_tag "gift_idea[url]", @gift[:url] %>
+            <%= hidden_field_tag "gift_idea[notes]", notes_text %>
+            <%= hidden_field_tag "gift_idea[status]", "idea" %>
+            <%= submit_tag "Save to Gift Ideas", class: "button primary" %>
+          <% end %>
+        </div>
+      </div>
+    <% elsif @last_query.present? %>
+      <div class="hint" style="margin-top: 18px;">
+        No structured suggestion returned. See server logs for raw model output.
+      </div>
+    <% end %>
+  </div>
+</main>

@@ -415,3 +415,6 @@
     transform: scale(1.1);
     box-shadow: 0 12px 32px rgba(157, 111, 87, 0.6);
 }
+.option.option--sm {
+    width: 145px;
+}

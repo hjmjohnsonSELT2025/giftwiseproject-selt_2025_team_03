@@ -3,8 +3,12 @@
 <main class='main-content' data-controller="gift-ideas-search">
   <div class='top-bar'>
     <h1 class='page-title'>Gift Ideas</h1>
-    <%= render 'shared/profile_dropdown' %>
+    <div class="top-bar__actions">
+      <%= render 'shared/profile_dropdown' %>
+    </div>
   </div>
+  <%= link_to "AI suggestions", new_chat_path, class: "option option--sm", data: { turbo: false } %>
+
 
   <div class='view-options container'>
     <%= form_with url: search_gift_ideas_path,
