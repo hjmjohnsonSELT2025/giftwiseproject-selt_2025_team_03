@@ -57,4 +57,15 @@ class Event < ApplicationRecord
   def day_from_now?
     date.to_date == 1.day.from_now.to_date
   end
+  def visible_events
+    Event
+      .left_outer_joins(:attendees)
+      .left_outer_joins(:event_invitations)
+      .where(
+        "events.user_id = :id OR attendees.user_id = :id OR event_invitations.invitee_id = :id",
+        id: id
+      )
+      .distinct
+  end
+
 end

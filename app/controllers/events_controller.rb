@@ -83,7 +83,7 @@ class EventsController < ApplicationController
   end
 
   def leave
-    if @event.creator == current_user
+    if @event.user_id == current_user.id
       redirect_to event_path(@event), alert: "Event owners cannot leave their own event.", status: :see_other
       return
     end
@@ -92,6 +92,7 @@ class EventsController < ApplicationController
     @event.attendees.where(user_id: current_user.id).destroy_all
     redirect_to events_path, notice: "Successfully left #{event_left_name}.", status: :see_other
   end
+
 
   private
 

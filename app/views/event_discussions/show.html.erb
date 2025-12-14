@@ -5,11 +5,15 @@
         <%= render "shared/profile_dropdown" %>
     </div>
     <div class="action-buttons">
-        <% if @event.creator != current_user %>
+        <% if @event.user_id != current_user.id %>
         <%= link_to leave_event_path(@event),
             data: { turbo_method: :delete, turbo_confirm: "Leave this event?" },
             class: "login-button secondary" do %>
-        <%= icon :leave, class: "icon" %>
+            <%= icon :leave, class: "icon" %>
+            Leave event
+        <% end %>
+        <% end %>
+
         Leave
         <% end %>
         <% end %>
