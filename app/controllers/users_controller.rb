@@ -63,16 +63,17 @@ class UsersController < ApplicationController
       else
         []
       end
-
-    case request.headers["Turbo-Frame"]
-    when "modal"
-      render :find_modal
-    when "users_list"
-      render partial: "users/user", collection: @users, as: :user,
-            locals: { clickable: true, invite_event: @event, last_query: @last_query }
-    else
-      render :find
-    end
+      case request.headers["Turbo-Frame"]
+      when "modal"
+        render :find_modal
+      when "users_list"
+        invite_mode = @event.present?
+        render partial: "users/find_results",
+              
+              locals: { users: @users, invite_event: @event, last_query: @last_query, clickable: true, show_actions: !invite_mode }
+      else
+        render :find
+      end
   end
 
 
