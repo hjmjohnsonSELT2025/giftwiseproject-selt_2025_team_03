@@ -53,14 +53,7 @@ Rails.application.routes.draw do
       get :search
     end
   end
-  # --------------------------------- chats
-  resources :chats, only: [:new, :create, :show]
-  get "/query_chat", :to => "chats#query", as: :query_chat
-  post "/query_chat", :to => "chats#query"
 
-  resources :event_recipients, only: [] do
-    resource :ai_suggestions, only: [:show, :create], controller: "ai_suggestions"
-  end
 
 
   #---------------------  GIFT IDEAS
