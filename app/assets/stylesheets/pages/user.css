@@ -134,6 +134,9 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
+.profile-form__pill-toggle {
+    text-transform: none;
+}
 
 .user-card__char-count {
     font-size: 11px;

@@ -45,7 +45,12 @@
                         <%= u.email_field :email,
                             class: "required profile-form__text-input",
                             autocomplete: "email", id: "user_email" %>
-                        <div class="profile-form__field-label">EMAIL</div>
+                        <div class="profile-form__field-label">EMAIL
+                        <label class="profile-form__pill-toggle">
+                            <%= u.check_box :email_notifications, checked: true %>
+                        <span>Receive email notifications</span>
+                    </label>
+                        </div>
                     </div>
                     <div class="profile-form__field input-group-required">
                         <div class='required-label'></div>
