@@ -49,4 +49,12 @@ class Event < ApplicationRecord
   def recipients_for(viewer)
         viewer.id == user_id ? recipients : recipients.publicly_visible
   end
+
+  def week_from_now?
+    date.to_date == 1.week.from_now.to_date
+  end
+
+  def day_from_now?
+    date.to_date == 1.day.from_now.to_date
+  end
 end

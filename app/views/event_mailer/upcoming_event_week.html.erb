@@ -1,0 +1,15 @@
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+
+  <h1 style="color: green; text-align: center;">
+    Hi <%= @user.first_name %>, Quick Reminder 🤞
+  </h1>
+
+  <p style="font-size: 16px; line-height: 1.6;">
+    Your event <strong><%= @event.name %></strong> is 1 week away!
+  </p>
+
+  <p style="font-size: 16px; line-height: 1.6;">
+    Date: <strong><%= @event.date.strftime("%B %d, %Y") %></strong>
+  </p>
+
+</div>

@@ -219,18 +219,6 @@
     font-weight: 600;
 }
 
-.view-all-link {
-    color: var(--brown-accent);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    transition: opacity 0.3s ease;
-}
-
-.view-all-link:hover {
-    opacity: 0.8;
-}
-
 .event-card {
     background-color: #2d4293;
     padding: 28px;
@@ -443,33 +431,17 @@
     font-size: 14px;
 }
 
-.chart-placeholder {
-    height: 280px;
-    background: linear-gradient(to top,
-    rgba(157, 111, 87, 0.4) 0%,
-    rgba(157, 111, 87, 0.2) 30%,
-    transparent 100%
-    );
-    border-radius: 12px;
-    margin-top: 20px;
+.chart-container {
     position: relative;
-    overflow: hidden;
+    height: 280px;
+    width: 100%;
+    margin-top: 20px;
 }
 
-.chart-line {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--brown-accent);
-    transform-origin: left;
-    animation: drawLine 2s ease-out forwards;
-}
-
-@keyframes drawLine {
-    from { width: 0; }
-    to { width: 100%; }
+#spendingChart {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 /* Floating Add Button */
@@ -480,7 +452,7 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: var(--brown-accent);
+    background: linear-gradient(135deg, var(--brown-accent), #b88968);
     border: none;
     font-size: 28px;
     color: white;
@@ -494,5 +466,3 @@
     transform: scale(1.1);
     box-shadow: 0 12px 32px rgba(157, 111, 87, 0.6);
 }
-
-
