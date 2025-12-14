@@ -8,6 +8,8 @@ module SidebarHelper
       :recipients
     elsif current_page?(gift_ideas_path)
       :gift_ideas
+    elsif controller_name == 'event_discussions'
+      :event_discussions
     else
       :none
     end

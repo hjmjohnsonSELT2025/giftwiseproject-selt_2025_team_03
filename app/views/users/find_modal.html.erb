@@ -1,0 +1,24 @@
+<turbo-frame id="modal" data-controller='modal'>
+    <div class="modal-overlay" data-action="click->modal#backdrop">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h1 class="modal-title">Invite to <%= @event.name %></h1>
+                <button type="button" class="modal-close" data-action="modal#close" aria-label="Close">×</button>
+            </div>
+            <%= render 'shared/search',
+                endpoint: find_users_path,
+                method: :get,
+                placeholder: "Find user by username...",
+                data: { turbo_frame: "users_list" },
+                hidden_fields: { event_id: @event.id } %>
+            <%= turbo_frame_tag "users_list" do %>
+            <% if @users.present? %>
+            <%= render partial: "users/user", collection: @users, as: :user,
+                locals: { clickable: true, invite_event: @event, last_query: @last_query, show_actions: false } %>
+            <% elsif @last_query.present? %>
+            <div class='hint'>No users found with the username "<%= @last_query %>".</div>
+            <% end %>
+            <% end %>
+        </div>
+    </div>
+</turbo-frame>

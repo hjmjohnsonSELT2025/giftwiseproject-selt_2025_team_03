@@ -347,7 +347,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     cursor: pointer;
 }
 
-/* Scrollbar styling */
 .recipient-selector::-webkit-scrollbar {
     width: 8px;
 }
@@ -365,3 +364,29 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .recipient-selector::-webkit-scrollbar-thumb:hover {
     background: #b88968;
 }
+
+.section-title-with-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 12px;
+}
+
+.section-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.option.option--sm {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  background-color: var(--brown-accent);
+}
+
+.option.option--sm .icon {
+  width: 30px;
+  height: 30px;
+}
+

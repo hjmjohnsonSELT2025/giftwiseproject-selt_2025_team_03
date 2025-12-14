@@ -17,13 +17,16 @@ Rails.application.routes.draw do
 
   #---------------------  EVENTS
   resources :events do
-    collection do
-      get :search
-    end
+    collection { get :search }
+    resources :event_invitations, only: [:new, :create]
+  end
+  #---------------------  EVENT DISCUSSIONS
+  resources :event_discussions, only: %i[index show] do
+    resources :event_messages, only: [:create]
   end
 
   #---------------------  EVENT INVITATIONS
-  resources :event_invitations, only: [:index, :update]
+  resources :event_invitations, only: [:index, :update, :create]
 
   #---------------------  PROFILE
   get "/preview_profile", to: "preview#profile"
@@ -52,8 +55,7 @@ Rails.application.routes.draw do
   end
   #---------------------  GIFT IDEAS
   resources :gift_ideas do
-    collection do
-      get :search
-    end
+    collection { get :search }
   end
+  match "*path", to: "application#render_not_found", via: :all
 end

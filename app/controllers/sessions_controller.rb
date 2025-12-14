@@ -8,8 +8,7 @@ class SessionsController < ApplicationController
     user = User.find_by("LOWER(username) = ?", username.downcase)
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
-
-      redirect_to dashboard_path, notice: "Logged in successfully."
+      redirect_to dashboard_path
     else
       flash.now[:invalid_credentials] = "Invalid username/password."
       render :new, status: :unauthorized
@@ -18,6 +17,6 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    redirect_to login_path, notice: "Logged out."
+    redirect_to login_path
   end
 end

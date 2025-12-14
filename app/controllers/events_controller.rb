@@ -1,14 +1,13 @@
 class EventsController < ApplicationController
   before_action :require_authorization
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_event, only: %i[show edit update destroy]
+  before_action :require_event_edit_access, only: %i[edit update destroy]
   def index
     # we'll render invitations right above existing events
     @event_invitations = current_user
                 .received_event_invitations
-                .pending
                 .includes(:event, :inviter)
-    @events = current_user.events.order(:date)
+    @events = current_user.visible_events
     
   end
 
@@ -16,12 +15,12 @@ class EventsController < ApplicationController
     query = params[:query].to_s.strip.downcase
 
     events = if query.present?
-               current_user.events.where(
+               current_user.owned_events.where(
                  "LOWER(name) LIKE ? OR LOWER(location) LIKE ? OR LOWER(theme) LIKE ?",
                  "%#{query}%", "%#{query}%", "%#{query}%"
                ).order(:date)
              else
-               current_user.events.order(:date)
+               current_user.owned_events.order(:date)
              end
 
     render json: {
@@ -41,16 +40,24 @@ class EventsController < ApplicationController
   end
 
   def show
-
+    @messages = @event.event_messages.includes(:user).order(:created_at)
+    @message = @event.event_messages.new
   end
-
+  def leave
+      if @event.creator == current_user
+        redirect_to event_path(@event), alert: "Event owners cannot leave their own event." and return
+      end
+      event_left_name = @event.name
+      @event.attendees.where(user_id: current_user.id).destroy_all
+      redirect_to events_path, notice: "Successfully left #{event_left_name}."
+  end
   def new
-    @event = current_user.events.new
+    @event = current_user.owned_events.new
     @recipients = current_user.recipients.order(:name)
   end
 
   def create
-    @event = current_user.events.new(event_params)
+    @event = current_user.owned_events.new(event_params)
 
     if @event.save
       if params[:recipient_ids].present?
@@ -95,13 +102,31 @@ class EventsController < ApplicationController
       format.json { render json: { success: true }, status: :ok }
     end
   end
+  def create
+    event = current_user.owned_events.find_by(id: params[:event_id])
+    redirect_to(events_path, alert: "Not authorized.") and return unless event
 
-  private
+    invitee = User.find_by(id: params[:invitee_id], public_profile: true)
+    redirect_back fallback_location: find_users_path(event_id: event.id), alert: "User not found." and return unless invitee
 
-  def set_event
-    @event = current_user.events.find(params[:id])
+    invitation = EventInvitation.new(event: event, inviter: current_user, invitee: invitee)
+
+    if invitation.save
+      redirect_back fallback_location: find_users_path(event_id: event.id), notice: "Invitation sent."
+    else
+      redirect_back fallback_location: find_users_path(event_id: event.id), alert: invitation.errors.full_messages.to_sentence
+    end
   end
 
+  private
+  def set_event
+    event_id = params[:event_id] || params.dig(:event_invitation, :event_id)
+    @event = current_user.owned_events.find(params[:id])
+    redirect_to(events_path, alert: "Not authorized to view event.") and return unless @event
+  end
+  def require_event_edit_access
+    redirect_to(events_path, alert: "Not authorized to edit this event.") and return unless @event.editable_by?(current_user)
+  end
   def event_params
     params.require(:event).permit(:name, :date, :location, :theme, :budget)
   end

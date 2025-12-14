@@ -1,73 +1,84 @@
 <%= render "shared/sidebar_layout" %>
 <main class='main-content'>
-  <div class='top-bar'>
-    <h1 class='page-title'><%= @event.name %></h1>
-    <%= render 'shared/profile_dropdown' %>
-  </div>
-
-  <div class='event-details-container'>
-    <div class='detail-section'>
-      <h2>Event Details</h2>
-
-      <div>
-        <div class='detail-row'>
-          <div class='detail-label'>Event Name:</div>
-          <div class='detail-value'><%= @event.name %></div>
-        </div>
-
-        <div class='detail-row'>
-          <div class='detail-label'>Date:</div>
-          <div class='detail-value'><%= @event.date.strftime("%B %d, %Y") %></div>
-        </div>
-
-        <div class='detail-row'>
-          <div class='detail-label'>Days Until:</div>
-          <div class='detail-value'><%= @event.days_until %> days</div>
-        </div>
-
-        <div class='detail-row'>
-          <div class='detail-label'>Location:</div>
-          <div class='detail-value'><%= @event.location || "Not specified" %></div>
-        </div>
-
-        <div class='detail-row'>
-          <div class='detail-label'>Theme:</div>
-          <div class='detail-value'><%= @event.theme || "Not specified" %></div>
-        </div>
-
-        <div class='detail-row'>
-          <div class='detail-label'>Budget:</div>
-          <div class='detail-value'>$<%= number_with_delimiter(@event.budget&.to_f || 0, delimiter: ',') %></div>
-        </div>
-
-        <div class='detail-row'>
-          <div class='detail-label'>Total Spent:</div>
-          <div class='detail-value'>$<%= number_with_delimiter(@event.total_spent.round, delimiter: ',') %></div>
-        </div>
-
-        <div class='detail-row'>
-          <div class='detail-label'>Remaining Budget:</div>
-          <div class='detail-value'>$<%= number_with_delimiter(@event.budget_remaining.round, delimiter: ',') %></div>
-        </div>
-      </div>
+    <div class='top-bar'>
+        <h1 class='page-title'><%= @event.name %></h1>
+        <%= render 'shared/profile_dropdown' %>
     </div>
+    <div class='event-details-container'>
+        <div class='detail-section'>
+        <h2 class="section-title-with-actions">
+            <span>Event Details</span>
 
-    <div class='detail-section'>
-      <h2>Recipients (<%= @event.recipients.count %>)</h2>
-      <% if @event.recipients.any? %>
-        <ul class='recipients-list-simple'>
-          <% @event.recipients.each do |recipient| %>
-            <li><%= recipient.name %></li>
-          <% end %>
-        </ul>
-      <% else %>
-        <p style='opacity: 0.7;'>No recipients added yet.</p>
-      <% end %>
-    </div>
+            <span class="section-actions">
+                <%= link_to event_discussion_path(@event),
+                    class: "option option--sm",
+                    title: "Discussion",
+                    aria: { label: "Discussion" } do %>
+                <%= icon :messages, class: "icon" %>
+                <% end %>
 
-    <div class='action-buttons'>
-      <%= link_to "Edit Event", edit_event_path(@event), class: "login-button" %>
-      <%= link_to "Back to Events", events_path, class: "login-button secondary" %>
+                <% unless @event.user_id == current_user.id %>
+                <%= link_to leave_event_path(@event),
+                    data: { turbo_method: :delete, turbo_confirm: "Leave this event?" },
+                    class: "option option--sm",
+                    title: "Leave event",
+                    aria: { label: "Leave event" } do %>
+                    <%= icon :leave, class: "icon" %>
+                <% end %>
+                <% end %>
+            </span>
+        </h2>
+
+            <div>
+                <div class='detail-row'>
+                    <div class='detail-label'>Event Name:</div>
+                    <div class='detail-value'><%= @event.name %></div>
+                </div>
+                <div class='detail-row'>
+                    <div class='detail-label'>Date:</div>
+                    <div class='detail-value'><%= @event.date.strftime("%B %d, %Y") %></div>
+                </div>
+                <div class='detail-row'>
+                    <div class='detail-label'>Days Until:</div>
+                    <div class='detail-value'><%= @event.days_until %> days</div>
+                </div>
+                <div class='detail-row'>
+                    <div class='detail-label'>Location:</div>
+                    <div class='detail-value'><%= @event.location || "Not specified" %></div>
+                </div>
+                <div class='detail-row'>
+                    <div class='detail-label'>Theme:</div>
+                    <div class='detail-value'><%= @event.theme || "Not specified" %></div>
+                </div>
+                <div class='detail-row'>
+                    <div class='detail-label'>Budget:</div>
+                    <div class='detail-value'>$<%= number_with_delimiter(@event.budget&.to_f || 0, delimiter: ',') %></div>
+                </div>
+                <div class='detail-row'>
+                    <div class='detail-label'>Total Spent:</div>
+                    <div class='detail-value'>$<%= number_with_delimiter(@event.total_spent.round, delimiter: ',') %></div>
+                </div>
+                <div class='detail-row'>
+                    <div class='detail-label'>Remaining Budget:</div>
+                    <div class='detail-value'>$<%= number_with_delimiter(@event.budget_remaining.round, delimiter: ',') %></div>
+                </div>
+            </div>
+        </div>
+        <div class='detail-section'>
+            <h2>Recipients (<%= @event.recipients.count %>)</h2>
+            <% if @event.recipients.any? %>
+            <ul class='recipients-list-simple'>
+                <% @event.recipients.each do |recipient| %>
+                <li><%= recipient.name %></li>
+                <% end %>
+            </ul>
+            <% else %>
+            <p style='opacity: 0.7; font-style: italic; '>No recipients added yet.</p>
+            <% end %>
+        </div>
+        <div class='action-buttons'>
+            <%= link_to "Edit Event", edit_event_path(@event), class: "login-button" %>
+            <%= link_to "Back to Events", events_path, class: "login-button secondary" %>
+        </div>
     </div>
-  </div>
 </main>

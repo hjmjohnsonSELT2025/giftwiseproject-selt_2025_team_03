@@ -13,6 +13,9 @@
 <% placeholder_text = local_assigns.fetch(:placeholder, "Search...") %>
 
 <%= form_with url: endpoint, method: form_method, data: form_data, class: "search-form", local: false do |f| %>
+  <% (local_assigns[:hidden_fields] || {}).each do |k, v| %>
+    <%= hidden_field_tag k, v %>
+  <% end %>
 
   <%= f.text_field :query,
                    value: params[:query],
